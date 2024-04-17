@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import logo from '../assets/school.png'
 import './css/landing.css'
 import { Link } from 'react-router-dom';
+import { IonIcon } from '@ionic/react';
+import { menu,close, menuOutline, cloudDoneSharp, closeCircleOutline, closeOutline } from 'ionicons/icons';
 export default function Landing() {
     const headerRef = useRef(null); // Referencia para el header
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -56,7 +58,7 @@ export default function Landing() {
                     <Link to='/login'>
                         <button className='bg-black text-white px-5 py-2 rounded-full hover:bg-gray hover:text-black'>Iniciar sesión</button>
                     </Link>
-                    <ion-icon onClick={toggleMenu} name={isMenuOpen?'close':'menu'} class='text-black text-3xl cursor-pointer md:hidden'></ion-icon>
+                    <IonIcon onClick={toggleMenu} icon={isMenuOpen?closeOutline:menuOutline} class='text-black text-3xl cursor-pointer md:hidden'></IonIcon>
                 </div>
             </nav>
         </header>

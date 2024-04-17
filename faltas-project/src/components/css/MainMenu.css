@@ -1,0 +1,56 @@
+.active{
+    background: white;
+    font-weight: bold;
+}
+
+.mm-button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+}
+
+.mm-icon {
+    font-size: 20px;
+    min-width: 20px;
+    margin-left: 0.5rem;
+  }
+
+.mm-button-text{
+    margin-left: 0.75rem;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.mm-text-user{
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+
+@media screen and (max-width: 1000px) {
+    .mm-header{
+        max-width: fit-content;
+    }
+    .mm-user-container,
+    .mm-nav {
+        max-width: fit-content;
+    }
+    .mm-user-container{
+        padding: 0.5rem;
+        display: block;
+
+    }
+    .mm-button-text{
+        display: none;
+    }
+    .mm-text-user{
+        display: none;
+    }
+    
+.mm-icon {
+    margin: 0;
+  }
+
+}

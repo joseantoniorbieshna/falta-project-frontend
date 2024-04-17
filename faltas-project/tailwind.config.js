@@ -9,6 +9,7 @@ export default {
       'white': '#ffffff',
       'green': '#dff2cd',
       'gray': '#f0f0f0',
+      'grayblack': '#b9b9b9',
       'black': '#000',
       'blacklight':'#404040'
     },
