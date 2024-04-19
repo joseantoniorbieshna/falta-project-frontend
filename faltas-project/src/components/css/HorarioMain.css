@@ -1,9 +1,13 @@
+:root {
+    --gray-color: #f0f0f0;
+  }
+  
 .hm-title-container{
     border-bottom: 3px solid #f0f0f0;
 }
 
 .hh-horario-container{
-    border: 3px solid #f0f0f0;
+    border: 3px solid var(--gray-color);
     border-radius: 10px;
     overflow: auto;
     display: flex;
@@ -12,26 +16,27 @@
 
 .hh-horario-head{
     display: grid;
-    grid-template-columns: minmax(min-content, 1fr) repeat(5, 2fr); 
-    grid-template-rows: auto auto; 
+    grid-template-columns: 1fr repeat(5, 2fr);
     position: static;
+    overflow-y: scroll;
 
 }
+
 .hh-horario-grid{
+    flex: 1;
     display: grid;
     grid-template-columns: 1fr repeat(5, 2fr); 
     grid-template-rows: auto auto; 
     position: relative;
-    overflow: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
+    
 }
-
 .hh-horario-grid > div:nth-child(6n + 1){ /*El primer elemento de la grilla*/
-    border-right: 3px solid #f0f0f0;
+    border-right: 3px solid var(--gray-color);
 }
 
-.hh-horario-grid::-webkit-scrollbar {
-    width: 8px; 
+.hh-horario-grid::-webkit-scrollbar{
+    width: 8px;
 }
 
 .hh-horario-grid::-webkit-scrollbar-thumb {
@@ -49,15 +54,20 @@
 /* Parte Header horario */
 .hhdk-hora-head{
     background-color: white;
-    border-bottom: 3px solid #f0f0f0;
+    border-bottom: 3px solid var(--gray-color);
 }
 
 /*parte time horario*/
 .ht-time-del-horario,
 .hh-first-space-grid{
-    flex: 1 1 0;
+    width: 100%;
+    flex: 1 1 auto;
     padding: 0 1rem 0 1rem;
-    word-break: break-all;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .ht-time-del-horario-text{
     position: sticky;
@@ -66,10 +76,43 @@
 
 /*Mensaje*/
 .m-hora{
-    border: 3px solid #f0f0f0;
+    width: 95%;
+    border: 3px solid var(--gray-color);
     overflow: hidden;
     word-break: break-all;
     margin: 0.3rem;
     padding: 0.5rem;
     border-radius: 20px;
+}
+
+/*General*/
+.actual-day,
+.is-last-day{
+    background-color: var(--gray-color);
+}
+.no-actual-day{
+    background-color: white;
+}
+
+.is-last-day::-webkit-scrollbar,
+.hh-horario-head::-webkit-scrollbar{
+    width: 8px;
+}
+
+.is-last-day::-webkit-scrollbar-thumb,
+.hh-horario-head::-webkit-scrollbar-thumb {
+    background-color: #888; 
+    border-radius: 4px; 
+}
+
+.hh-horario-head::-webkit-scrollbar-track,
+.hh-horario-head::-webkit-scrollbar-track {
+    background-color: white; 
+}
+.is-last-day::-webkit-scrollbar-track,
+.is-last-day::-webkit-scrollbar-track {
+    background-color: var(--gray-color);
+}
+.last-day-horario-head{
+    margin-left: 12px;
 }

@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import './css/MainMenu.css'
 import { IonIcon } from '@ionic/react';
 import { logOutOutline,settingsOutline,calendar } from 'ionicons/icons';
-
 export default function MainMenu(){
     const location = useLocation();
     const [activeButton, setActiveButton] = useState({

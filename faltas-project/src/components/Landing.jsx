@@ -4,6 +4,7 @@ import './css/landing.css'
 import { Link } from 'react-router-dom';
 import { IonIcon } from '@ionic/react';
 import { menu,close, menuOutline, cloudDoneSharp, closeCircleOutline, closeOutline } from 'ionicons/icons';
+import useEffectAddWindowEvent from '../hooks/useEffectAddWindowEvent';
 export default function Landing() {
     const headerRef = useRef(null); // Referencia para el header
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -13,23 +14,15 @@ export default function Landing() {
         setMenuOpen(!isMenuOpen);
     };
 
-
-
-  useEffect(() => {
-    const handleResize = () => {
-      if(headerRef.current){
-        const height = headerRef.current.clientHeight;
-        setHeaderHeight(height);
-        console.log(height);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+    const handleResize = ()=>{
+        if(headerRef.current){
+          const height = headerRef.current.clientHeight;
+          setHeaderHeight(height);
+          console.log(height);
+        }
+      };
+    
+    useEffectAddWindowEvent({handleResize,type:'resize'});
   
     return (
         <>
