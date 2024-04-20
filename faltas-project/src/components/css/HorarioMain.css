@@ -121,6 +121,10 @@
     margin-left: 12px;
 }
 
+.go-to{
+    display: none;
+}
+
 
 @media screen and (max-width: 768px) {
     .hh-horario-container,
@@ -196,7 +200,7 @@
 
 
     /*only mobile part*/
-    .hh-navigation-container{
+    .hh-navigation-container-day{
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -232,6 +236,9 @@
     .active-horario-head{
         background-color: #9c9c9c;
     }
-    
 
+    .hm-title-container > div{
+        background-color: black;
+        color: white;
+    }
 }

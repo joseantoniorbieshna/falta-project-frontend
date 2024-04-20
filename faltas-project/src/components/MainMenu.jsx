@@ -20,7 +20,7 @@ export default function MainMenu(){
     }, [location.pathname]);
     
     return(
-    <header className="mm-header flex flex-col w-[20vw] h-[100vh] items-center bg-gray ">
+    <header className="mm-header flex flex-col w-[20vw] items-center bg-gray ">
 
         <div className="mm-user-container flex flex-row items-center bg-[#fff] w-[80%] m-5 rounded-3xl py-5 px-3">
             <img className="mm-user-image rounded-full w-7 h-7" src="https://th.bing.com/th/id/OIP.R9HMSxN_IRyxw9-iE1usugAAAA?rs=1&pid=ImgDetMain"></img>

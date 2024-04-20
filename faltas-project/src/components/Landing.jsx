@@ -28,7 +28,7 @@ export default function Landing() {
         <>
         <header className='bg-green' ref={headerRef}>
             <nav className='flex ju justify-between items-center w-[92%] mx-auto py-3'>
-                <div className='flex items-center gap-3'>
+                <div className='flex items-center gap-3 mr-5'>
                     <img className='w-10' src={logo} alt='no image'></img>
                     <h2 className='font-bold'>FaltaTracker</h2>
                 </div>
@@ -47,9 +47,9 @@ export default function Landing() {
                         </li>
                     </ul>
                 </div>
-                <div className='flex items-center gap-6'>
-                    <Link to='/login'>
-                        <button className='bg-black text-white px-5 py-2 rounded-full hover:bg-gray hover:text-black'>Iniciar sesión</button>
+                <div className='flex items-center gap-6 container-menu-container'>
+                    <Link to='/horario'>
+                        <button className='log-in-btn bg-black text-white px-5 py-2 rounded-full hover:bg-gray hover:text-black'>Iniciar sesión</button>
                     </Link>
                     <IonIcon onClick={toggleMenu} icon={isMenuOpen?closeOutline:menuOutline} class='text-black text-3xl cursor-pointer md:hidden'></IonIcon>
                 </div>

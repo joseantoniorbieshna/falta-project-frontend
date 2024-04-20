@@ -1,3 +1,12 @@
 .lnd-menu ul li a{
     color: #101010;
 }
+
+@media screen and (max-width: 370px) {
+    .log-in-btn{
+        padding: 0.5rem 0.25rem 0.5rem 0.25rem;
+    }
+    .container-menu-container{
+        gap: 0.25rem;
+    }
+}

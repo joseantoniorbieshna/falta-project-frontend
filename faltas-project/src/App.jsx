@@ -15,7 +15,7 @@ function MyLandingContainer({ children }) {
 
 function MyMainPageContainer({ children }) {
   return (
-    <div className='flex flex-row h-[100vh]'> {/*flex flex-col  md:flex-row md:h-[100vh]*/}
+    <div className='mm-container-root flex flex-row'> {/*flex flex-col  md:flex-row md:h-[100vh]*/}
       {children}
     </div>
   );

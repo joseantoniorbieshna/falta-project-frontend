@@ -8,5 +8,5 @@ export default function useEffectAddWindowEvent({ handleResize, type = 'resize' 
         return () => {
             window.removeEventListener(type, handleResize);
         };
-    }, [handleResize, type]);
+    }, []);
 }

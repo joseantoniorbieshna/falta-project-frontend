@@ -6,13 +6,14 @@ import useMobile from '../hooks/useMobile';
 import { IonIcon } from '@ionic/react';
 import { arrowBack, arrowForward } from 'ionicons/icons';
 import { useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual = false, children }, ref) => {
     const clasesStyle = isActual ? 'actual-day' : 'no-actual-day'
     const dia = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes']
     const classNameLastDay = dayOfWeek == 4 ? 'last-day-horario-head' : ''
     return (
-        <div ref={ref} id={`day-${dayOfWeek}`} className={`${clasesStyle} ${classNameLastDay} hhdk-hora-head flex flex-col items-center justify-center p-5`}>
+        <div ref={ref} id={`day-${dayOfWeek}`} name={`day-${dayOfWeek}`} className={`${clasesStyle} ${classNameLastDay} hhdk-hora-head flex flex-col items-center justify-center p-5`}>
             <div className="hhdk-dia-semana">
                 {dia[dayOfWeek]}
             </div>
@@ -24,11 +25,24 @@ const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual =
     )
 });
 
-function HoraNavigationMobile({ dayIndex, diasTextoAbreviado, actualDay, isActual, isActive, setActive }, key) {
+function DayNavigationMobile({ dayIndex, diasTextoAbreviado, actualDay, isActual, isActive, setActive }, key) {
+    const location = useLocation()
+    const navigate = useNavigate()
     const classNameActualDay = isActual ? 'last-day-horario-head' : ''
     const classNameActiveDay = isActive ? 'active-horario-head' : ''
+    const funcionOnCLick = (event) => {
+        /* PARA QUE NO APAREZCA EN LA RUTA */
+        event.preventDefault();
+        const targetId = event.currentTarget.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'instant' });
+        }
+        /* ACTIVAR EL COLOR */
+        setActive(dayIndex)
+    }
     return (
-        <a key={key} className={`hh-menu-mobile-part-day ${classNameActualDay} ${classNameActiveDay}`} href={`#day-${dayIndex}`} onClick={() => (setActive(dayIndex))}>
+        <a key={key} href={`#day-${dayIndex}`} name={`#day-${dayIndex}`} className={`hh-menu-mobile-part-day ${classNameActualDay} ${classNameActiveDay}`} onClick={funcionOnCLick}>
             <div className='hh-menu-mobile-day-day_number' >
                 {diasTextoAbreviado}
             </div>
@@ -38,6 +52,25 @@ function HoraNavigationMobile({ dayIndex, diasTextoAbreviado, actualDay, isActua
         </a>
     )
 };
+
+function WeekNavigation({lunesCercano}){
+
+    return (
+        <>
+        <div className='p-5'>
+            <div className='flex flex-row'>
+                <div>{`${lunesCercano}-${lunesCercano + 4}`} Mayo 2024</div>
+                <div className='flex flex-row items-center ml-5'>
+                    <IonIcon icon={arrowBack} className='text-black mr-5 cursor-pointer'></IonIcon>
+                    <IonIcon icon={arrowForward} className='text-black mr-5 cursor-pointer'></IonIcon>
+                </div>
+            </div>
+        </div>
+    </>
+
+    )
+
+}
 
 const HorarioTime = React.forwardRef(({ time, isActual = false }, ref) => {
     const classNameIsActual = isActual ? 'hh-time-actual-day' : ''
@@ -78,7 +111,7 @@ export default function Horario() {
     const dias = [lunesCercano, lunesCercano + 1, lunesCercano + 2, lunesCercano + 3, lunesCercano + 4]
     const timeArray = ['8:00:00', '9:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00']
     const mensaje = ['Programación-NievesTejeda', 'BaseDeDatos-NievesTejeda', 'ProgramacionServicios-Jose']
-    const indiceDiaActual = new Date().getDay() - 2;
+    const indiceDiaActual = new Date().getDay() - 1;
     const diasTextoAbreviado = ['Lun', 'Mart', 'Mier', 'Juev', 'Vier']
     //const mensaje = ['a','b','c']
     const isLastDayClassName = indiceDiaActual == 4 ? 'is-last-day' : ''
@@ -107,16 +140,20 @@ export default function Horario() {
     useEffectAddWindowEvent({ handleResize, type: 'resize' });
 
     /* comportamiento nav actual */
+    var eventsAdded = false;
     useEffect(() => {
         const container = containerNavRef.current;
         if (!container || !container.children) return;
-        const handleScroll=()=>{
-            const children = container.children;        
+
+
+        const handleScroll = () => {
+            const children = Array.from(container.children);
             for (let i = 0; i < children.length; i++) {
                 const child = children[i];
                 const rectChild = child.getBoundingClientRect();
                 const rectContainer = container.getBoundingClientRect();
-                if (rectChild.bottom >= rectContainer.top) {
+                if (rectChild.bottom >= rectContainer.top + 40) {
+                    console.log(i + " index active mobile");
                     setActiveNavMobile(i)
                     console.log("activao");
                     break;
@@ -124,14 +161,23 @@ export default function Horario() {
             }
         }
         handleScroll();
+        if (isMobile && !eventsAdded) {
+            handleScroll();
+            container.addEventListener('scroll', handleScroll);
+            window.addEventListener('resize', handleScroll);
+            console.log("Aquí se carga el método para el nav en color móvil");
+            eventsAdded = true;
+        } else if (!isMobile && eventsAdded) {
+            container.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
+            console.log("Aquí se borra el método para el nav en color móvil");
+            eventsAdded = false;
+        }
 
-        container.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize',handleScroll)
-        console.log("aqui carga el metodo para el nav en color movil");
         return () => {
             console.log("aqui borro el metodo para el nav en color movil");
             container.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize',handleScroll)
+            window.removeEventListener('resize', handleScroll)
         };
     }, [isMobile]);
     return (
@@ -139,27 +185,20 @@ export default function Horario() {
         <>
             {/*HEADER INFO/NAVIGATION*/}
             {!isMobile ?
+                <WeekNavigation lunesCercano={lunesCercano}></WeekNavigation>
+                :
                 <>
-                    <div className='p-5'>
-                        <div className='flex flex-row'>
-                            <div>{`${lunesCercano}-${lunesCercano + 4}`} Mayo 2023</div>
-                            <div className='flex flex-row items-center ml-5'>
-                                <IonIcon icon={arrowBack} className='text-black mr-5 cursor-pointer'></IonIcon>
-                                <IonIcon icon={arrowForward} className='text-black mr-5 cursor-pointer'></IonIcon>
-                            </div>
+
+                    <div className='hh-navigation-container-day'>
+                        <div className='hh-menu-mobile-day' >
+                            {dias.map((actualDayVar, index) => (
+                                <DayNavigationMobile key={index} dayIndex={index} diasTextoAbreviado={diasTextoAbreviado[index]}
+                                    actualDay={actualDayVar} isActual={index == indiceDiaActual}
+                                    setActive={setActiveNavMobile} isActive={indexActiveMobile == index} />
+                            ))}
                         </div>
                     </div>
                 </>
-                :
-                <div className='hh-navigation-container'>
-                    <div className='hh-menu-mobile-day' >
-                        {dias.map((actualDayVar, index) => (
-                            <HoraNavigationMobile key={index} dayIndex={index} diasTextoAbreviado={diasTextoAbreviado[index]}
-                                actualDay={actualDayVar} isActual={index == indiceDiaActual}
-                                setActive={setActiveNavMobile} isActive={indexActiveMobile == index} />
-                        ))}
-                    </div>
-                </div>
             }
 
 
