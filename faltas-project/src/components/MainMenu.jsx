@@ -14,8 +14,8 @@ export default function MainMenu(){
       // Establecer el estado activo correspondiente según la ruta actual
       setActiveButton(prevState => ({
         ...prevState,
-        horario: location.pathname === '/horario' ? 'active' : '',
-        settings: location.pathname === '/settings' ? 'active' : '',
+        horario: location.pathname.startsWith('/horario') || location.pathname.startsWith('/horario/') ? 'active' : '',
+        settings: location.pathname.startsWith('/settings') || location.pathname.startsWith('/settings/') ? 'active' : '',
       }));
     }, [location.pathname]);
     

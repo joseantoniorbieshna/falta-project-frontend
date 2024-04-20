@@ -49,8 +49,16 @@
         display: none;
     }
     
-.mm-icon {
-    margin: 0;
-  }
+    .mm-icon {
+        margin: 0;
+    }
 
+}
+
+@media screen and (max-width: 430px) {
+    .mm-user-container{
+        padding: 0.1rem;
+        margin: 0.5rem;
+        margin-top: 1.25rem;
+    }
 }

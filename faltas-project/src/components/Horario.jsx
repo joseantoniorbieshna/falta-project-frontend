@@ -1,47 +1,69 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './css/HorarioMain.css'
 import useEffectAddWindowEvent from '../hooks/useEffectAddWindowEvent';
-const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth ,isActual=false },ref)=> {
-    const clasesStyle=isActual?'actual-day':'no-actual-day'
+import useMobile from '../hooks/useMobile';
+import { IonIcon } from '@ionic/react';
+import { arrowBack, arrowForward } from 'ionicons/icons';
+import { useRef } from 'react';
+
+const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual = false, children }, ref) => {
+    const clasesStyle = isActual ? 'actual-day' : 'no-actual-day'
     const dia = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes']
-    const classNameLastDay =  dayOfWeek==4?'last-day-horario-head':''
+    const classNameLastDay = dayOfWeek == 4 ? 'last-day-horario-head' : ''
     return (
-        <div ref={ref} className={`${clasesStyle} ${classNameLastDay} hhdk-hora-head flex flex-col items-center justify-center p-5`}>
+        <div ref={ref} id={`day-${dayOfWeek}`} className={`${clasesStyle} ${classNameLastDay} hhdk-hora-head flex flex-col items-center justify-center p-5`}>
             <div className="hhdk-dia-semana">
                 {dia[dayOfWeek]}
             </div>
             <div className='hh-dia-title '>
                 Dia {dayOfMonth}
             </div>
+            {children}
         </div>
     )
 });
 
-const HorarioTime = React.forwardRef(({ time }, ref) => {
+function HoraNavigationMobile({ dayIndex, diasTextoAbreviado, actualDay, isActual, isActive, setActive }, key) {
+    const classNameActualDay = isActual ? 'last-day-horario-head' : ''
+    const classNameActiveDay = isActive ? 'active-horario-head' : ''
     return (
-        <div className='hh-hora min-h-12' ref={ref}>
-            <div className='ht-time-del-horario'>
+        <a key={key} className={`hh-menu-mobile-part-day ${classNameActualDay} ${classNameActiveDay}`} href={`#day-${dayIndex}`} onClick={() => (setActive(dayIndex))}>
+            <div className='hh-menu-mobile-day-day_number' >
+                {diasTextoAbreviado}
+            </div>
+            <div className='hh-menu-mobile-day-day_text'>
+                {actualDay}
+            </div>
+        </a>
+    )
+};
+
+const HorarioTime = React.forwardRef(({ time, isActual = false }, ref) => {
+    const classNameIsActual = isActual ? 'hh-time-actual-day' : ''
+    return (
+        <div className={`hh-hora min-h-12`} ref={ref}>
+            <div className={`ht-time-del-horario ${classNameIsActual}`}>
                 <div className='ht-time-del-horario-text'>
                     {time}
                 </div>
             </div>
         </div>
-      );
+    );
 });
 
 
-function HorarioHora({ children,isActual=false }) {
-    const clasesStyle=isActual?'actual-day':'no-actual-day'
+function HorarioHora({ children, isActual = false }) {
+    const clasesStyle = isActual ? 'actual-day' : 'no-actual-day'
     return (
         <div className={`hh-hora ${clasesStyle}`}>
             {children}
         </div>
     );
 }
-function MensajeHora({ mensaje ,backgroundColor='#dff2cd'}) {
+function MensajeHora({ mensaje, backgroundColor = '#dff2cd' }) {
     return (
-        <div className='m-hora' style={{backgroundColor}}>
+        <div className='m-hora' style={{ backgroundColor }}>
             {mensaje}
         </div>
     )
@@ -49,62 +71,160 @@ function MensajeHora({ mensaje ,backgroundColor='#dff2cd'}) {
 
 
 
-export default function Horario(){
-    /* Cambio de elementos no responsive para pc */
-    const timeHoraHorarioRef = useRef(null);
-    const [sizeTimeWidth,setSizeTimeWidth]=useState('auto');
-
+export default function Horario() {
+    /* DATA */
     const lunesCercano = 15;
     const diaActual = 18;
     const dias = [lunesCercano, lunesCercano + 1, lunesCercano + 2, lunesCercano + 3, lunesCercano + 4]
     const timeArray = ['8:00:00', '9:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00']
-    const mensaje = ['Programación-NievesTejeda', 'BaseDeDatos-NievesTejeda','ProgramacionServicios-Jose']
-    const indiceDiaActual = new Date().getDay()-2;
+    const mensaje = ['Programación-NievesTejeda', 'BaseDeDatos-NievesTejeda', 'ProgramacionServicios-Jose']
+    const indiceDiaActual = new Date().getDay() - 2;
+    const diasTextoAbreviado = ['Lun', 'Mart', 'Mier', 'Juev', 'Vier']
     //const mensaje = ['a','b','c']
+    const isLastDayClassName = indiceDiaActual == 4 ? 'is-last-day' : ''
 
-    const isLastDayClassName= indiceDiaActual==4?'is-last-day':''
-    const handleResize = ()=>{
-         /*primer elemento cambiar tamaño*/ 
-        if(timeHoraHorarioRef.current){
+
+
+    /* CAMBIO DE ELEMENTO NO RESPONSIVE PARA PC */
+    const timeHoraHorarioRef = useRef(null);
+    const [sizeTimeWidth, setSizeTimeWidth] = useState('auto');
+
+
+    /*COMPONENTE PARA EL HEADER MOBILE*/
+    const containerNavRef = useRef(null);
+    const [isMobile] = useMobile();
+    const [indexActiveMobile, setActiveNavMobile] = useState(-1);
+
+
+    const handleResize = () => {
+        /*primer elemento cambiar tamaño*/
+        if (timeHoraHorarioRef.current && !isMobile) {
             const { width } = timeHoraHorarioRef.current.getBoundingClientRect();
             setSizeTimeWidth(width)
-            console.log(width);
-            console.log("esto solo en resize en teoria");
-        }else{
-            console.log("problema");
+            console.log("Horario - resizePC");
         }
     }
-    useEffectAddWindowEvent({handleResize,type:'resize'});
+    useEffectAddWindowEvent({ handleResize, type: 'resize' });
 
+    /* comportamiento nav actual */
+    useEffect(() => {
+        const container = containerNavRef.current;
+        if (!container || !container.children) return;
+        const handleScroll=()=>{
+            const children = container.children;        
+            for (let i = 0; i < children.length; i++) {
+                const child = children[i];
+                const rectChild = child.getBoundingClientRect();
+                const rectContainer = container.getBoundingClientRect();
+                if (rectChild.bottom >= rectContainer.top) {
+                    setActiveNavMobile(i)
+                    console.log("activao");
+                    break;
+                }
+            }
+        }
+        handleScroll();
+
+        container.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize',handleScroll)
+        console.log("aqui carga el metodo para el nav en color movil");
+        return () => {
+            console.log("aqui borro el metodo para el nav en color movil");
+            container.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize',handleScroll)
+        };
+    }, [isMobile]);
     return (
-        
-        <div className={`hh-horario-container flex-1 m-5 ${isLastDayClassName}`}>
-        <div className={`hh-horario-head ${isLastDayClassName}`}>
 
-            {/* horario cabezera dia */}
-            <div className={`hhdk-hora-head hh-first-space-grid`} style={{width:sizeTimeWidth}}></div>
-            {dias.map((day, index) => (
-                <HorarioHeadDayWeek key={index} dayOfWeek={index} dayOfMonth={day} isActual={index==indiceDiaActual} />
-            ))}
-        </div>
+        <>
+            {/*HEADER INFO/NAVIGATION*/}
+            {!isMobile ?
+                <>
+                    <div className='p-5'>
+                        <div className='flex flex-row'>
+                            <div>{`${lunesCercano}-${lunesCercano + 4}`} Mayo 2023</div>
+                            <div className='flex flex-row items-center ml-5'>
+                                <IonIcon icon={arrowBack} className='text-black mr-5 cursor-pointer'></IonIcon>
+                                <IonIcon icon={arrowForward} className='text-black mr-5 cursor-pointer'></IonIcon>
+                            </div>
+                        </div>
+                    </div>
+                </>
+                :
+                <div className='hh-navigation-container'>
+                    <div className='hh-menu-mobile-day' >
+                        {dias.map((actualDayVar, index) => (
+                            <HoraNavigationMobile key={index} dayIndex={index} diasTextoAbreviado={diasTextoAbreviado[index]}
+                                actualDay={actualDayVar} isActual={index == indiceDiaActual}
+                                setActive={setActiveNavMobile} isActive={indexActiveMobile == index} />
+                        ))}
+                    </div>
+                </div>
+            }
 
-        <div className='hh-horario-grid'>
-            {/* horario  hora*/}
-            {timeArray.map((hora, indexTime) => (
-                <React.Fragment key={indexTime}>
-                    <HorarioTime time={hora} ref={timeHoraHorarioRef}></HorarioTime>
-                    {dias.map((day, indexDia) => (
-                        <HorarioHora key={indexDia} isActual={indexDia==indiceDiaActual}>
-                            {mensaje.map((mensaje, indexMensaje) => (
-                                <MensajeHora key={indexMensaje} mensaje={mensaje} />
-                            ))}
-                        </HorarioHora>
-                    ))}
-               </React.Fragment>
-            ))}
 
-        </div>
 
-    </div>
+
+            {/*HORARIO INFO*/}
+            <div className={`hh-horario-container flex-1${isLastDayClassName}`}>
+
+                {!isMobile ?
+                    <div className={`hh-horario-head ${isLastDayClassName}`}>
+
+                        {/* horario cabezera dia */}
+                        <div className={`hhdk-hora-head hh-first-space-grid`} style={{ width: sizeTimeWidth }}></div>
+                        {dias.map((day, index) => (
+                            <HorarioHeadDayWeek key={index} dayOfWeek={index} dayOfMonth={day} isActual={index == indiceDiaActual} />
+                        ))}
+                    </div>
+                    : <></>}
+
+                {!isMobile ?
+                    <div className='hh-horario-table_list'>
+                        {/* horario  hora*/}
+                        {timeArray.map((hora, indexTime) => (
+                            <React.Fragment key={indexTime}>
+                                <HorarioTime time={hora} ref={timeHoraHorarioRef}></HorarioTime>
+                                {dias.map((day, indexDia) => (
+                                    <HorarioHora key={indexDia} isActual={indexDia == indiceDiaActual}>
+                                        {mensaje.map((mensaje, indexMensaje) => (
+                                            <MensajeHora key={indexMensaje} mensaje={mensaje} />
+                                        ))}
+                                    </HorarioHora>
+                                ))}
+                            </React.Fragment>
+                        ))}
+                    </div>
+                    :
+
+                    <div className='hh-horario-table_list' ref={containerNavRef}>
+                        {/* Lo mismo que arriba pero modificado*/}
+                        {/* horario  hora*/}
+                        {/* dia -tiempo mensaje*/}
+
+
+                        {dias.map((day, indexDia) => (
+                            <React.Fragment key={indexDia}>
+                                <HorarioHeadDayWeek dayOfWeek={indexDia} dayOfMonth={day} isActual={indexDia == indiceDiaActual} >
+                                    {timeArray.map((hora, indexTime) => (
+                                        <React.Fragment key={indexTime}>
+                                            <HorarioTime time={hora} ref={timeHoraHorarioRef} isActual={indexDia == indiceDiaActual}></HorarioTime>
+                                            <HorarioHora isActual={indexDia == indiceDiaActual}>
+                                                {mensaje.map((mensaje, indexMensaje) => (
+                                                    <MensajeHora key={indexMensaje} mensaje={mensaje} />
+                                                ))}
+                                            </HorarioHora>
+                                        </React.Fragment>
+                                    ))}
+                                </HorarioHeadDayWeek>
+                            </React.Fragment>
+                        ))}
+
+                    </div>
+                }
+
+            </div>
+
+        </>
     )
 }
