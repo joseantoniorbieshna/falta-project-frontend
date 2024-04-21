@@ -27,6 +27,9 @@
     overflow: hidden;
     word-wrap: break-word;
 }
+.mm-menu.icon{
+    display: none;
+}
 
 
 @media screen and (max-width: 1000px) {
@@ -52,6 +55,46 @@
     .mm-icon {
         margin: 0;
     }
+
+}
+
+@media screen and (max-width: 768px) {
+    .mm-header{
+        width: 100vw;
+        max-width: none;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 2rem 0 2rem;
+    }
+    
+    .mm-nav{
+        width: 80%;
+        max-width: 80%;
+        height: 100vh;
+        height: 100dvh;
+
+        position: fixed;
+        margin: 0;
+        top: 80px;
+        right: -100%;
+        z-index: 10;
+        justify-content: start;
+        align-items: center;
+        padding-top: 2rem;
+        gap: 2rem;
+        background-color: #f0f0f0;
+
+        transition: all .5s;
+    }
+    .menu-open{
+        right: 0;
+    }
+
+    .mm-button-text{
+        display: block;
+    }
+
+
 
 }
 

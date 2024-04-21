@@ -7,8 +7,8 @@ import { menu,close, menuOutline, cloudDoneSharp, closeCircleOutline, closeOutli
 import useEffectAddWindowEvent from '../hooks/useEffectAddWindowEvent';
 export default function Landing() {
     const headerRef = useRef(null); // Referencia para el header
-    const [isMenuOpen, setMenuOpen] = useState(false);
     const [headerHeight, setHeaderHeight] = useState('9%'); // Estado para almacenar la altura del header
+    const [isMenuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
@@ -32,6 +32,7 @@ export default function Landing() {
                     <img className='w-10' src={logo} alt='no image'></img>
                     <h2 className='font-bold'>FaltaTracker</h2>
                 </div>
+                
                 <div className={`absolute md:static bg-green md:min-h-fit min-h-[60vh] left-0
                 w-full md:w-fit flex items-center justify-start md:justify-center px-5`}
                 style={{ top: isMenuOpen ? headerHeight : '-1000%' }}>

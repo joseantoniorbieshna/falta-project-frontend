@@ -169,6 +169,7 @@
 
     .hh-horario-table_list{
         display: flex;
+        flex: 1 1 0;
         flex-direction: column;
      
     }
@@ -230,7 +231,9 @@
         background-color: var(--gray-color);
     }
     .hh-section-horario{
+        flex: 1 1 0;
         margin: 0;
+        height: 100%;
     }
 
     .active-horario-head{

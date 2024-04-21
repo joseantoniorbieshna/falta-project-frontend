@@ -1,12 +1,18 @@
 import { useEffect } from "react";
 
-export default function useEffectAddWindowEvent({ handleResize, type = 'resize' }) {
+export default function useEffectAddWindowEvent({ handleResize, type = 'resize', condition=true }) {
     useEffect(() => {
         handleResize();
-        window.addEventListener(type, handleResize);
-        console.log("Cargando useEffectWindowEvent Añadido");
+
+        if(condition){
+            window.addEventListener(type, handleResize);
+            console.log("Cargando useEffectWindowEvent Añadido");
+        }else{
+            window.removeEventListener(type, handleResize);
+            console.log("Borrando useEffectWindowEvent");
+        }
         return () => {
             window.removeEventListener(type, handleResize);
         };
-    }, []);
+    }, [condition]);
 }
