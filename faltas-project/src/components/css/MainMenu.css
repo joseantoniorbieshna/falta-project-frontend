@@ -64,9 +64,12 @@
         max-width: none;
         flex-direction: row;
         justify-content: space-between;
-        padding: 0 2rem 0 2rem;
+        padding: 0 2rem 0 1rem;
     }
-    
+    .mm-user-container{
+        margin: 0.75rem;
+        padding: 0.25rem;
+    }
     .mm-nav{
         width: 80%;
         max-width: 80%;
@@ -96,12 +99,4 @@
 
 
 
-}
-
-@media screen and (max-width: 430px) {
-    .mm-user-container{
-        padding: 0.1rem;
-        margin: 0.5rem;
-        margin-top: 1.25rem;
-    }
 }

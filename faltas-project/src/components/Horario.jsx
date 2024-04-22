@@ -7,6 +7,7 @@ import { IonIcon } from '@ionic/react';
 import { arrowBack, arrowForward } from 'ionicons/icons';
 import { useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useScrollComponent from '../hooks/useScrollComponent';
 
 const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual = false, children }, ref) => {
     const clasesStyle = isActual ? 'actual-day' : 'no-actual-day'
@@ -123,14 +124,14 @@ export default function Horario() {
     const [sizeTimeWidth, setSizeTimeWidth] = useState('auto');
 
 
-    /*COMPONENTE PARA EL HEADER MOBILE*/
+    /*COMPONENTE PARA EL HORARIO MOBILE*/
     const containerNavRef = useRef(null);
     const [isMobile] = useMobile();
     const [indexActiveMobile, setActiveNavMobile] = useState(-1);
 
 
     const handleResize = () => {
-        /*primer elemento cambiar tamaño*/
+        /*primer elemento cambiar tamaño (se descuadra hay que ajustarlo con js)*/
         if (timeHoraHorarioRef.current && !isMobile) {
             const { width } = timeHoraHorarioRef.current.getBoundingClientRect();
             setSizeTimeWidth(width)
@@ -140,46 +141,25 @@ export default function Horario() {
     useEffectAddWindowEvent({ handleResize, type: 'resize' });
 
     /* comportamiento nav actual */
-    var eventsAdded = false;
-    useEffect(() => {
+    const handleScroll = () => {
         const container = containerNavRef.current;
-        if (!container || !container.children) return;
-
-
-        const handleScroll = () => {
-            const children = Array.from(container.children);
-            for (let i = 0; i < children.length; i++) {
-                const child = children[i];
-                const rectChild = child.getBoundingClientRect();
-                const rectContainer = container.getBoundingClientRect();
-                if (rectChild.bottom >= rectContainer.top + 40) {
-                    console.log(i + " index active mobile");
-                    setActiveNavMobile(i)
-                    console.log("activao");
-                    break;
-                }
+        if (!container || !container.children) return null;
+        const children = Array.from(container.children);
+        for (let i = 0; i < children.length; i++) {
+            const child = children[i];
+            const rectChild = child.getBoundingClientRect();
+            const rectContainer = container.getBoundingClientRect();
+            if (rectChild.bottom >= rectContainer.top + 40) {
+                console.log(i + " index active mobile");
+                setActiveNavMobile(i)
+                console.log("activao");
+                break;
             }
         }
-        handleScroll();
-        if (isMobile && !eventsAdded) {
-            handleScroll();
-            container.addEventListener('scroll', handleScroll);
-            window.addEventListener('resize', handleScroll);
-            console.log("Aquí se carga el método para el nav en color móvil");
-            eventsAdded = true;
-        } else if (!isMobile && eventsAdded) {
-            container.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleScroll);
-            console.log("Aquí se borra el método para el nav en color móvil");
-            eventsAdded = false;
-        }
+        return container;
+    }
+    useScrollComponent({handleScroll, isMobile});
 
-        return () => {
-            console.log("aqui borro el metodo para el nav en color movil");
-            container.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleScroll)
-        };
-    }, [isMobile]);
     return (
 
         <>
@@ -249,9 +229,13 @@ export default function Horario() {
                                         <React.Fragment key={indexTime}>
                                             <HorarioTime time={hora} ref={timeHoraHorarioRef} isActual={indexDia == indiceDiaActual}></HorarioTime>
                                             <HorarioHora isActual={indexDia == indiceDiaActual}>
+                                                
+                                                {/* Aqui se imprimen los mensajes*/}
                                                 {mensaje.map((mensaje, indexMensaje) => (
                                                     <MensajeHora key={indexMensaje} mensaje={mensaje} />
                                                 ))}
+
+
                                             </HorarioHora>
                                         </React.Fragment>
                                     ))}
