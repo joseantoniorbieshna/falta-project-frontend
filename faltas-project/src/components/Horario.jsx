@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
 import './css/HorarioMain.css'
-import useEffectAddWindowEvent from '../hooks/useEffectAddWindowEvent';
 import useMobile from '../hooks/useMobile';
 import { IonIcon } from '@ionic/react';
 import { arrowBack, arrowForward } from 'ionicons/icons';
 import { useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useScrollComponent from '../hooks/useScrollComponent';
+import useResizeComponentAndWindow from '../hooks/useResizeComponentAndWindow';
 
 const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual = false, children }, ref) => {
     const clasesStyle = isActual ? 'actual-day' : 'no-actual-day'
@@ -129,17 +129,6 @@ export default function Horario() {
     const [isMobile] = useMobile();
     const [indexActiveMobile, setActiveNavMobile] = useState(-1);
 
-
-    const handleResize = () => {
-        /*primer elemento cambiar tamaño (se descuadra hay que ajustarlo con js)*/
-        if (timeHoraHorarioRef.current && !isMobile) {
-            const { width } = timeHoraHorarioRef.current.getBoundingClientRect();
-            setSizeTimeWidth(width)
-            console.log("Horario - resizePC");
-        }
-    }
-    useEffectAddWindowEvent({ handleResize, type: 'resize' });
-
     /* comportamiento nav actual */
     const handleScroll = () => {
         const container = containerNavRef.current;
@@ -159,6 +148,18 @@ export default function Horario() {
         return container;
     }
     useScrollComponent({handleScroll, isMobile});
+    const handleResize = () => {
+        /*primer elemento cambiar tamaño (se descuadra hay que ajustarlo con js)*/
+        if (timeHoraHorarioRef.current && !isMobile) {
+            const { width } = timeHoraHorarioRef.current.getBoundingClientRect();
+            setSizeTimeWidth(width)
+            console.log(width+"px para el resize");
+            console.log("Horario - resizePC");
+            return timeHoraHorarioRef.current;
+        }
+        return null;
+    }
+    useResizeComponentAndWindow({ handleResize});
 
     return (
 
@@ -191,7 +192,7 @@ export default function Horario() {
                     <div className={`hh-horario-head ${isLastDayClassName}`}>
 
                         {/* horario cabezera dia */}
-                        <div className={`hhdk-hora-head hh-first-space-grid`} style={{ width: sizeTimeWidth }}></div>
+                        <div className={`hhdk-hora-head hh-first-space-grid ${indiceDiaActual==0?'hh-first-space-grid-active':''}`} style={{ width: sizeTimeWidth }}></div>
                         {dias.map((day, index) => (
                             <HorarioHeadDayWeek key={index} dayOfWeek={index} dayOfMonth={day} isActual={index == indiceDiaActual} />
                         ))}

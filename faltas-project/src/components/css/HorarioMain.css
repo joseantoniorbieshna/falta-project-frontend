@@ -74,6 +74,9 @@
     align-items: center;
 }
 .hh-first-space-grid{
+    border-right: 3px solid transparent;
+}
+.hh-first-space-grid-active{
     border-right: 3px solid var(--gray-color);
 }
 .ht-time-del-horario-text{
@@ -114,13 +117,14 @@
 
 .hh-horario-head::-webkit-scrollbar-track,
 .hh-horario-head::-webkit-scrollbar-track {
-    background-color: white; 
+    background-color: white;
+    border-bottom: 3px solid var(--gray-color);
 }
 .is-last-day::-webkit-scrollbar-track,
 .is-last-day::-webkit-scrollbar-track {
     background-color: var(--gray-color);
 }
-.last-day-horario-head{
+.last-day-horario-head div{
     margin-left: 12px;
 }
 
@@ -232,6 +236,9 @@
 
     .last-day-horario-head{
         background-color: var(--gray-color);
+    }
+    .last-day-horario-head div{
+        margin: 0;
     }
     .hh-section-horario{
         flex: 1 1 0;
