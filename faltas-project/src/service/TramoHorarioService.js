@@ -1,5 +1,7 @@
+
+const URL_BACKEND_GRAPHQL = import.meta.env.VITE_BACKEND_END_POINT + "/graphql";
 export const getAllHours=()=>{
-    fetch('http://localhost:8080/graphql', {
+    return fetch(URL_BACKEND_GRAPHQL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 
-export const getHorarioByProfesor=()=>{
-    fetch('http://localhost:8080/graphql', {
+const URL_BACKEND_GRAPHQL = import.meta.env.VITE_BACKEND_END_POINT + "/graphql";
+export const getHorarioByProfesor=({referenciaProfesor})=>{
+    return fetch(URL_BACKEND_GRAPHQL, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -14,6 +15,9 @@ export const getHorarioByProfesor=()=>{
             profesor {
               nombre
             }
+            materia{
+              nombreCompleto
+            }
           }
           tramoHorario {
             dia
@@ -23,10 +27,10 @@ export const getHorarioByProfesor=()=>{
       }
       `,
     variables: {
-        referenciaProfesor: "100041110",
+        referenciaProfesor,
     },
   }),
 })
   .then((res) => res.json())
-  .then((result) => console.log(result))
+  .then((result) => result.data.getHorasHorarioByReferenciaProfesor)
 }

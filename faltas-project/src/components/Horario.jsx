@@ -9,28 +9,36 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import useScrollComponent from '../hooks/useScrollComponent';
 import useResizeComponentAndWindow from '../hooks/useResizeComponentAndWindow';
 
-const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual = false, children }, ref) => {
+const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual = false, children, showDayNumber }, ref) => {
     const clasesStyle = isActual ? 'actual-day' : 'no-actual-day'
     const dia = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes']
     const classNameLastDay = dayOfWeek == 4 ? 'last-day-horario-head' : ''
+    const classNameNotShowDayNumber = !showDayNumber? 'hh-is-only-day-of-week-name':''
     return (
-        <div ref={ref} id={`day-${dayOfWeek}`} name={`day-${dayOfWeek}`} className={`${clasesStyle} ${classNameLastDay} hhdk-hora-head flex flex-col items-center justify-center p-5`}>
-            <div className="hhdk-dia-semana">
+        <div ref={ref} id={`day-${dayOfWeek}`} name={`day-${dayOfWeek}`} className={`${clasesStyle} ${classNameLastDay} ${classNameNotShowDayNumber} hhdk-hora-head flex flex-col items-center justify-center p-5`}>
+            <div className={`hhdk-dia-semana ${clasesStyle}`}>
                 {dia[dayOfWeek]}
             </div>
-            <div className='hh-dia-title '>
-                Dia {dayOfMonth}
-            </div>
+            {
+                showDayNumber ?
+                    <div className='hh-dia-title '>
+                        Dia {dayOfMonth}
+                    </div>
+                    :
+                    <></>
+            }
+
             {children}
         </div>
     )
 });
 
-function DayNavigationMobile({ dayIndex, diasTextoAbreviado, actualDay, isActual, isActive, setActive }, key) {
+function DayNavigationMobile({ dayIndex, diasTextoAbreviado, actualDay, isActual, isActive, setActive, showDayNumber }, key) {
     const location = useLocation()
     const navigate = useNavigate()
     const classNameActualDay = isActual ? 'last-day-horario-head' : ''
     const classNameActiveDay = isActive ? 'active-horario-head' : ''
+    const classNameNotShowDayNumber = !showDayNumber? 'hh-is-only-day-of-week-name':''
     const funcionOnCLick = (event) => {
         /* PARA QUE NO APAREZCA EN LA RUTA */
         event.preventDefault();
@@ -43,35 +51,22 @@ function DayNavigationMobile({ dayIndex, diasTextoAbreviado, actualDay, isActual
         setActive(dayIndex)
     }
     return (
-        <a key={key} href={`#day-${dayIndex}`} name={`#day-${dayIndex}`} className={`hh-menu-mobile-part-day ${classNameActualDay} ${classNameActiveDay}`} onClick={funcionOnCLick}>
+        <a key={key} href={`#day-${dayIndex}`} name={`#day-${dayIndex}`} className={`hh-menu-mobile-part-day ${classNameActualDay} ${classNameActiveDay} ${classNameNotShowDayNumber}`} onClick={funcionOnCLick}>
             <div className='hh-menu-mobile-day-day_number' >
                 {diasTextoAbreviado}
             </div>
-            <div className='hh-menu-mobile-day-day_text'>
-                {actualDay}
-            </div>
+            {
+                showDayNumber?
+                <div className='hh-menu-mobile-day-day_text'>
+                    {actualDay}
+                </div>
+                :
+                <></>
+            }
+        
         </a>
     )
 };
-
-function WeekNavigation({lunesCercano}){
-
-    return (
-        <>
-        <div className='p-5'>
-            <div className='flex flex-row'>
-                <div>{`${lunesCercano}-${lunesCercano + 4}`} Mayo 2024</div>
-                <div className='flex flex-row items-center ml-5'>
-                    <IonIcon icon={arrowBack} className='text-black mr-5 cursor-pointer'></IonIcon>
-                    <IonIcon icon={arrowForward} className='text-black mr-5 cursor-pointer'></IonIcon>
-                </div>
-            </div>
-        </div>
-    </>
-
-    )
-
-}
 
 const HorarioTime = React.forwardRef(({ time, isActual = false }, ref) => {
     const classNameIsActual = isActual ? 'hh-time-actual-day' : ''
@@ -95,23 +90,14 @@ function HorarioHora({ children, isActual = false }) {
         </div>
     );
 }
-function MensajeHora({ mensaje, backgroundColor = '#dff2cd' }) {
-    return (
-        <div className='m-hora' style={{ backgroundColor }}>
-            {mensaje}
-        </div>
-    )
-}
 
 
 
-export default function Horario() {
+export default function Horario({ timeArray, mensajes, showDayNumber }) {
     /* DATA */
     const lunesCercano = 15;
     const diaActual = 18;
     const dias = [lunesCercano, lunesCercano + 1, lunesCercano + 2, lunesCercano + 3, lunesCercano + 4]
-    const timeArray = ['8:00:00', '9:00:00', '10:00:00', '11:00:00', '12:00:00', '13:00:00', '14:00:00']
-    const mensaje = ['Programación-NievesTejeda', 'BaseDeDatos-NievesTejeda', 'ProgramacionServicios-Jose']
     const indiceDiaActual = new Date().getDay() - 1;
     const diasTextoAbreviado = ['Lun', 'Mart', 'Mier', 'Juev', 'Vier']
     //const mensaje = ['a','b','c']
@@ -147,44 +133,23 @@ export default function Horario() {
         }
         return container;
     }
-    useScrollComponent({handleScroll, isMobile});
+    useScrollComponent({ handleScroll, isMobile });
     const handleResize = () => {
         /*primer elemento cambiar tamaño (se descuadra hay que ajustarlo con js)*/
         if (timeHoraHorarioRef.current && !isMobile) {
             const { width } = timeHoraHorarioRef.current.getBoundingClientRect();
             setSizeTimeWidth(width)
-            console.log(width+"px para el resize");
+            console.log(width + "px para el resize");
             console.log("Horario - resizePC");
             return timeHoraHorarioRef.current;
         }
         return null;
     }
-    useResizeComponentAndWindow({ handleResize});
+    useResizeComponentAndWindow({ handleResize });
 
     return (
 
         <>
-            {/*HEADER INFO/NAVIGATION*/}
-            {!isMobile ?
-                <WeekNavigation lunesCercano={lunesCercano}></WeekNavigation>
-                :
-                <>
-
-                    <div className='hh-navigation-container-day'>
-                        <div className='hh-menu-mobile-day' >
-                            {dias.map((actualDayVar, index) => (
-                                <DayNavigationMobile key={index} dayIndex={index} diasTextoAbreviado={diasTextoAbreviado[index]}
-                                    actualDay={actualDayVar} isActual={index == indiceDiaActual}
-                                    setActive={setActiveNavMobile} isActive={indexActiveMobile == index} />
-                            ))}
-                        </div>
-                    </div>
-                </>
-            }
-
-
-
-
             {/*HORARIO INFO*/}
             <div className={`hh-horario-container flex-1${isLastDayClassName}`}>
 
@@ -192,12 +157,22 @@ export default function Horario() {
                     <div className={`hh-horario-head ${isLastDayClassName}`}>
 
                         {/* horario cabezera dia */}
-                        <div className={`hhdk-hora-head hh-first-space-grid ${indiceDiaActual==0?'hh-first-space-grid-active':''}`} style={{ width: sizeTimeWidth }}></div>
+                        <div className={`hhdk-hora-head hh-first-space-grid ${indiceDiaActual == 0 ? 'hh-first-space-grid-active' : ''}`} style={{ width: sizeTimeWidth }}></div>
                         {dias.map((day, index) => (
-                            <HorarioHeadDayWeek key={index} dayOfWeek={index} dayOfMonth={day} isActual={index == indiceDiaActual} />
+                            <HorarioHeadDayWeek key={index} dayOfWeek={index} dayOfMonth={day} isActual={index == indiceDiaActual} showDayNumber={showDayNumber}/>
                         ))}
                     </div>
-                    : <></>}
+                    :
+                    <div className='hh-navigation-container-day'>
+                        <div className='hh-menu-mobile-day' >
+                            {dias.map((actualDayVar, index) => (
+                                <DayNavigationMobile key={index} dayIndex={index} diasTextoAbreviado={diasTextoAbreviado[index]}
+                                    actualDay={actualDayVar} isActual={index == indiceDiaActual}
+                                    setActive={setActiveNavMobile} isActive={indexActiveMobile == index}
+                                    showDayNumber={showDayNumber} />
+                            ))}
+                        </div>
+                    </div>}
 
                 {!isMobile ?
                     <div className='hh-horario-table_list'>
@@ -207,9 +182,15 @@ export default function Horario() {
                                 <HorarioTime time={hora} ref={timeHoraHorarioRef}></HorarioTime>
                                 {dias.map((day, indexDia) => (
                                     <HorarioHora key={indexDia} isActual={indexDia == indiceDiaActual}>
-                                        {mensaje.map((mensaje, indexMensaje) => (
-                                            <MensajeHora key={indexMensaje} mensaje={mensaje} />
+
+
+                                        {mensajes.filter((element) => {
+                                            return element.props.dia == indexDia && element.props.indice == indexTime
+                                        }).map((mensaje, indexMensaje) => (
+                                            mensaje
                                         ))}
+
+
                                     </HorarioHora>
                                 ))}
                             </React.Fragment>
@@ -230,10 +211,13 @@ export default function Horario() {
                                         <React.Fragment key={indexTime}>
                                             <HorarioTime time={hora} ref={timeHoraHorarioRef} isActual={indexDia == indiceDiaActual}></HorarioTime>
                                             <HorarioHora isActual={indexDia == indiceDiaActual}>
-                                                
+
                                                 {/* Aqui se imprimen los mensajes*/}
-                                                {mensaje.map((mensaje, indexMensaje) => (
-                                                    <MensajeHora key={indexMensaje} mensaje={mensaje} />
+
+                                                {mensajes.filter((element) => {
+                                                    return element.props.dia == indexDia && element.props.indice == indexTime
+                                                }).map((mensaje, indexMensaje) => (
+                                                    mensaje
                                                 ))}
 
 

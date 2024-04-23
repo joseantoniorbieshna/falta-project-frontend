@@ -1,16 +1,16 @@
 :root {
     --gray-color: #f0f0f0;
-  }
+}
 
-.hh-section-horario{
+.hh-section-horario {
     margin: 1.5rem;
 }
 
-.hm-title-container{
-    border-bottom: 3px solid #f0f0f0;
+.wn-week-navigation-container {
+    border-top: 3px solid #f0f0f0;
 }
 
-.hh-horario-container{
+.hh-horario-container {
     border: 3px solid var(--gray-color);
     border-radius: 10px;
     overflow: auto;
@@ -18,7 +18,7 @@
     flex-direction: column;
 }
 
-.hh-horario-head{
+.hh-horario-head {
     display: grid;
     grid-template-columns: 1fr repeat(5, 2fr);
     position: static;
@@ -26,29 +26,31 @@
 
 }
 
-.hh-horario-table_list{
+.hh-horario-table_list {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr repeat(5, 2fr); 
-    grid-template-rows: auto auto; 
+    grid-template-columns: 1fr repeat(5, 2fr);
+    grid-template-rows: auto auto;
     position: relative;
     overflow-y: scroll;
-    
+
 }
-.hh-horario-table_list > div:nth-child(6n + 1){ /*El primer elemento de la grilla*/
+
+.hh-horario-table_list>div:nth-child(6n + 1) {
+    /*El primer elemento de la grilla*/
     border-right: 3px solid var(--gray-color);
 }
 
-.hh-horario-table_list::-webkit-scrollbar{
+.hh-horario-table_list::-webkit-scrollbar {
     width: 8px;
 }
 
 .hh-horario-table_list::-webkit-scrollbar-thumb {
-    background-color: #888; 
-    border-radius: 4px; 
+    background-color: #888;
+    border-radius: 4px;
 }
 
-.hh-hora{
+.hh-hora {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,14 +58,14 @@
 
 
 /* Parte Header horario */
-.hhdk-hora-head{
+.hhdk-hora-head {
     background-color: white;
     border-bottom: 3px solid var(--gray-color);
 }
 
 /*parte time horario*/
 .ht-time-del-horario,
-.hh-first-space-grid{
+.hh-first-space-grid {
     width: 100%;
     flex: 1 1 auto;
     padding: 0 1rem 0 1rem;
@@ -73,46 +75,41 @@
     flex-direction: column;
     align-items: center;
 }
-.hh-first-space-grid{
+
+.hh-first-space-grid {
     border-right: 3px solid transparent;
 }
-.hh-first-space-grid-active{
+
+.hh-first-space-grid-active {
     border-right: 3px solid var(--gray-color);
 }
-.ht-time-del-horario-text{
+
+.ht-time-del-horario-text {
     position: sticky;
     top: 0;
 }
 
-/*Mensaje*/
-.m-hora{
-    width: 95%;
-    border: 3px solid var(--gray-color);
-    overflow: hidden;
-    word-break: break-all;
-    margin: 0.3rem;
-    padding: 0.5rem;
-    border-radius: 20px;
-}
+
 
 /*General*/
 .actual-day,
-.is-last-day{
+.is-last-day {
     background-color: var(--gray-color);
 }
-.no-actual-day{
+
+.no-actual-day {
     background-color: white;
 }
 
 .is-last-day::-webkit-scrollbar,
-.hh-horario-head::-webkit-scrollbar{
+.hh-horario-head::-webkit-scrollbar {
     width: 8px;
 }
 
 .is-last-day::-webkit-scrollbar-thumb,
 .hh-horario-head::-webkit-scrollbar-thumb {
-    background-color: #888; 
-    border-radius: 4px; 
+    background-color: #888;
+    border-radius: 4px;
 }
 
 .hh-horario-head::-webkit-scrollbar-track,
@@ -120,39 +117,43 @@
     background-color: white;
     border-bottom: 3px solid var(--gray-color);
 }
+
 .is-last-day::-webkit-scrollbar-track,
 .is-last-day::-webkit-scrollbar-track {
     background-color: var(--gray-color);
 }
-.last-day-horario-head div{
+
+.last-day-horario-head div {
     margin-left: 12px;
 }
 
-.go-to{
+.go-to {
     display: none;
 }
 
 
 @media screen and (max-width: 768px) {
+
     .hh-horario-container,
     .hm-title-container,
     .hhdk-hora-head,
-    .hh-horario-table_list > div:nth-child(6n + 1){
+    .hh-horario-table_list>div:nth-child(6n + 1) {
         border: 0 solid black;
     }
 
-    .hhdk-hora-head{
+    .hhdk-hora-head {
         display: grid;
         grid-template-columns: 1fr 3fr;
         justify-items: center;
         padding: 0;
 
     }
-    .hh-horario-container{
+
+    .hh-horario-container {
         border-radius: 0;
     }
 
-    .hhdk-dia-semana{
+    .hhdk-dia-semana {
         padding: 0.5rem 0 0.5rem 0;
         position: sticky;
         top: -1px;
@@ -162,65 +163,71 @@
         width: 100%;
         z-index: 5;
     }
-    .last-day-horario-head{
+
+    .last-day-horario-head {
         margin: 0;
     }
-    .ht-time-del-horario-text{
+
+    .ht-time-del-horario-text {
         justify-items: start;
         top: 40px;
     }
 
-    .hh-dia-title{
+    .hh-dia-title {
         display: none;
     }
 
-    .hh-horario-table_list{
+    .hh-horario-table_list {
         display: flex;
         flex: 1 1 0;
         flex-direction: column;
-     
+
     }
-    .hh-hora{
+
+    .hh-hora {
         height: 100%;
         width: 100%;
     }
 
-    .hh-time-actual-day{
+    .hh-time-actual-day {
         background-color: var(--gray-color);
     }
 
-    .hh-horario-table_list::-webkit-scrollbar{
+    .hh-horario-table_list::-webkit-scrollbar {
         background-color: white;
         width: 3px;
     }
-    .hh-horario-table_list::-webkit-scrollbar-thumb{
-        background-color: #888; 
+
+    .hh-horario-table_list::-webkit-scrollbar-thumb {
+        background-color: #888;
         border-radius: 4px;
     }
 
-    .hm-title-container{
+    .hm-title-container {
         display: flex;
         flex-direction: column;
         align-items: center;
 
     }
-    
+
 
 
     /*only mobile part*/
-    .hh-navigation-container-day{
+    .hh-navigation-container-day {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 100%;
     }
-    .hh-menu-mobile-day{
+
+    .hh-menu-mobile-day {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         width: 95%;
     }
-    .hh-menu-mobile-part-day{
+
+    .hh-menu-mobile-part-day {
         display: flex;
         flex-direction: column;
         text-align: center;
@@ -230,28 +237,45 @@
     }
 
     .hh-menu-mobile-day-day_number,
-    .hh-menu-mobile-day-day_text{
+    .hh-menu-mobile-day-day_text {
         flex: 1;
     }
 
-    .last-day-horario-head{
+    .last-day-horario-head {
         background-color: var(--gray-color);
     }
-    .last-day-horario-head div{
+
+    .last-day-horario-head div {
         margin: 0;
     }
-    .hh-section-horario{
+
+    .hh-section-horario {
         flex: 1 1 0;
         margin: 0;
         height: 100%;
     }
 
-    .active-horario-head{
+    .active-horario-head {
         background-color: #9c9c9c;
     }
 
-    .hm-title-container > div{
+    .hm-title-container>div {
         background-color: black;
         color: white;
     }
+
+    /*General*/
+    .actual-day,
+    .is-last-day {
+        background-color: var(--gray-color);
+    }
+
+    .no-actual-day {
+        background-color: white;
+    }
+}
+
+.hh-is-only-day-of-week-name {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }
