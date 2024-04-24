@@ -20,21 +20,22 @@ export function HorarioMain() {
     useEffect(() => {
         Promise.all([
           getAllHours(),
-          getHorarioByProfesor({referenciaProfesor:"100041110"})
+          getHorarioByProfesor({referenciaProfesor:"100041664"})
         ])
         .then(([timeHorario, horasHorario]) => {
-
+            console.log("timeHorario:", timeHorario);
+            console.log("horasHorario:", horasHorario);
             setAllHours(timeHorario);
             horasHorario = horasHorario.map((horaHorario)=>{
                 const dia = horaHorario.tramoHorario.dia
                 const indice = horaHorario.tramoHorario.indice
-                const profesor = horaHorario.sesion.profesor.nombre
                 const materia = horaHorario.sesion.materia.nombreCompleto
-                return <MensajeHorario dia={dia} indice={indice} mensaje={materia}></MensajeHorario>
+                const grupos = horaHorario.sesion.grupos
+                const curso = horaHorario.sesion.grupos[0].curso.nombre
+                return <MensajeHorario dia={dia} indice={indice} mensaje={materia} grupos={grupos} curso={curso}></MensajeHorario>
             })
             setAllElementHour(horasHorario)
-            console.log("timeHorario:", timeHorario);
-            console.log("horasHorario:", horasHorario);
+            
             setLoad(true);
         })
         .catch((err) => {

@@ -12,11 +12,14 @@ export const getHorarioByProfesor=({referenciaProfesor})=>{
         getHorasHorarioByReferenciaProfesor(referenciaProfesor: $referenciaProfesor) {
           sesion {
             referencia
-            profesor {
-              nombre
-            }
             materia{
               nombreCompleto
+            }
+            grupos{
+              nombre
+              curso{
+                nombre
+              }
             }
           }
           tramoHorario {
