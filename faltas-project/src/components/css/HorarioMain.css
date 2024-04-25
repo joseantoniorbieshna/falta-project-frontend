@@ -31,7 +31,6 @@
     display: grid;
     grid-template-columns: 1fr repeat(5, 2fr);
     grid-template-rows: auto auto;
-    position: relative;
     overflow-y: scroll;
 
 }

@@ -20,7 +20,7 @@ export function HorarioMain() {
     useEffect(() => {
         Promise.all([
           getAllHours(),
-          getHorarioByProfesor({referenciaProfesor:"100041664"})
+          getHorarioByProfesor({referenciaProfesor:"100041110"})
         ])
         .then(([timeHorario, horasHorario]) => {
             console.log("timeHorario:", timeHorario);
