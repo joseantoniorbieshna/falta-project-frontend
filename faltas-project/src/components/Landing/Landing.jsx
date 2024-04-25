@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import logo from '../assets/school.png'
+import logo from '../../assets/school.png'
 import './css/landing.css'
 import { Link } from 'react-router-dom';
 import { IonIcon } from '@ionic/react';
 import { menu,close, menuOutline, cloudDoneSharp, closeCircleOutline, closeOutline } from 'ionicons/icons';
-import useEffectAddWindowEvent from '../hooks/useEffectAddWindowEvent';
+import useEffectAddWindowEvent from '../../hooks/useEffectAddWindowEvent';
 export default function Landing() {
     const headerRef = useRef(null); // Referencia para el header
     const [headerHeight, setHeaderHeight] = useState('9%'); // Estado para almacenar la altura del header

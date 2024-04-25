@@ -1,5 +1,5 @@
 import { IonIcon } from '@ionic/react'
-import './css/HorarioMain.css'
+import './css/Horario.css'
 import { arrowBack, arrowForward } from 'ionicons/icons'
 
 export default function WeekNavigation({lunesCercano}){

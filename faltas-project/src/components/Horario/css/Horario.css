@@ -1,0 +1,258 @@
+:root {
+    --gray-color: #f0f0f0;
+}
+
+
+.wn-week-navigation-container {
+    border-top: 3px solid #f0f0f0;
+}
+
+.hh-horario-container {
+    border: 3px solid var(--gray-color);
+    border-radius: 10px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.hh-horario-head {
+    display: grid;
+    grid-template-columns: 1fr repeat(5, 2fr);
+    position: static;
+    overflow-y: scroll;
+
+}
+
+.hh-horario-table_list {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr repeat(5, 2fr);
+    grid-template-rows: auto auto;
+    overflow-y: scroll;
+
+}
+
+.hh-horario-table_list>div:nth-child(6n + 1) {
+    /*El primer elemento de la grilla*/
+    border-right: 3px solid var(--gray-color);
+}
+
+.hh-horario-table_list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.hh-horario-table_list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.hh-hora {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Parte Header horario */
+.hhdk-hora-head {
+    background-color: white;
+    border-bottom: 3px solid var(--gray-color);
+}
+
+/*parte time horario*/
+.ht-time-del-horario,
+.hh-first-space-grid {
+    width: 100%;
+    flex: 1 1 auto;
+    padding: 0 1rem 0 1rem;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hh-first-space-grid {
+    border-right: 3px solid transparent;
+}
+
+.hh-first-space-grid-active {
+    border-right: 3px solid var(--gray-color);
+}
+
+.ht-time-del-horario-text {
+    position: sticky;
+    top: 0;
+}
+
+
+
+/*General*/
+.actual-day,
+.is-last-day {
+    background-color: var(--gray-color);
+}
+
+.no-actual-day {
+    background-color: white;
+}
+
+.is-last-day::-webkit-scrollbar,
+.hh-horario-head::-webkit-scrollbar {
+    width: 8px;
+}
+
+.is-last-day::-webkit-scrollbar-thumb,
+.hh-horario-head::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.hh-horario-head::-webkit-scrollbar-track,
+.hh-horario-head::-webkit-scrollbar-track {
+    background-color: white;
+    border-bottom: 3px solid var(--gray-color);
+}
+
+.is-last-day::-webkit-scrollbar-track,
+.is-last-day::-webkit-scrollbar-track {
+    background-color: var(--gray-color);
+}
+
+.last-day-horario-head div {
+    margin-left: 12px;
+}
+
+.go-to {
+    display: none;
+}
+
+
+@media screen and (max-width: 768px) {
+
+    .hh-horario-container,
+    .hhdk-hora-head,
+    .hh-horario-table_list>div:nth-child(6n + 1) {
+        border: 0 solid black;
+    }
+
+    .hhdk-hora-head {
+        display: grid;
+        grid-template-columns: 1fr 3fr;
+        justify-items: center;
+        padding: 0;
+
+    }
+
+    .hh-horario-container {
+        border-radius: 0;
+    }
+
+    .hhdk-dia-semana {
+        padding: 0.5rem 0 0.5rem 0;
+        position: sticky;
+        top: -1px;
+        grid-column: 1 / span 2;
+        text-align: center;
+        background-color: white;
+        width: 100%;
+        z-index: 5;
+    }
+
+    .last-day-horario-head {
+        margin: 0;
+    }
+
+    .ht-time-del-horario-text {
+        justify-items: start;
+        top: 40px;
+    }
+
+    .hh-dia-title {
+        display: none;
+    }
+
+    .hh-horario-table_list {
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+
+    }
+
+    .hh-hora {
+        height: 100%;
+        width: 100%;
+    }
+
+    .hh-time-actual-day {
+        background-color: var(--gray-color);
+    }
+
+    .hh-horario-table_list::-webkit-scrollbar {
+        background-color: white;
+        width: 3px;
+    }
+
+    .hh-horario-table_list::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 4px;
+    }
+
+
+
+    /*only mobile part*/
+    .hh-navigation-container-day {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hh-menu-mobile-day {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        width: 95%;
+    }
+
+    .hh-menu-mobile-part-day {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        padding: 0.5rem;
+        border-radius: 10px;
+    }
+
+    .hh-menu-mobile-day-day_number,
+    .hh-menu-mobile-day-day_text {
+        flex: 1;
+    }
+
+    .last-day-horario-head {
+        background-color: var(--gray-color);
+    }
+
+    .last-day-horario-head div {
+        margin: 0;
+    }
+
+    .active-horario-head {
+        background-color: #9c9c9c;
+    }
+
+    /*General*/
+    .actual-day,
+    .is-last-day {
+        background-color: var(--gray-color);
+    }
+
+    .no-actual-day {
+        background-color: white;
+    }
+}
+
+.hh-is-only-day-of-week-name {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}

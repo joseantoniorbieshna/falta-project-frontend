@@ -1,0 +1,8 @@
+.red-border{
+    border: 1px solid red;
+}
+.my-calendar{
+    padding: 0.25rem;
+    padding-left: 0.5rem;
+    border-radius: 5px;
+}

@@ -3,8 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import './css/MainMenu.css'
 import { IonIcon } from '@ionic/react';
 import { logOutOutline,settingsOutline,calendar, closeOutline, menuOutline } from 'ionicons/icons';
-import useMobile from "../hooks/useMobile";
-import useEffectAddWindowEvent from "../hooks/useEffectAddWindowEvent";
+import useMobile from "../../hooks/useMobile";
+import useEffectAddWindowEvent from "../../hooks/useEffectAddWindowEvent";
 export default function MainMenu(){
     const location = useLocation();
     const [activeButton, setActiveButton] = useState({

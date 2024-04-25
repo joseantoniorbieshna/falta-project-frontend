@@ -78,4 +78,20 @@
         align-items: start;
         padding: 0.5rem 1rem 0.5rem 1rem;
     }
+
+    .hm-title-container{
+        border: 0 solid black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hm-title-container>div {
+        background-color: black;
+        color: white;
+    }
+    .last-day-horario-head .m-mensaje{
+        margin: 0.3rem;
+        padding: 0.5rem;
+    }
 }

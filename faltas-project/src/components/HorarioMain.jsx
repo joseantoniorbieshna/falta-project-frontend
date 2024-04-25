@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
 import './css/HorarioMain.css'
-import Horario from './Horario';
+import Horario from './Horario/Horario';
 import useMobile from '../hooks/useMobile';
 import { useEffect } from 'react';
 import { getAllHours } from '../service/TramoHorarioService';
 import { getHorarioByProfesor } from '../service/HoraHorarioService';
-import WeekNavigation from './WeekNavigation';
-import Loading from './Loading';
+import WeekNavigation from './Horario/WeekNavigation';
+import Loading from './Utiles/Loading';
 import MensajeHorario from './MensajeHorario';
+import ContainerInfoGrupoYCurso from './ContainerInfoGrupoYCurso';
 
 
 export function HorarioMain() {
@@ -32,7 +33,8 @@ export function HorarioMain() {
                 const materia = horaHorario.sesion.materia.nombreCompleto
                 const grupos = horaHorario.sesion.grupos
                 const curso = horaHorario.sesion.grupos[0].curso.nombre
-                return <MensajeHorario dia={dia} indice={indice} mensaje={materia} grupos={grupos} curso={curso}></MensajeHorario>
+                const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso grupos={grupos} curso={curso}></ContainerInfoGrupoYCurso>
+                return <MensajeHorario dia={dia} indice={indice} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso}></MensajeHorario>
             })
             setAllElementHour(horasHorario)
             

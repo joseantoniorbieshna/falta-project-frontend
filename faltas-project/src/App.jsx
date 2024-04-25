@@ -1,7 +1,7 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import Landing from './components/Landing'
-import ErrorMessage from './components/ErrorMessage'
-import MainMenu from './components/MainMenu'
+import Landing from './components/Landing/Landing'
+import ErrorMessage from './components/Utiles/ErrorMessage'
+import MainMenu from './components/Menu/MainMenu'
 import { HorarioMain } from './components/HorarioMain'
 
 
