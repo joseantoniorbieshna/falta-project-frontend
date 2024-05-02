@@ -27,14 +27,15 @@ export function HorarioMain() {
             console.log("timeHorario:", timeHorario);
             console.log("horasHorario:", horasHorario);
             setAllHours(timeHorario);
-            horasHorario = horasHorario.map((horaHorario)=>{
+            horasHorario = horasHorario.map((horaHorario,index)=>{
                 const dia = horaHorario.tramoHorario.dia
                 const indice = horaHorario.tramoHorario.indice
                 const materia = horaHorario.sesion.materia.nombreCompleto
                 const grupos = horaHorario.sesion.grupos
                 const curso = horaHorario.sesion.grupos[0].curso.nombre
-                const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso grupos={grupos} curso={curso}></ContainerInfoGrupoYCurso>
-                return <MensajeHorario dia={dia} indice={indice} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso}></MensajeHorario>
+                const referenciaSesion = horaHorario.sesion.referencia
+                const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso}></ContainerInfoGrupoYCurso>
+                return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso}></MensajeHorario>
             })
             setAllElementHour(horasHorario)
             

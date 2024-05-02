@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './css/MensajeHorario.css'
 import MenuMensajeHorario from './PopUps/MenuMensajeHorario'
-export default function MensajeHora({ mensaje, backgroundColor = '#dff2cd', containerInfoGrupoYCurso, dia, indice }) {
+export default function MensajeHora({ mensaje, backgroundColor = '#dff2cd', containerInfoGrupoYCurso, dia, indice, referenciaSesion }) {
     const [isActive, setActive] = useState(false)
     const changeActive = () => {
         setActive(!isActive);
@@ -21,7 +21,7 @@ export default function MensajeHora({ mensaje, backgroundColor = '#dff2cd', cont
             </div>
             {
                 isActive?
-                <MenuMensajeHorario changeToClose={changeActive} materia={mensaje} containerInfoGrupoYCurso={containerInfoGrupoYCurso}></MenuMensajeHorario>
+                <MenuMensajeHorario changeToClose={changeActive} dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={mensaje} containerInfoGrupoYCurso={containerInfoGrupoYCurso}></MenuMensajeHorario>
                 :
                 <></>
             }

@@ -13,11 +13,11 @@ export default function ContainerInfoGrupoYCurso({curso,grupos}){
                             {
                                 grupos.length == 1 ?
                                     grupos.map((grupo, index) => {
-                                        return <p className='m-grupo-text'>{grupo.nombre}</p>
+                                        return <p key={index} className='m-grupo-text'>{grupo.nombre}</p>
                                     })
                                     :
                                     grupos.map((grupo, index) => {
-                                        return <p className='m-grupo-text m-grupo-text-multy'>{grupo.nombre}|</p>
+                                        return <p key={index} className='m-grupo-text m-grupo-text-multy'>{grupo.nombre}|</p>
                                     })
                             }
                         </div>

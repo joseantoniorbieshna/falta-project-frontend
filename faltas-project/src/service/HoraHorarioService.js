@@ -8,7 +8,7 @@ export const getHorarioByProfesor=({referenciaProfesor})=>{
   },
   body: JSON.stringify({
     query: `
-    mutation GetHorasHorarioByReferenciaProfesor($referenciaProfesor: String!) {
+    query GetHorasHorarioByReferenciaProfesor($referenciaProfesor: String!) {
         getHorasHorarioByReferenciaProfesor(referenciaProfesor: $referenciaProfesor) {
           sesion {
             referencia

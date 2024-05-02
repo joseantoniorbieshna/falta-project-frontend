@@ -21,6 +21,7 @@
     margin: 1rem;
     z-index: 100;
 
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,6 +29,7 @@
     background-color: #f0f0f0;
 }
 .menumenh-title{
+    border-radius: 10px 10px 0 0;
     padding-top: 1rem;
     padding-bottom: 1rem;
     padding-left: 1rem;
@@ -47,23 +49,44 @@
 
 .menumenh-container-info{
     width: 90%;
-    min-height: 50vh;
-    flex: 1 1 0;
+    max-height: 70vh;
     margin: 1rem;
-    display: flex;
-    flex-direction: column;
     overflow-y: auto;
 }
+
+.menumenh-container-info::-webkit-scrollbar {
+    width: 8px;
+}
+
+.menumenh-container-info::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
 .menumenh-info-comentario{
-    flex: 1 1 0;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
 }
 .menumenh-info-comentario textarea{
     padding: 0.25rem;
-    flex: 1 1 0;
+    flex: 1 1 auto;
 }
 
-
-
-
+.menumh-button{
+    margin-top: 0.5rem;
+    border-radius: 10px;
+    padding: 0.5rem;
+    background-color: black;
+    color: white;
+    width: max-content;
+    border: 1px solid black;
+}
+.menumh-button:active{
+    background-color: white;
+    color: black;
+}
+.menumh-send-container{
+    display: flex;
+    justify-content: center;
+}

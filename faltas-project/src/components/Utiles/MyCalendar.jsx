@@ -5,8 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./css/MyCalendar.css"
 import { addDays, startOfWeek, endOfWeek,startOfDay } from 'date-fns';
 import { es } from 'date-fns/locale/es';
-export default function MyCalendar(){
-    const [myDate, setMyDate] = useState(null);
+export default function MyCalendar({myDate,setMyDate}){
     const day=3;
     const esDiaDeLaSemanaValido=(date)=>{
         return date.getDay() - 1 == day;
