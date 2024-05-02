@@ -1,23 +1,21 @@
-import React, { useRef, useState } from 'react';
-import './css/HorarioMain.css'
-import Horario from './Horario/Horario';
-import useMobile from '../hooks/useMobile';
-import { useEffect } from 'react';
-import { getAllHours } from '../service/TramoHorarioService';
-import { getHorarioByProfesor } from '../service/HoraHorarioService';
-import WeekNavigation from './Horario/WeekNavigation';
-import Loading from './Utiles/Loading';
-import MensajeHorario from './MensajeHorario';
-import ContainerInfoGrupoYCurso from './ContainerInfoGrupoYCurso';
-import { getLunesCercano } from '../utils/myDateFunctions';
+import { useEffect, useState } from "react";
+import useMobile from "../hooks/useMobile";
+import { getAllHours } from "../service/TramoHorarioService";
+import { getHorarioByProfesor } from "../service/HoraHorarioService";
+import ContainerInfoGrupoYCurso from "./ContainerInfoGrupoYCurso";
+import Loading from "./Utiles/Loading";
+import MensajeHorario from "./MensajeHorario";
+import Horario from "./Horario/Horario";
+import WeekNavigation from "./Horario/WeekNavigation";
+import { getLunesCercano } from "../utils/myDateFunctions";
 
-
-export function HorarioMain() {
+export default function FaltasMain(){
     const [isLoad,setLoad] = useState(false)
     const [allHours,setAllHours] = useState(null);
     const [allElementsHour,setAllElementHour] = useState(null);
     const [isMobile] = useMobile();
     const lunesCercano = getLunesCercano(new Date());
+    const dias = [lunesCercano, lunesCercano + 1, lunesCercano + 2, lunesCercano + 3, lunesCercano + 4]
     useEffect(() => {
         Promise.all([
           getAllHours(),
@@ -43,15 +41,17 @@ export function HorarioMain() {
       }, []);
     return (
         <section className="hh-section-horario flex-1 flex flex-col justify-center">
-            <div className="hm-title-container p-5">
-                <h1 className='font-bold text-2xl text-blacklight'>Horario Escolar</h1>
-            </div>
-            {
-                isLoad?<Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={false} lunesCercano={lunesCercano}></Horario>:<Loading></Loading>
-            }
-            
+        <div className="hm-title-container p-5">
+            <h1 className='font-bold text-2xl text-blacklight'>Faltas</h1>
+        </div>
+        <WeekNavigation lunesCercano={lunesCercano}></WeekNavigation>
+
+        {
+            isLoad?<Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={true} lunesCercano={lunesCercano}></Horario>:<Loading></Loading>
+        }
+        
 
 
-        </section>
-    );
+    </section>
+    )
 }

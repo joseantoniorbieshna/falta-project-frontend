@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import './css/MainMenu.css'
 import { IonIcon } from '@ionic/react';
-import { logOutOutline,settingsOutline,calendar, closeOutline, menuOutline } from 'ionicons/icons';
+import { logOutOutline,settingsOutline,calendar, closeOutline, menuOutline, handLeft } from 'ionicons/icons';
 import useMobile from "../../hooks/useMobile";
 import useEffectAddWindowEvent from "../../hooks/useEffectAddWindowEvent";
 export default function MainMenu(){
     const location = useLocation();
     const [activeButton, setActiveButton] = useState({
+        faltas: '',
         horario: '',
-        settings: ''
+        settings: '',
       });
       const [isMenuOpen, setMenuOpen] = useState(false);
       const toggleMenu = () => {
@@ -21,6 +22,7 @@ export default function MainMenu(){
       // Establecer el estado activo correspondiente según la ruta actual
       setActiveButton(prevState => ({
         ...prevState,
+        faltas: location.pathname.startsWith('/faltas') || location.pathname.startsWith('/faltas/') ? 'active' : '',
         horario: location.pathname.startsWith('/horario') || location.pathname.startsWith('/horario/') ? 'active' : '',
         settings: location.pathname.startsWith('/settings') || location.pathname.startsWith('/settings/') ? 'active' : '',
       }));
@@ -52,11 +54,17 @@ export default function MainMenu(){
         <nav style={{top:height}} className={`mm-nav flex flex-1 justify-between flex-col w-[80%] mt-4 ${isMenuOpen?'menu-open':''}`}>
             <div>
                 
-                <ul>
+                <ul className="flex flex-col gap-3">
                     <li>
                         <Link title="Horario" to='/horario' className={`mm-button ${activeButton.horario}`}>
                             <IonIcon icon={calendar} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
                             <p className="mm-button-text">Horario</p>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link title="Horario" to='/faltas' className={`mm-button ${activeButton.faltas}`}>
+                            <IonIcon icon={handLeft} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
+                            <p className="mm-button-text">Faltas</p>
                         </Link>
                     </li>
                 </ul>

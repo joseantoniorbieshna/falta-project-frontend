@@ -35,5 +35,17 @@ export const getHorarioByProfesor=({referenciaProfesor})=>{
   }),
 })
   .then((res) => res.json())
-  .then((result) => result.data.getHorasHorarioByReferenciaProfesor)
+  .then((result) =>{
+    let horasHorario = result.data.getHorasHorarioByReferenciaProfesor
+    horasHorario = horasHorario.map((horaHorario,index)=>{
+      const dia = horaHorario.tramoHorario.dia
+      const indice = horaHorario.tramoHorario.indice
+      const materia = horaHorario.sesion.materia.nombreCompleto
+      const grupos = horaHorario.sesion.grupos
+      const curso = horaHorario.sesion.grupos[0].curso.nombre
+      const referenciaSesion = horaHorario.sesion.referencia
+      return {dia,indice,materia,grupos,curso,referenciaSesion}
+    })
+    return horasHorario;
+  })
 }

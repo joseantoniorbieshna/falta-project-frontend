@@ -3,6 +3,7 @@ import Landing from './components/Landing/Landing'
 import ErrorMessage from './components/Utiles/ErrorMessage'
 import MainMenu from './components/Menu/MainMenu'
 import { HorarioMain } from './components/HorarioMain'
+import FaltasMain from './components/FaltasMain'
 
 
 function MyLandingContainer({ children }) {
@@ -32,6 +33,12 @@ function App() {
               <MyMainPageContainer>
                   <MainMenu/>
                   <HorarioMain></HorarioMain>
+              </MyMainPageContainer>}>    
+          </Route>
+          <Route path='/faltas' element={
+              <MyMainPageContainer>
+                  <MainMenu/>
+                  <FaltasMain></FaltasMain>
               </MyMainPageContainer>}>    
           </Route>
           <Route path='/settings' element={

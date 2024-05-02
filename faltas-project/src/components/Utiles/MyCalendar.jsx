@@ -26,7 +26,7 @@ export default function MyCalendar({myDate,setMyDate}){
         startOfDay(new Date())
     }, [])
     return (
-        <DatePicker
+    <DatePicker
         selected={myDate}
         onChange={(date) => setMyDate(date)}
         locale="es"

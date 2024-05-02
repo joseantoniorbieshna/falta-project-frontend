@@ -93,14 +93,17 @@ function HorarioHora({ children, isActual = false }) {
 
 
 
-export default function Horario({ timeArray, mensajes, showDayNumber }) {
+export default function Horario({ timeArray, mensajes, showDayNumber, lunesCercano }) {
     /* DATA */
-    const lunesCercano = 15;
-    const diaActual = 18;
-    const dias = [lunesCercano, lunesCercano + 1, lunesCercano + 2, lunesCercano + 3, lunesCercano + 4]
+    const dias = Array.from({ length: 5 }, (_, i) => { // el barra baja es para indicar que no haga caso a ese parametro
+        var fecha = new Date(lunesCercano);
+        fecha.setDate(fecha.getDate() + i);
+        return fecha.getDate();
+    });
+
+    const diaActual = new Date().getDate();
     const indiceDiaActual = new Date().getDay() - 1;
     const diasTextoAbreviado = ['Lun', 'Mart', 'Mier', 'Juev', 'Vier']
-    //const mensaje = ['a','b','c']
     const isLastDayClassName = indiceDiaActual == 4 ? 'is-last-day' : ''
 
 
@@ -125,9 +128,7 @@ export default function Horario({ timeArray, mensajes, showDayNumber }) {
             const rectChild = child.getBoundingClientRect();
             const rectContainer = container.getBoundingClientRect();
             if (rectChild.bottom >= rectContainer.top + 40) {
-                console.log(i + " index active mobile");
                 setActiveNavMobile(i)
-                console.log("activao");
                 break;
             }
         }
@@ -139,8 +140,6 @@ export default function Horario({ timeArray, mensajes, showDayNumber }) {
         if (timeHoraHorarioRef.current && !isMobile) {
             const { width } = timeHoraHorarioRef.current.getBoundingClientRect();
             setSizeTimeWidth(width)
-            console.log(width + "px para el resize");
-            console.log("Horario - resizePC");
             return timeHoraHorarioRef.current;
         }
         return null;
