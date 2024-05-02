@@ -34,7 +34,6 @@ export default function MyCalendar({myDate,setMyDate}){
         filterDate={esValidDate}
         dateFormat="P"
         className={`${myDate==null?'red-border':''} my-calendar`}>
-        <div style={{ color: "red" }}>Es muy importante que elijas bien la fecha.</div>
     </DatePicker>
     )
 }

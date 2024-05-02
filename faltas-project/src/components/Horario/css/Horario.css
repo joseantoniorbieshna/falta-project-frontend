@@ -145,6 +145,7 @@
     }
 
     .hh-horario-container {
+        flex: 1 1 auto;
         border-radius: 0;
     }
 

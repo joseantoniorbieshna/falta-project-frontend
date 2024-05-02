@@ -1,5 +1,5 @@
 import { IonIcon } from '@ionic/react';
-import './css/MenuMensajeHorario.css'
+import './css/PopUpCreateFaltaHorario.css'
 import { close } from 'ionicons/icons';
 import MyCalendar from '../Utiles/MyCalendar';
 import { createFalta } from '../../service/FaltaService';

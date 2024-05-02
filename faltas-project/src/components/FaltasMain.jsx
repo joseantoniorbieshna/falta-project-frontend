@@ -8,14 +8,13 @@ import MensajeHorario from "./MensajeHorario";
 import Horario from "./Horario/Horario";
 import WeekNavigation from "./Horario/WeekNavigation";
 import { getLunesCercano } from "../utils/myDateFunctions";
+import PopUpCreateFaltaHorario from "./PopUps/PopUpCreateFaltaHorario";
 
 export default function FaltasMain(){
     const [isLoad,setLoad] = useState(false)
     const [allHours,setAllHours] = useState(null);
     const [allElementsHour,setAllElementHour] = useState(null);
-    const [isMobile] = useMobile();
     const lunesCercano = getLunesCercano(new Date());
-    const dias = [lunesCercano, lunesCercano + 1, lunesCercano + 2, lunesCercano + 3, lunesCercano + 4]
     useEffect(() => {
         Promise.all([
           getAllHours(),
@@ -28,10 +27,10 @@ export default function FaltasMain(){
             horasHorario = horasHorario.map((horaHorarioDTO,index)=>{
                 const {dia,indice,materia,grupos,curso,referenciaSesion} = horaHorarioDTO
                 const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso}></ContainerInfoGrupoYCurso>
-                return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso}></MensajeHorario>
+                return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={PopUpCreateFaltaHorario}></MensajeHorario>
             })
             setAllElementHour(horasHorario)
-            
+            /*AQUI DECIMOS QUE CARGUE YA QUE EL FETCH SE HA HECHO CON EXITO */
             setLoad(true);
         })
         .catch((err) => {
@@ -41,7 +40,7 @@ export default function FaltasMain(){
       }, []);
     return (
         <section className="hh-section-horario flex-1 flex flex-col justify-center">
-        <div className="hm-title-container p-5">
+        <div className="hm-title-container md:p-5 p-2">
             <h1 className='font-bold text-2xl text-blacklight'>Faltas</h1>
         </div>
         <WeekNavigation lunesCercano={lunesCercano}></WeekNavigation>

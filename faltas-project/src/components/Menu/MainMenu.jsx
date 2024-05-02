@@ -62,7 +62,7 @@ export default function MainMenu(){
                         </Link>
                     </li>
                     <li>
-                        <Link title="Horario" to='/faltas' className={`mm-button ${activeButton.faltas}`}>
+                        <Link title="Faltas" to='/faltas' className={`mm-button ${activeButton.faltas}`}>
                             <IonIcon icon={handLeft} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
                             <p className="mm-button-text">Faltas</p>
                         </Link>

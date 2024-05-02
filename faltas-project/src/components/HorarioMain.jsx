@@ -10,6 +10,7 @@ import Loading from './Utiles/Loading';
 import MensajeHorario from './MensajeHorario';
 import ContainerInfoGrupoYCurso from './ContainerInfoGrupoYCurso';
 import { getLunesCercano } from '../utils/myDateFunctions';
+import PopUpCreateFaltaHorario from './PopUps/PopUpCreateFaltaHorario';
 
 
 export function HorarioMain() {
@@ -18,40 +19,37 @@ export function HorarioMain() {
     const [allElementsHour,setAllElementHour] = useState(null);
     const [isMobile] = useMobile();
     const lunesCercano = getLunesCercano(new Date());
+    /* FETCH DATA */
     useEffect(() => {
         Promise.all([
           getAllHours(),
           getHorarioByProfesor({referenciaProfesor:"100041110"})
         ])
         .then(([timeHorario, horasHorario]) => {
-            console.log("timeHorario:", timeHorario);
-            console.log("horasHorario:", horasHorario);
             setAllHours(timeHorario);
             horasHorario = horasHorario.map((horaHorarioDTO,index)=>{
                 const {dia,indice,materia,grupos,curso,referenciaSesion} = horaHorarioDTO
                 const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso}></ContainerInfoGrupoYCurso>
-                return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso}></MensajeHorario>
+                return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={PopUpCreateFaltaHorario}></MensajeHorario>
             })
             setAllElementHour(horasHorario)
-            
+            /*AQUI DECIMOS QUE CARGUE YA QUE EL FETCH SE HA HECHO CON EXITO */
             setLoad(true);
         })
         .catch((err) => {
             setLoad(false);
-          console.log("err:", err);
+            console.log("err:", err);
         });
       }, []);
     return (
         <section className="hh-section-horario flex-1 flex flex-col justify-center">
-            <div className="hm-title-container p-5">
+            <div className="hm-title-container md:p-5 p-2">
                 <h1 className='font-bold text-2xl text-blacklight'>Horario Escolar</h1>
             </div>
             {
                 isLoad?<Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={false} lunesCercano={lunesCercano}></Horario>:<Loading></Loading>
             }
             
-
-
         </section>
     );
 }

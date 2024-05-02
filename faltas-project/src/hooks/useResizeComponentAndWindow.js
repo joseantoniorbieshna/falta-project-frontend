@@ -15,12 +15,10 @@ export default function useResizeComponentAndWindow({handleResize}){
             handleResize();
             if(container!=null){observer.observe(container);};
             window.addEventListener('resize', handleResize);
-            console.log("resize component added");
         }
 
         return () => {
             observer.disconnect();
-            console.log("resize componente delete");
             if(container!=null){container.removeEventListener('resize', handleResize);}
             window.removeEventListener('resize', handleResize)
         };

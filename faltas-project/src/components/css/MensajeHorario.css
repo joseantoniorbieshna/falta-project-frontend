@@ -49,7 +49,7 @@
 /*GRUPOS*/
 .m-grupos{
     display: flex;
-    flex-direction: ROW;
+    flex-direction: row;
     flex-wrap: wrap;
 }
 
