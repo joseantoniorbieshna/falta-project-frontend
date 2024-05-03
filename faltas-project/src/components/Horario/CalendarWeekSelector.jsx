@@ -9,7 +9,7 @@ import { calendar } from 'ionicons/icons';
 import "react-datepicker/dist/react-datepicker.css";
 import './css/WeekNavigation.css'
 
-export default function CalendarWeekSelector({ }) {
+export default function CalendarWeekSelector({ setFecha}) {
     const [startDate, setStartDate] = useState(new Date());
     const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
         <IonIcon icon={calendar} className='text-black text-xl mr-5 cursor-pointer' onClick={onClick}></IonIcon>
@@ -22,7 +22,10 @@ export default function CalendarWeekSelector({ }) {
     return (
         <DatePicker
             selected={startDate}
-            onChange={(date) => setStartDate(date)}
+            onChange={(date) => {
+                setStartDate(date);
+                setFecha(date);
+            }}
             highlightDates={[{ startDate: startOfWeek(new Date()), endDate: endOfWeek(new Date()) }]}
             filterDate={(date)=> ( (date.getDay()-1)<5 && date.getDay()!=0 )?true:false}
             dateFormat="P"

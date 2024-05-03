@@ -7,7 +7,12 @@ export function getLunesCercano(fecha){
     }
     
     var lunesAnteriorCercano = new Date(fecha);
+    console.log("dia para lunes"+diasParaLunes);
     lunesAnteriorCercano.setDate(fecha.getDate() - diasParaLunes);
 
     return lunesAnteriorCercano;
+}
+
+export function convertDateToString(myDate){
+    return myDate.toISOString().split("T")[0];
 }

@@ -36,7 +36,6 @@ export const getHorarioByProfesor=({referenciaProfesor})=>{
 })
   .then((res) => res.json())
   .then((result) =>{
-    console.log(result);
     let horasHorario = result.data.getHorasHorarioByReferenciaProfesor
     horasHorario = horasHorario.map((horaHorario,index)=>{
       const dia = horaHorario.tramoHorario.dia

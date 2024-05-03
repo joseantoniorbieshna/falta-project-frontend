@@ -6,7 +6,7 @@ import { arrowBack, arrowForward } from 'ionicons/icons';
 import CalendarWeekSelector from './CalendarWeekSelector';
 
 
-export default function WeekNavigation({ lunesCercano }) {
+export default function WeekNavigation({ lunesCercano, setFecha }) {
     const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
     /* FECHA */
@@ -31,15 +31,28 @@ export default function WeekNavigation({ lunesCercano }) {
         }
     }
 
+
+    const avanzarUnaSemana = ()=>{
+        const fecha = new Date(lunesCercano);
+        fecha.setDate(lunesCercano.getDate() + 7);
+        setFecha(fecha)
+    }
+
+    const retrocederUnaSemana = ()=>{
+        const fecha = new Date(lunesCercano);
+        fecha.setDate(lunesCercano.getDate() - 7);
+        setFecha(fecha)
+    }
+
     return (
         <>
             <div className='wn-week-navigation-container p-5'>
                 <div className='flex flex-row'>
                     <div>{`${lunesCercano.getDate()}-${viernesCercano.getDate()}`} {getMonths()} {getYears()}</div>
                     <div className='wn-container-buttons flex flex-row items-center ml-5'>
-                        <IonIcon icon={arrowBack} className='text-black text-xl mr-5 cursor-pointer'></IonIcon>
-                        <CalendarWeekSelector></CalendarWeekSelector>
-                        <IonIcon icon={arrowForward} className='text-black text-xl mr-5 cursor-pointer'></IonIcon>
+                        <IonIcon icon={arrowBack} className='text-black text-xl mr-5 cursor-pointer' onClick={retrocederUnaSemana}></IonIcon>
+                        <CalendarWeekSelector setFecha={setFecha}></CalendarWeekSelector>
+                        <IonIcon icon={arrowForward} className='text-black text-xl mr-5 cursor-pointer' onClick={avanzarUnaSemana}></IonIcon>
                     </div>
                 </div>
             </div>
