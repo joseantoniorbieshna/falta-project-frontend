@@ -1,11 +1,14 @@
+import React from 'react';
 import { useState } from 'react'
 import './css/MensajeHorario.css'
-export default function MensajeHora({ mensaje, backgroundColor = '#dff2cd', containerInfoGrupoYCurso, dia, indice, referenciaSesion, PopUpComponent }) {
+export default function MensajeHora({ mensaje, backgroundColor = '#dff2cd', containerInfoGrupoYCurso, dia, indice, PopUpComponent }) {
     const [isActive, setActive] = useState(false)
     const changeActive = () => {
         setActive(!isActive);
     }
-
+    const additionalProps = {
+        changeToClose: changeActive
+    };
 
     return (
         <>
@@ -19,10 +22,9 @@ export default function MensajeHora({ mensaje, backgroundColor = '#dff2cd', cont
                
             </div>
             {
-                isActive?
-                <PopUpComponent changeToClose={changeActive} dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={mensaje} containerInfoGrupoYCurso={containerInfoGrupoYCurso}></PopUpComponent>
-                :
-                <></>
+                PopUpComponent && isActive?
+                React.cloneElement(PopUpComponent, {...additionalProps })
+                :<></>
             }
         </>
     )

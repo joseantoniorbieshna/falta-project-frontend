@@ -7,12 +7,12 @@ import Loading from "./Utiles/Loading";
 import MensajeHorario from "./MensajeHorario";
 import Horario from "./Horario/Horario";
 import WeekNavigation from "./Horario/WeekNavigation";
-import { convertDateToString, getLunesCercano } from "../utils/myDateFunctions";
-import PopUpCreateFaltaHorario from "./PopUps/PopUpCreateFaltaHorario";
+import { convertDateToString, getActualDate, getLunesCercano } from "../utils/myDateFunctions";
 import { getAllFaltasBetweenFechas } from "../service/FaltaService";
+import PopUpSustituirFalta from "./PopUps/PopUpSustituirFalta";
 
 export default function FaltasMain(){
-    const [fechaBase,setFechaBase] = useState(new Date())
+    const [fechaBase,setFechaBase] = useState(getActualDate())
     const [isLoad,setLoad] = useState(false)
     const [allHours,setAllHours] = useState(null);
     const [allElementsHour,setAllElementHour] = useState(null);
@@ -27,6 +27,7 @@ export default function FaltasMain(){
 
     /* HOOK INICIAL */
     useEffect(() => {
+        setLoad(false);
         Promise.all([
           getAllHours(),
           getAllFaltasBetweenFechas({ fechaInicio:convertDateToString(lunesCercano), fechaFin:convertDateToString(getViernes()) })
@@ -34,9 +35,26 @@ export default function FaltasMain(){
         .then(([timeHorario,faltas]) => {
             setAllHours(timeHorario);
             faltas = faltas.map((horaHorarioDTO,index)=>{
-                const {dia,indice,materia,grupos,curso,referenciaSesion,profesor,nombreProfesor} = horaHorarioDTO
-                const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso} profesor={nombreProfesor}></ContainerInfoGrupoYCurso>
-                return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={PopUpCreateFaltaHorario}></MensajeHorario>
+                const referenciaProfesorSesionActual = "100041110"
+                const {comentario,fecha,referenciaSesion,dia,indice,materia,grupos,curso,nombreProfesor,referenciaProfesor,nombreProfesorSustituto,referenciaProfesorSustituto} = horaHorarioDTO
+
+                const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso} profesor={nombreProfesor} profesorSustituto={nombreProfesorSustituto}></ContainerInfoGrupoYCurso>
+                let poUp = null
+                
+                /* COLOR Y ACCION*/
+                let color="#d3d3d3"; // COLOR POR DEFECTO (GRIS)
+                console.log(referenciaProfesor);
+                if(referenciaProfesorSesionActual==referenciaProfesor){ // Es mi falta
+                    console.log("falta mia");
+                    color="#9cd6ff" // COLOR ES MI FALTA (AZUL) 
+                    poUp=null //poner accion popup para poder eliminar mi falta
+                }else if(nombreProfesorSustituto && referenciaProfesorSustituto!=referenciaProfesorSesionActual){ // La estoy sustituyendo
+                   color= "#ff9c9c"
+                }else{
+                    poUp = <PopUpSustituirFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} ></PopUpSustituirFalta>
+                }
+
+                return <MensajeHorario backgroundColor={color} key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={poUp}></MensajeHorario>
             })
             setAllElementHour(faltas)
             /*AQUI DECIMOS QUE CARGUE YA QUE EL FETCH SE HA HECHO CON EXITO */

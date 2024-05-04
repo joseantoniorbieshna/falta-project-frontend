@@ -1,11 +1,11 @@
 import { IonIcon } from '@ionic/react';
 import './css/PopUpCreateFaltaHorario.css'
 import '../css/MensajeHorario.css'
+import './css/PopUpSustituirFalta.css'
 import { close } from 'ionicons/icons';
-import MyCalendar from '../Utiles/MyCalendar';
 import { createFalta } from '../../service/FaltaService';
 import { useState } from 'react';
-export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso }) {
+export default function PopUpSustituirFalta({dia,indice, referenciaSesion, changeToClose, materia,profesor, containerInfoGrupoYCurso }) {
     const [myDate, setMyDate] = useState(null);
     const [comentario, setComentario] = useState('');
     const diaDeLaSemanaPalabra = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"]
@@ -31,27 +31,26 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
         <div className={`menumenh-container-parent`} id='parent-menu-mensaje' onClick={(e) => noPropagationChangeToClose(e)}>
             <div className="menumenh-container">
                     <IonIcon icon={close} onClick={changeToClose} className={'menumenh-close-button text-blacklight text-4xl cursor-pointer'}></IonIcon>
-                <h1 className='menumenh-title text-4xl font-bold'>Registrar falta</h1>
+                <h1 className='menumenh-title text-4xl font-bold'>Sustituir Falta</h1>
                 <div className='menumenh-container-info'>
-                    <h2 className='text-2xl font-semibold break-words'>{materia}</h2>
+                    <h2 className='text-2xl font-semibold'>{materia}</h2>
                     <div className='flex flex-row items-end'>
-                        <p className='text-[0.8rem] italic mr-1 '><span className='m-text-span'>Dia:</span>{diaDeLaSemanaPalabra[dia]}</p>
-                        <p className='text-[0.8rem] italic mr-1'><span className='m-text-span'>Hora:</span>{indiceDeLaSemanaPalabra[indice]}</p>
-                    </div>
-                    <div>
-                        <p className='text-[0.8rem] italic'><span className='m-text-span'>Fecha:</span></p>
-                        <MyCalendar myDate={myDate} setMyDate={setMyDate}></MyCalendar>
+                        <p className='text-[0.8rem] italic mr-1 '><span className='m-text-span'>Dia:</span></p>
+                        <p className='mr-2'>{diaDeLaSemanaPalabra[dia]}</p>
+                        <p className='text-[0.8rem] italic mr-1'><span className='m-text-span'>Hora:</span></p>
+                        <p>{indiceDeLaSemanaPalabra[indice]}</p>
                     </div>
                     {containerInfoGrupoYCurso}
                     <div className='menumenh-info-comentario'>
-                        <p className='text-[0.8rem] italic'>Comentario:</p>
-                        <textarea type="text" className='w-[100%]' onChange={(e)=>setComentario(e.target.value)}/>
+                        <p className='text-[0.8rem] italic'><span className='m-text-span'>Comentario:</span></p>
+                        <textarea disabled type="text" className='w-[100%]' onChange={(e)=>setComentario(e.target.value)}/>
                     </div>
                     <div className='menumh-send-container'>
-                        <button className='menumh-button' onClick={(e)=>crearFalta()}>Registrar Falta</button>
+                        <button className='menumh-button menumh-button-aceptar' onClick={(e)=>crearFalta()}>Aceptar</button>
+                        <button className='menumh-button menumh-button-rechazar' onClick={(e)=>changeToClose()}>Rechazar</button>
                     </div>
 
-                </div>
+                </div>  
             </div>
         </div>
     );

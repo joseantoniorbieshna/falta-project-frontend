@@ -36,14 +36,16 @@
 }
 
 .m-curso-text{
-    flex: 1 1 0;
+    flex: 1 1 auto;
     margin-right: 0.5rem;
     word-break: break-all;
 }
 .m-text-span{
     font-size: 0.8rem;
+    font-weight: 600;
     font-style: italic;
     text-decoration: wavy;
+    vertical-align: text-bottom;
 }
 
 /*GRUPOS*/
@@ -53,14 +55,6 @@
     flex-wrap: wrap;
 }
 
-.m-container-grupos{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-.m-grupo-title{
-    margin-right: 0.5rem;
-}
 /*ITALIC*/
 .m-curso-text,
 .m-grupo-title{

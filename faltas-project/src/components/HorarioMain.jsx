@@ -9,7 +9,7 @@ import WeekNavigation from './Horario/WeekNavigation';
 import Loading from './Utiles/Loading';
 import MensajeHorario from './MensajeHorario';
 import ContainerInfoGrupoYCurso from './ContainerInfoGrupoYCurso';
-import { getLunesCercano } from '../utils/myDateFunctions';
+import { getActualDate, getLunesCercano } from '../utils/myDateFunctions';
 import PopUpCreateFaltaHorario from './PopUps/PopUpCreateFaltaHorario';
 
 
@@ -18,7 +18,7 @@ export function HorarioMain() {
     const [allHours,setAllHours] = useState(null);
     const [allElementsHour,setAllElementHour] = useState(null);
     const [isMobile] = useMobile();
-    const lunesCercano = getLunesCercano(new Date());
+    const lunesCercano = getLunesCercano(getActualDate());
     /* FETCH DATA */
     useEffect(() => {
         Promise.all([
@@ -30,7 +30,9 @@ export function HorarioMain() {
             horasHorario = horasHorario.map((horaHorarioDTO,index)=>{
                 const {dia,indice,materia,grupos,curso,referenciaSesion} = horaHorarioDTO
                 const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso}></ContainerInfoGrupoYCurso>
-                return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={PopUpCreateFaltaHorario}></MensajeHorario>
+                const poUp = <PopUpCreateFaltaHorario dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} ></PopUpCreateFaltaHorario>
+
+                return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={poUp}></MensajeHorario>
             })
             setAllElementHour(horasHorario)
             /*AQUI DECIMOS QUE CARGUE YA QUE EL FETCH SE HA HECHO CON EXITO */

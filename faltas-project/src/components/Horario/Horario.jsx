@@ -8,6 +8,7 @@ import { useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useScrollComponent from '../../hooks/useScrollComponent';
 import useResizeComponentAndWindow from '../../hooks/useResizeComponentAndWindow';
+import { getActualDate } from '../../utils/myDateFunctions';
 
 const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual = false, children, showDayNumber }, ref) => {
     const clasesStyle = isActual ? 'actual-day' : 'no-actual-day'
@@ -101,8 +102,8 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
         return fecha.getDate();
     });
 
-    const diaActual = new Date().getDate();
-    const indiceDiaActual = new Date().getDay() - 1;
+    const diaActual = getActualDate().getDate();
+    const indiceDiaActual = getActualDate().getDay() - 1;
     const diasTextoAbreviado = ['Lun', 'Mart', 'Mier', 'Juev', 'Vier']
     const isLastDayClassName = indiceDiaActual == 4 ? 'is-last-day' : ''
 

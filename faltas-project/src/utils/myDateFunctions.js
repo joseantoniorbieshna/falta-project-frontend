@@ -16,3 +16,7 @@ export function getLunesCercano(fecha){
 export function convertDateToString(myDate){
     return myDate.toISOString().split("T")[0];
 }
+
+export function getActualDate(){
+    return new Date()
+}

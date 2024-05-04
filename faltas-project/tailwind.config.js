@@ -11,7 +11,10 @@ export default {
       'gray': '#f0f0f0',
       'grayblack': '#b9b9b9',
       'black': '#000',
-      'blacklight':'#404040'
+      'blacklight':'#404040',
+      'red': '#ff9c9c',
+      'orange': '#ffdb9c',
+      'blue': '#9cd6ff'
     },
     extend: {},
   },

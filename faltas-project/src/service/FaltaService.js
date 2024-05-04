@@ -29,8 +29,10 @@ export const createFalta = ({ faltaCreateInput }) => {
   .then((res) => {
     console.log(res);
     if (res.errors) {
+      console.log(res.errors);
       throw new Error(res.errors[0].message);
     } else {
+      console.log(res.data.createFalta);
       return res.data.createFalta;
     }
   });
@@ -66,12 +68,17 @@ export const getAllFaltasBetweenFechas = ({ fechaInicio,fechaFin }) => {
                 }
               }
               profesor{
-                nombre
+                nombre,
+                referencia
               }
             }
           },
           comentario,
-          fecha
+          fecha,
+          profesorSustituto{
+            nombre,
+            referencia
+          }
         }
       }
       `,
@@ -95,11 +102,19 @@ export const getAllFaltasBetweenFechas = ({ fechaInicio,fechaFin }) => {
         const dia = dataObject.horaHorario.tramoHorario.dia
         const indice = dataObject.horaHorario.tramoHorario.indice
         const nombreProfesor = dataObject.horaHorario.sesion.profesor.nombre
+        const referenciaProfesor = dataObject.horaHorario.sesion.profesor.referencia
 
         const materia = dataObject.horaHorario.sesion.materia.nombreCompleto
         const grupos = dataObject.horaHorario.sesion.grupos
         const curso = dataObject.horaHorario.sesion.grupos[0].curso.nombre
-        return {comentario,fecha,referenciaSesion,dia,indice,materia,grupos,curso,nombreProfesor}
+        const profesorSustituto = dataObject.profesorSustituto
+        let nombreProfesorSustituto=null
+        let referenciaProfesorSustituto=null
+        if(profesorSustituto){
+          nombreProfesorSustituto = profesorSustituto.nombre
+          referenciaProfesorSustituto = profesorSustituto.referencia
+        }
+        return {comentario,fecha,referenciaSesion,dia,indice,materia,grupos,curso,nombreProfesor,referenciaProfesor,nombreProfesorSustituto,referenciaProfesorSustituto}
       })
     }
   });

@@ -5,13 +5,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./css/MyCalendar.css"
 import { addDays, startOfWeek, endOfWeek,startOfDay } from 'date-fns';
 import { es } from 'date-fns/locale/es';
+import { getActualDate } from "../../utils/myDateFunctions";
 export default function MyCalendar({myDate,setMyDate}){
     const day=3;
     const esDiaDeLaSemanaValido=(date)=>{
         return date.getDay() - 1 == day;
     }
     const esMayorOIgualFechaActual=(date)=>{
-        const fechaActual = new Date();
+        const fechaActual = getActualDate();
         fechaActual.setHours(0, 0, 0, 0);
         return date >= fechaActual;
     }
@@ -23,7 +24,7 @@ export default function MyCalendar({myDate,setMyDate}){
 
     useEffect(() => {
         registerLocale('es', es)
-        startOfDay(new Date())
+        startOfDay(getActualDate())
     }, [])
     return (
     <DatePicker

@@ -8,16 +8,17 @@ import { registerLocale, setDefaultLocale } from "react-datepicker";
 import { calendar } from 'ionicons/icons';
 import "react-datepicker/dist/react-datepicker.css";
 import './css/WeekNavigation.css'
+import { getActualDate } from '../../utils/myDateFunctions';
 
 export default function CalendarWeekSelector({ setFecha}) {
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(getActualDate());
     const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
         <IonIcon icon={calendar} className='text-black text-xl mr-5 cursor-pointer' onClick={onClick}></IonIcon>
     ));
 
     useEffect(() => {
         registerLocale('es', es)
-        startOfDay(new Date())
+        startOfDay(getActualDate())
     }, [])
     return (
         <DatePicker
