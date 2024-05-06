@@ -6,8 +6,7 @@ import "./css/MyCalendar.css"
 import { addDays, startOfWeek, endOfWeek,startOfDay } from 'date-fns';
 import { es } from 'date-fns/locale/es';
 import { getActualDate } from "../../utils/myDateFunctions";
-export default function MyCalendar({myDate,setMyDate}){
-    const day=3;
+export default function MyCalendar({myDate,setMyDate,day}){
     const esDiaDeLaSemanaValido=(date)=>{
         return date.getDay() - 1 == day;
     }

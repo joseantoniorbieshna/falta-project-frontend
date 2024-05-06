@@ -40,7 +40,7 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
                     </div>
                     <div>
                         <p className='text-[0.8rem] italic'><span className='m-text-span'>Fecha:</span></p>
-                        <MyCalendar myDate={myDate} setMyDate={setMyDate}></MyCalendar>
+                        <MyCalendar myDate={myDate} setMyDate={setMyDate} day={dia}></MyCalendar>
                     </div>
                     {containerInfoGrupoYCurso}
                     <div className='menumenh-info-comentario'>

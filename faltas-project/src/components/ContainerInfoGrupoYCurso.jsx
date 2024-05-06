@@ -1,3 +1,4 @@
+import React from 'react'
 import './css/MensajeHorario.css'
 
 export default function ContainerInfoGrupoYCurso({curso,grupos,profesor=null,profesorSustituto, classNameTextTitle}){
@@ -12,11 +13,11 @@ export default function ContainerInfoGrupoYCurso({curso,grupos,profesor=null,pro
                             {
                                 grupos.length == 1 ?
                                     grupos.map((grupo, index) => {
-                                        return <>{grupo.nombre}</>
+                                        return <React.Fragment key={index}>{grupo.nombre}</React.Fragment>
                                     })
                                     :
                                     grupos.map((grupo, index) => {
-                                        return <>{grupo.nombre}|</>
+                                        return <React.Fragment key={index}>{grupo.nombre}|</React.Fragment>
                                     })
                             }                    
                             </p>

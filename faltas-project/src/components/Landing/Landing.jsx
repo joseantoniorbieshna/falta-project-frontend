@@ -49,7 +49,7 @@ export default function Landing() {
                     </ul>
                 </div>
                 <div className='flex items-center gap-6 container-menu-container'>
-                    <Link to='/horario'>
+                    <Link to='/login'>
                         <button className='log-in-btn bg-black text-white px-5 py-2 rounded-full hover:bg-gray hover:text-black'>Iniciar sesión</button>
                     </Link>
                     <IonIcon onClick={toggleMenu} icon={isMenuOpen?closeOutline:menuOutline} class='text-black text-3xl cursor-pointer md:hidden'></IonIcon>

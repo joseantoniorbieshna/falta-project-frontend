@@ -4,6 +4,7 @@ import ErrorMessage from './components/Utiles/ErrorMessage'
 import MainMenu from './components/Menu/MainMenu'
 import { HorarioMain } from './components/HorarioMain'
 import FaltasMain from './components/FaltasMain'
+import Login from './components/Login'
 
 
 function MyLandingContainer({ children }) {
@@ -50,8 +51,7 @@ function App() {
 
           <Route path='/login' element={
               <MyMainPageContainer>
-                  <MainMenu/>
-                  <HorarioMain></HorarioMain>
+                  <Login/>
               </MyMainPageContainer>}>    
           </Route>
 
