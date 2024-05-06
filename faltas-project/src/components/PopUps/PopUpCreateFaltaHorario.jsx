@@ -5,6 +5,8 @@ import { close } from 'ionicons/icons';
 import MyCalendar from '../Utiles/MyCalendar';
 import { createFalta } from '../../service/FaltaService';
 import { useState } from 'react';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso }) {
     const [myDate, setMyDate] = useState(null);
     const [comentario, setComentario] = useState('');
@@ -12,14 +14,51 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
     const indiceDeLaSemanaPalabra = ["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
 
     const crearFalta = ()=>{
+        /* VALIDACION */
+        if(myDate==null){
+            toast.error("Introduce una fecha", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+            return
+        }
+        /* QUERY */
         const faltaCreateObject={dia,indice,referenciaSesion,comentario,fecha:myDate.toISOString().split("T")[0]}
         console.log(faltaCreateObject);
         createFalta({faltaCreateInput:faltaCreateObject})
         .then((data)=>{
-            console.log(data);
+            toast.success('Falta creada con exito!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
         })
         .catch((err)=>{
-            console.log(err);
+            console.log(err.message);
+            toast.error(err.message, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
         })
     }
 
@@ -35,8 +74,8 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
                 <div className='menumenh-container-info'>
                     <h2 className='text-2xl font-semibold break-words'>{materia}</h2>
                     <div className='flex flex-row items-end'>
-                        <p className='text-[0.8rem] italic mr-1 '><span className='m-text-span'>Dia:</span>{diaDeLaSemanaPalabra[dia]}</p>
-                        <p className='text-[0.8rem] italic mr-1'><span className='m-text-span'>Hora:</span>{indiceDeLaSemanaPalabra[indice]}</p>
+                        <p className='italic mr-2'><span className='m-text-span'>Dia: </span>{diaDeLaSemanaPalabra[dia]}</p>
+                        <p className='italic'><span className='m-text-span'>Hora: </span>{indiceDeLaSemanaPalabra[indice]} </p>
                     </div>
                     <div>
                         <p className='text-[0.8rem] italic'><span className='m-text-span'>Fecha:</span></p>
@@ -44,7 +83,7 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
                     </div>
                     {containerInfoGrupoYCurso}
                     <div className='menumenh-info-comentario'>
-                        <p className='text-[0.8rem] italic'>Comentario:</p>
+                        <p className='text-[0.8rem] italic m-text-span'>Comentario:</p>
                         <textarea type="text" className='w-[100%]' onChange={(e)=>setComentario(e.target.value)}/>
                     </div>
                     <div className='menumh-send-container'>

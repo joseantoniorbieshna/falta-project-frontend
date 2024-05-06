@@ -71,6 +71,8 @@
     flex-direction: column;
 }
 .menumenh-info-comentario textarea{
+    min-height: 5rem;
+    resize: none;
     padding: 0.25rem;
     flex: 1 1 auto;
 }

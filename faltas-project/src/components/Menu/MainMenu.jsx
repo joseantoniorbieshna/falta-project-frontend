@@ -5,6 +5,7 @@ import { IonIcon } from '@ionic/react';
 import { logOutOutline,settingsOutline,calendar, closeOutline, menuOutline, handLeft } from 'ionicons/icons';
 import useMobile from "../../hooks/useMobile";
 import useEffectAddWindowEvent from "../../hooks/useEffectAddWindowEvent";
+import { saveTokenInCookies } from "../../service/AuthorizationService";
 export default function MainMenu(){
     const location = useLocation();
     const [activeButton, setActiveButton] = useState({
@@ -16,6 +17,10 @@ export default function MainMenu(){
       const toggleMenu = () => {
           setMenuOpen(!isMenuOpen);
       };
+
+      const cerrarSesion=()=>{
+        saveTokenInCookies(null);
+      }
   
 
     useEffect(() => {
@@ -81,7 +86,7 @@ export default function MainMenu(){
                         </Link>
                     </li>
                     <li>
-                        <Link title="Cerrar sesión" to='/home' className={`mm-button ${activeButton} `}>
+                        <Link title="Cerrar sesión" to='/home' className={`mm-button ${activeButton}`} onClick={cerrarSesion}>
                             <IonIcon icon={logOutOutline} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
                             <p className="mm-button-text">Cerrar sesión</p>
                         </Link>

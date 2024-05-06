@@ -31,7 +31,7 @@ export default function PopUpSustituirFalta({dia,indice, referenciaSesion, chang
         <div className={`menumenh-container-parent`} id='parent-menu-mensaje' onClick={(e) => noPropagationChangeToClose(e)}>
             <div className="menumenh-container">
                     <IonIcon icon={close} onClick={changeToClose} className={'menumenh-close-button text-blacklight text-4xl cursor-pointer'}></IonIcon>
-                <h1 className='menumenh-title text-4xl font-bold'>Sustituir Falta</h1>
+                <h1 className='menumenh-title menumenh-title-update text-4xl font-bold'>Sustituir Falta</h1>
                 <div className='menumenh-container-info'>
                     <h2 className='text-2xl font-semibold'>{materia}</h2>
                     <div className='flex flex-row items-end'>
