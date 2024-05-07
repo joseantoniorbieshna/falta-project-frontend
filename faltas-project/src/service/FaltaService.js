@@ -97,7 +97,7 @@ export const getAllFaltasBetweenFechas = ({ fechaInicio,fechaFin }) => {
       console.log(dataList);
       return dataList.map((dataObject,index)=>{
         const comentario = dataObject.comentario;
-        const fecha = dataObject.fecha;
+        const fecha = new Date(dataObject.fecha);
         const referenciaSesion = dataObject.horaHorario.sesion.referencia
         const dia = dataObject.horaHorario.tramoHorario.dia
         const indice = dataObject.horaHorario.tramoHorario.indice

@@ -1,5 +1,5 @@
 import { IonIcon } from '@ionic/react';
-import './css/PopUpCreateFaltaHorario.css'
+import './css/PopUpGeneral.css'
 import '../css/MensajeHorario.css'
 import { close } from 'ionicons/icons';
 import MyCalendar from '../Utiles/MyCalendar';
@@ -7,6 +7,7 @@ import { createFalta } from '../../service/FaltaService';
 import { useState } from 'react';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso }) {
     const [myDate, setMyDate] = useState(null);
     const [comentario, setComentario] = useState('');
@@ -70,7 +71,7 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
         <div className={`menumenh-container-parent`} id='parent-menu-mensaje' onClick={(e) => noPropagationChangeToClose(e)}>
             <div className="menumenh-container">
                     <IonIcon icon={close} onClick={changeToClose} className={'menumenh-close-button text-blacklight text-4xl cursor-pointer'}></IonIcon>
-                <h1 className='menumenh-title text-4xl font-bold'>Registrar falta</h1>
+                <h1 className='menumenh-title bg-[#dff2cd] text-4xl font-bold'>Registrar falta</h1>
                 <div className='menumenh-container-info'>
                     <h2 className='text-2xl font-semibold break-words'>{materia}</h2>
                     <div className='flex flex-row items-end'>

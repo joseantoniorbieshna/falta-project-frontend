@@ -22,22 +22,18 @@ export default function ContainerInfoGrupoYCurso({curso,grupos,profesor=null,pro
                             }                    
                             </p>
                     </div>
-                    {
-                            profesor?
+                        {
+                            profesor &&
                             <div className='m-container-profesor'>
                                 <p className='m-profesor-text'><span className={`m-text-span ${classNameTextTitle}`}>Profesor: </span>{profesor}</p>
                             </div>
-                            :
-                            <></>
                         }
 
-{
-                            profesorSustituto?
+                        {
+                            profesorSustituto &&
                             <div className='m-container-profesor'>
                                 <p className='m-profesor-text'><span className={`m-text-span ${classNameTextTitle}`}>Profesor Sustituto: </span>{profesorSustituto}</p>
                             </div>
-                            :
-                            <></>
                         }
 
 

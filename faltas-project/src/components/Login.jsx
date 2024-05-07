@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { getloginUserToken, saveTokenInCookies } from "../service/AuthorizationService";
 import { useNavigate } from 'react-router-dom';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login(){
     const [username,setUsername] = useState("")
@@ -17,11 +19,23 @@ export default function Login(){
             navigate('/horario');
         })
         .catch(err=>{
+            let messageError=""
             if(err.cause && err.cause.status==401){
-                console.log("no autorizado error catch");
+                messageError="Usuario o contraseña no valido";
             }else{
-                console.log("Otro error catch");
+                messageError="Hubo un error al intentar iniciar sesion";
             }
+            toast.error(messageError, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
         })
    
     }

@@ -10,6 +10,7 @@ import WeekNavigation from "./Horario/WeekNavigation";
 import { convertDateToString, getActualDate, getLunesCercano } from "../utils/myDateFunctions";
 import { getAllFaltasBetweenFechas } from "../service/FaltaService";
 import PopUpSustituirFalta from "./PopUps/PopUpSustituirFalta";
+import PopUpEditarEliminarFalta from "./PopUps/PopUpEditarEliminarFalta";
 
 export default function FaltasMain(){
     const [fechaBase,setFechaBase] = useState(getActualDate())
@@ -47,11 +48,12 @@ export default function FaltasMain(){
                 if(referenciaProfesorSesionActual==referenciaProfesor){ // Es mi falta
                     console.log("falta mia");
                     color="#9cd6ff" // COLOR ES MI FALTA (AZUL) 
-                    poUp=null //poner accion popup para poder eliminar mi falta
+                    poUp = <PopUpEditarEliminarFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso}comentarioInput={comentario} fechaInput={fecha}></PopUpEditarEliminarFalta>
                 }else if(nombreProfesorSustituto && referenciaProfesorSustituto!=referenciaProfesorSesionActual){ // La estoy sustituyendo
-                   color= "#ff9c9c"
+                    color= "#ff9c9c"
+                    poUp=null //poner accion popup para poder eliminar mi falta
                 }else{
-                    poUp = <PopUpSustituirFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} ></PopUpSustituirFalta>
+                    poUp = <PopUpSustituirFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} comentario={comentario}></PopUpSustituirFalta>
                 }
 
                 return <MensajeHorario backgroundColor={color} key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={poUp}></MensajeHorario>
