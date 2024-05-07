@@ -34,7 +34,7 @@ export default function PopUpSustituirFalta({dia,indice, referenciaSesion, chang
                         <p>{indiceDeLaSemanaPalabra[indice]}</p>
                     </div>
                     <div>
-                    <p className='text-[0.8rem] italic mr-1 '><span className='m-text-span span-bottom'>Fecha:</span>{fechaFaltaString}</p>
+                    <p className='text-[0.8rem] italic mr-1 '><span className='m-text-span span-bottom'>Fecha: </span>{fechaFaltaString}</p>
                     </div>
                     {containerInfoGrupoYCurso}
                     <div className='menumenh-info-comentario'>

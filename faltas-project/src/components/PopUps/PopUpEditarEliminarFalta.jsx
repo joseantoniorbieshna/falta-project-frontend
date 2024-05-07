@@ -3,17 +3,18 @@ import './css/PopUpGeneral.css'
 import '../css/MensajeHorario.css'
 import { close } from 'ionicons/icons';
 import MyCalendar from '../Utiles/MyCalendar';
-import { createFalta } from '../../service/FaltaService';
+import { createFalta, editarFaltaApi } from '../../service/FaltaService';
 import { useState } from 'react';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { convertDateToString } from '../../utils/myDateFunctions';
 export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso, comentarioInput, fechaInput }) {
     const [myDate, setMyDate] = useState(fechaInput);
     const [comentario, setComentario] = useState(comentarioInput);
     const diaDeLaSemanaPalabra = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"]
     const indiceDeLaSemanaPalabra = ["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
 
-    const crearFalta = ()=>{
+    const editarFalta = ()=>{
         /* VALIDACION */
         if(myDate==null){
             toast.error("Introduce una fecha", {
@@ -30,11 +31,11 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
             return
         }
         /* QUERY */
-        const faltaCreateObject={dia,indice,referenciaSesion,comentario,fecha:myDate.toISOString().split("T")[0]}
-        console.log(faltaCreateObject);
-        createFalta({faltaCreateInput:faltaCreateObject})
+        const faltaEditObject={dia,indice,referenciaSesion,comentario,fecha:convertDateToString(fechaInput),fechaNueva:convertDateToString(myDate)}
+        console.log(faltaEditObject);
+        editarFaltaApi(faltaEditObject)
         .then((data)=>{
-            toast.success('Falta creada con exito!', {
+            toast.success('Falta editada con exito!', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -87,7 +88,7 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
                         <textarea type="text" className='w-[100%]' onChange={(e)=>setComentario(e.target.value)} value={comentario}/>
                     </div>
                     <div className='menumh-send-container'>
-                        <button className='menumh-button' onClick={(e)=>crearFalta()}>Registrar Falta</button>
+                        <button className='menumh-button' onClick={(e)=>editarFalta()}>Editar Falta</button>
                     </div>
 
                 </div>

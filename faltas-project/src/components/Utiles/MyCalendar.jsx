@@ -28,7 +28,7 @@ export default function MyCalendar({myDate,setMyDate,day}){
     return (
     <DatePicker
         selected={myDate}
-        onChange={(date) => setMyDate(date)}
+        onChange={(date) =>setMyDate(date)}
         locale="es"
         highlightDates={[{ startDate: startOfWeek(new Date()), endDate: endOfWeek(new Date()) }]}
         filterDate={esValidDate}

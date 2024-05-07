@@ -7,6 +7,7 @@ import { createFalta } from '../../service/FaltaService';
 import { useState } from 'react';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { convertDateToString } from '../../utils/myDateFunctions';
 
 export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso }) {
     const [myDate, setMyDate] = useState(null);
@@ -31,9 +32,8 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
             return
         }
         /* QUERY */
-        const faltaCreateObject={dia,indice,referenciaSesion,comentario,fecha:myDate.toISOString().split("T")[0]}
-        console.log(faltaCreateObject);
-        createFalta({faltaCreateInput:faltaCreateObject})
+        const faltaCreateObject={dia,indice,referenciaSesion,comentario,fecha:convertDateToString(myDate)}
+        createFalta(faltaCreateObject)
         .then((data)=>{
             toast.success('Falta creada con exito!', {
                 position: "top-right",

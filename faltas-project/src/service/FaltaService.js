@@ -1,6 +1,6 @@
 const URL_BACKEND_GRAPHQL = import.meta.env.VITE_BACKEND_END_POINT + "/graphql";
 
-export const createFalta = ({ faltaCreateInput }) => {
+export const createFalta = (faltaCreateInput) => {
   return fetch(URL_BACKEND_GRAPHQL, {
     method: 'POST',
     headers: {
@@ -10,18 +10,52 @@ export const createFalta = ({ faltaCreateInput }) => {
       query: `
         mutation CreateFalta($faltaCreateInput: FaltaCreateInputDTO!) {
           createFalta(faltaCreateInput: $faltaCreateInput) {
-            
             horaHorario {
               sesion {
                 referencia
               }
             }
-
           }
         }
       `,
       variables: {
-        faltaCreateInput,
+        faltaCreateInput: faltaCreateInput,
+      },
+    }),
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    if (res.errors) {
+      throw new Error(res.errors[0].message);
+    } else {
+      return res.data.createFalta;
+    }
+  });
+};
+
+
+
+
+export const editarFaltaApi = (faltaUpdateInput) => {
+  return fetch(URL_BACKEND_GRAPHQL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+      mutation UpdateFalta($faltaUpdateInput: FaltaUpdateInputDTO!) {
+        updateFalta(faltaUpdateInput: $faltaUpdateInput) {
+          horaHorario {
+            sesion {
+              referencia
+            }
+          }
+        }
+      }
+      `,
+      variables: {
+        faltaUpdateInput: faltaUpdateInput,
       },
     }),
   })
@@ -32,12 +66,11 @@ export const createFalta = ({ faltaCreateInput }) => {
       console.log(res.errors);
       throw new Error(res.errors[0].message);
     } else {
-      console.log(res.data.createFalta);
-      return res.data.createFalta;
+      console.log(res.data.updateFalta);
+      return res.data.updateFalta;
     }
   });
 };
-
 
 
 export const getAllFaltasBetweenFechas = ({ fechaInicio,fechaFin }) => {
