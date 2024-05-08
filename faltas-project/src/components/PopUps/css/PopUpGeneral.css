@@ -102,6 +102,11 @@
     background-color: red;
     border: solid 1px red;
 }
+
+.menumh-button-edit{
+    background-color: orange;
+    border: solid 1px orange;
+}
 .span-bottom{
     vertical-align: bottom;
 }

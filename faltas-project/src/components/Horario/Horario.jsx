@@ -147,6 +147,18 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
     }
     useResizeComponentAndWindow({ handleResize });
 
+    const isActualFechaiWithIndiceDay=(diaIndice)=>{
+        const yearProve = lunesCercano.getFullYear();
+        const monthProve = String(lunesCercano.getMonth() + 1).padStart(2, '0');
+        const dayProve = parseInt(String(lunesCercano.getDate()).padStart(2, '0'))+diaIndice;
+
+        const yearActual = getActualDate().getFullYear();
+        const monthActual = String(getActualDate().getMonth() + 1).padStart(2, '0');
+        const dayActual = String(getActualDate().getDate()).padStart(2, '0');
+
+        return (yearProve==yearActual && monthProve==monthActual && dayProve==dayActual)
+    }
+
     return (
 
         <>
@@ -159,7 +171,7 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
                         {/* horario cabezera dia */}
                         <div className={`hhdk-hora-head hh-first-space-grid ${indiceDiaActual == 0 ? 'hh-first-space-grid-active' : ''}`} style={{ width: sizeTimeWidth }}></div>
                         {dias.map((day, index) => (
-                            <HorarioHeadDayWeek key={index} dayOfWeek={index} dayOfMonth={day} isActual={index == indiceDiaActual} showDayNumber={showDayNumber}/>
+                            <HorarioHeadDayWeek key={index} dayOfWeek={index} dayOfMonth={day} isActual={isActualFechaiWithIndiceDay(index)} showDayNumber={showDayNumber}/>
                         ))}
                     </div>
                     :
@@ -167,7 +179,7 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
                         <div className='hh-menu-mobile-day' >
                             {dias.map((actualDayVar, index) => (
                                 <DayNavigationMobile key={index} dayIndex={index} diasTextoAbreviado={diasTextoAbreviado[index]}
-                                    actualDay={actualDayVar} isActual={index == indiceDiaActual}
+                                    actualDay={actualDayVar} isActual={isActualFechaiWithIndiceDay(index)}
                                     setActive={setActiveNavMobile} isActive={indexActiveMobile == index}
                                     showDayNumber={showDayNumber} />
                             ))}
@@ -181,7 +193,7 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
                             <React.Fragment key={indexTime}>
                                 <HorarioTime time={hora} ref={timeHoraHorarioRef}></HorarioTime>
                                 {dias.map((day, indexDia) => (
-                                    <HorarioHora key={indexDia} isActual={indexDia == indiceDiaActual}>
+                                    <HorarioHora key={indexDia} isActual={isActualFechaiWithIndiceDay(indexDia)}>
 
 
                                         {mensajes.filter((element) => {
@@ -206,11 +218,11 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
 
                         {dias.map((day, indexDia) => (
                             <React.Fragment key={indexDia}>
-                                <HorarioHeadDayWeek dayOfWeek={indexDia} dayOfMonth={day} isActual={indexDia == indiceDiaActual} >
+                                <HorarioHeadDayWeek dayOfWeek={indexDia} dayOfMonth={day} isActual={isActualFechaiWithIndiceDay(indexDia)} >
                                     {timeArray.map((hora, indexTime) => (
                                         <React.Fragment key={indexTime}>
-                                            <HorarioTime time={hora} ref={timeHoraHorarioRef} isActual={indexDia == indiceDiaActual}></HorarioTime>
-                                            <HorarioHora isActual={indexDia == indiceDiaActual}>
+                                            <HorarioTime time={hora} ref={timeHoraHorarioRef} isActual={isActualFechaiWithIndiceDay(indexDia)}></HorarioTime>
+                                            <HorarioHora isActual={isActualFechaiWithIndiceDay(indexDia)}>
 
                                                 {/* Aqui se imprimen los mensajes*/}
 
