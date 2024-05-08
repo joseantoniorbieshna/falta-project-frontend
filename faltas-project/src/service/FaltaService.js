@@ -72,6 +72,35 @@ export const editarFaltaApi = (faltaUpdateInput) => {
   });
 };
 
+export const deleteFaltaApi = (faltaDeleteInput) => {
+  return fetch(URL_BACKEND_GRAPHQL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+      mutation deleteFalta($faltaDeleteInput: FaltaDeleteInputDTO!) {
+        deleteFalta(faltaDeleteInput: $faltaDeleteInput) 
+      }
+      `,
+      variables: {
+        faltaDeleteInput: faltaDeleteInput,
+      },
+    }),
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    console.log(res);
+    if (res.errors) {
+      console.log(res.errors);
+      throw new Error(res.errors[0].message);
+    } else {
+      console.log(res.data);
+      return res.data;
+    }
+  });
+};
 
 export const getAllFaltasBetweenFechas = ({ fechaInicio,fechaFin }) => {
   console.log(fechaInicio,fechaFin);

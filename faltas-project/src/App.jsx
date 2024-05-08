@@ -36,7 +36,7 @@ function App() {
                   <HorarioMain></HorarioMain>
               </MyMainPageContainer>}>    
           </Route>
-          <Route path='/faltas' element={
+          <Route path='/faltas/:year?/:month?/:day?' element={
               <MyMainPageContainer>
                   <MainMenu/>
                   <FaltasMain></FaltasMain>

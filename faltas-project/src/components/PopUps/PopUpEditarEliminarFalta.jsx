@@ -3,18 +3,22 @@ import './css/PopUpGeneral.css'
 import '../css/MensajeHorario.css'
 import { close,trash } from 'ionicons/icons';
 import MyCalendar from '../Utiles/MyCalendar';
-import { createFalta, editarFaltaApi } from '../../service/FaltaService';
+import { createFalta, deleteFaltaApi, editarFaltaApi } from '../../service/FaltaService';
 import { useState } from 'react';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { convertDateToString } from '../../utils/myDateFunctions';
 import Modal from './Modal';
-export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso, comentarioInput, fechaInput }) {
+import { useNavigate } from 'react-router-dom';
+export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso, comentarioInput, fechaInput, reloadData }) {
+    const navigate = useNavigate();
     const [openDelete, setOpenDelete] = useState(false)
     const [myDate, setMyDate] = useState(fechaInput);
     const [comentario, setComentario] = useState(comentarioInput);
     const diaDeLaSemanaPalabra = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
     const indiceDeLaSemanaPalabra = ["Primera", "Segunda", "Tercera", "Recreo", "Cuarta", "Quinta", "Sexta"]
+
+
 
     const editarFalta = () => {
         /* VALIDACION */
@@ -48,6 +52,8 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                     theme: "dark",
                     transition: Bounce,
                 });
+                reloadData()
+                
             })
             .catch((err) => {
                 console.log(err.message);
@@ -66,8 +72,38 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
     }
 
     const borrarFalta = () => {
-        console.log("Borrar");
-        setOpenDelete(false)
+        const faltaDeleteObject = { dia, indice, referenciaSesion, fecha: convertDateToString(fechaInput)}
+        console.log(faltaDeleteObject);
+        deleteFaltaApi(faltaDeleteObject)
+            .then((data) => {
+                toast.success('Falta eliminada con exito!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                });
+                reloadData()
+                setOpenDelete(false)
+            })
+            .catch((err) => {
+                console.log(err.message);
+                toast.error(err.message, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                });
+            })
     }
 
     const noPropagationChangeToClose = (e) => {
@@ -109,10 +145,10 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                                 </p>
                             </div>
                             <div className="flex gap-4">
-                                <button className="btn btn-danger w-full rounded-lg bg-[red] text-[white] font-bold"
+                                <button className="btn btn-danger w-full rounded-lg bg-[red] text-[white] font-bold py-1"
                                 onClick={borrarFalta}>Borrar</button>
                                 <button
-                                    className="btn btn-danger w-full rounded-lg bg-[black] text-[white] font-bold"
+                                    className="btn btn-danger w-full rounded-lg bg-[black] text-[white] font-bol py-1"
                                     onClick={() => setOpenDelete(false)}>Cancelar</button>
                             </div>
                         </div>

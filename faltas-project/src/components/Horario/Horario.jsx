@@ -35,8 +35,6 @@ const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual =
 });
 
 function DayNavigationMobile({ dayIndex, diasTextoAbreviado, actualDay, isActual, isActive, setActive, showDayNumber }, key) {
-    const location = useLocation()
-    const navigate = useNavigate()
     const classNameActualDay = isActual ? 'last-day-horario-head' : ''
     const classNameActiveDay = isActive ? 'active-horario-head' : ''
     const classNameNotShowDayNumber = !showDayNumber? 'hh-is-only-day-of-week-name':''
@@ -145,6 +143,8 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
         }
         return null;
     }
+
+    
     useResizeComponentAndWindow({ handleResize });
 
     const isActualFechaiWithIndiceDay=(diaIndice)=>{
@@ -158,6 +158,8 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
 
         return (yearProve==yearActual && monthProve==monthActual && dayProve==dayActual)
     }
+
+
 
     return (
 

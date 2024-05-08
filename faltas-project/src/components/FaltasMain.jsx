@@ -7,16 +7,34 @@ import Loading from "./Utiles/Loading";
 import MensajeHorario from "./MensajeHorario";
 import Horario from "./Horario/Horario";
 import WeekNavigation from "./Horario/WeekNavigation";
-import { convertDateToString, getActualDate, getLunesCercano } from "../utils/myDateFunctions";
+import { convertDateToObjYearMonthDay, convertDateToString, getActualDate, getLunesCercano } from "../utils/myDateFunctions";
 import { getAllFaltasBetweenFechas } from "../service/FaltaService";
 import PopUpSustituirFalta from "./PopUps/PopUpSustituirFalta";
 import PopUpEditarEliminarFalta from "./PopUps/PopUpEditarEliminarFalta";
+import { useParams,useNavigate } from "react-router-dom";
+function getFechaBase(year,month,day){
+    if(!isNaN(year) && year!=null && !isNaN(month) && month!=null && !isNaN(day) && day!=null){
+        try{
+            console.log(day+"---"+month+"..."+day);
+            const date=new Date(year+"-"+month+"-"+day);
+            console.log("obtengo la fecha de URL");
+            return date;
+        }catch{
+            console.log("Error al parsear el dia");
+        }
+    }
+    console.log("obtengo la fecha del hora actual");
+    return getActualDate();
+}
 
 export default function FaltasMain(){
-    const [fechaBase,setFechaBase] = useState(getActualDate())
+    const { year,month,day } = useParams();
+    const navigate = useNavigate();
+    const [fechaBase,setFechaBase] = useState(getFechaBase(year,month,day))
     const [isLoad,setLoad] = useState(false)
     const [allHours,setAllHours] = useState(null);
     const [allElementsHour,setAllElementHour] = useState(null);
+
     const lunesCercano = getLunesCercano(fechaBase);
 
     /* FUNCIONES PARA AVANZAR EN EL TIEMPO*/
@@ -27,47 +45,55 @@ export default function FaltasMain(){
     }
 
     /* HOOK INICIAL */
-    useEffect(() => {
+
+    const loadDataApi=()=>{
         setLoad(false);
         Promise.all([
-          getAllHours(),
-          getAllFaltasBetweenFechas({ fechaInicio:convertDateToString(lunesCercano), fechaFin:convertDateToString(getViernes()) })
-        ])
-        .then(([timeHorario,faltas]) => {
-            setAllHours(timeHorario);
-            faltas = faltas.map((horaHorarioDTO,index)=>{
-                const referenciaProfesorSesionActual = "100041110"
-                const {comentario,fecha,referenciaSesion,dia,indice,materia,grupos,curso,nombreProfesor,referenciaProfesor,nombreProfesorSustituto,referenciaProfesorSustituto} = horaHorarioDTO
+            getAllHours(),
+            getAllFaltasBetweenFechas({ fechaInicio:convertDateToString(lunesCercano), fechaFin:convertDateToString(getViernes()) })
+          ])
+          .then(([timeHorario,faltas]) => {
+              setAllHours(timeHorario);
+              faltas = faltas.map((horaHorarioDTO,index)=>{
+                  const referenciaProfesorSesionActual = "100041110"
+                  const {comentario,fecha,referenciaSesion,dia,indice,materia,grupos,curso,nombreProfesor,referenciaProfesor,nombreProfesorSustituto,referenciaProfesorSustituto} = horaHorarioDTO
+  
+                  const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso} profesor={nombreProfesor} profesorSustituto={nombreProfesorSustituto}></ContainerInfoGrupoYCurso>
+                  let poUp = null
+                  
+                  /* COLOR Y ACCION*/
+                  let color="#d3d3d3"; // COLOR POR DEFECTO (GRIS)
+                  console.log(referenciaProfesor);
+                  if(referenciaProfesorSesionActual==referenciaProfesor){ // Es mi falta
+                      console.log("falta mia");
+                      color="#9cd6ff" // COLOR ES MI FALTA (AZUL) 
+                      poUp = <PopUpEditarEliminarFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso}comentarioInput={comentario} fechaInput={fecha} reloadData={loadDataApi}></PopUpEditarEliminarFalta>
+                  }else if(nombreProfesorSustituto && referenciaProfesorSustituto!=referenciaProfesorSesionActual){ // La estoy sustituyendo
+                      color= "#ff9c9c"
+                      poUp=null //poner accion popup para poder eliminar mi falta
+                  }else{
+                      poUp = <PopUpSustituirFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} comentario={comentario}></PopUpSustituirFalta>
+                  }
+  
+                  return <MensajeHorario backgroundColor={color} key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={poUp}></MensajeHorario>
+              })
+              setAllElementHour(faltas)
+              /*AQUI DECIMOS QUE CARGUE YA QUE EL FETCH SE HA HECHO CON EXITO */
+              console.log("faltas");
+              console.log(faltas);
+              setLoad(true);
+          })
+          .catch((err) => {
+              setLoad(false);
+            console.log("err:", err);
+          });
+    }
 
-                const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso} profesor={nombreProfesor} profesorSustituto={nombreProfesorSustituto}></ContainerInfoGrupoYCurso>
-                let poUp = null
-                
-                /* COLOR Y ACCION*/
-                let color="#d3d3d3"; // COLOR POR DEFECTO (GRIS)
-                console.log(referenciaProfesor);
-                if(referenciaProfesorSesionActual==referenciaProfesor){ // Es mi falta
-                    console.log("falta mia");
-                    color="#9cd6ff" // COLOR ES MI FALTA (AZUL) 
-                    poUp = <PopUpEditarEliminarFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso}comentarioInput={comentario} fechaInput={fecha}></PopUpEditarEliminarFalta>
-                }else if(nombreProfesorSustituto && referenciaProfesorSustituto!=referenciaProfesorSesionActual){ // La estoy sustituyendo
-                    color= "#ff9c9c"
-                    poUp=null //poner accion popup para poder eliminar mi falta
-                }else{
-                    poUp = <PopUpSustituirFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} comentario={comentario}></PopUpSustituirFalta>
-                }
+    useEffect(() => {
+        const {year,month,day}=convertDateToObjYearMonthDay(lunesCercano);
+        navigate(`/faltas/${year}/${month}/${day}`, { replace: true })
 
-                return <MensajeHorario backgroundColor={color} key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={poUp}></MensajeHorario>
-            })
-            setAllElementHour(faltas)
-            /*AQUI DECIMOS QUE CARGUE YA QUE EL FETCH SE HA HECHO CON EXITO */
-            console.log("faltas");
-            console.log(faltas);
-            setLoad(true);
-        })
-        .catch((err) => {
-            setLoad(false);
-          console.log("err:", err);
-        });
+        loadDataApi();
       }, [fechaBase]);
 
     return (
