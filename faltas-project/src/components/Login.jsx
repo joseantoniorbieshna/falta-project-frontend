@@ -1,13 +1,23 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { getloginUserToken, saveTokenInCookies } from "../service/AuthorizationService";
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from "../context/authenticationState";
+import { reload } from "ionicons/icons";
 
 export default function Login(){
+    const {isAdmin,isLoggedIn,isChecking,checkIsLogin,logout} = useAuth();
+    const [isProvedLogged,setIsProvedLogged] =  useState(false)
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
     const navigate = useNavigate();
+
+    useEffect(()=> {
+        checkIsLogin()
+        setIsProvedLogged(true) // aqui se pone a true sin terminar la peticion
+
+    }, [])
 
     const handleLogin = (event)=> {
         event.preventDefault();
@@ -15,10 +25,12 @@ export default function Login(){
         getloginUserToken(username,password)
         .then(res=>{
             console.log(res);
+            console.log("isAdmin:"+isAdmin);
             saveTokenInCookies(res)
-            navigate('/horario');
+            checkIsLogin();
         })
         .catch(err=>{
+            logout()
             let messageError=""
             if(err.cause && err.cause.status==401){
                 messageError="Usuario o contraseña no valido";
@@ -53,6 +65,13 @@ export default function Login(){
                 <button className="border-2 px-2 rounded-md">Iniciar sesion</button>
             </div>
         </form>
+        {
+            isProvedLogged && isAdmin && isLoggedIn && !isChecking &&  <Navigate to={"/admin"}></Navigate>
+        }
+        {
+            isProvedLogged && !isAdmin && isLoggedIn && !isChecking &&  <Navigate to={"/horario"}></Navigate>
+        }
+       
     </div>
     )
 }

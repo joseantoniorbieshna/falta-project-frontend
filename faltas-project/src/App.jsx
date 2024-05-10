@@ -7,6 +7,8 @@ import FaltasMain from './components/FaltasMain'
 import Login from './components/Login'
 import { useEffect } from 'react'
 import AuthProvider,{ useAuth } from './context/authenticationState'
+import AdminMain from './components/AdminMain'
+
 
 
 function MyLandingContainer({ children }) {
@@ -68,7 +70,16 @@ function App() {
           <Route path='/settings' element={
               <MyMainPageContainer>
                   <MainMenu/>
-                  <HorarioMain></HorarioMain>
+                  <div className='flex-auto  text-center'>
+                    CONFIGURACION
+                  </div>
+              </MyMainPageContainer>}>    
+          </Route>
+
+          <Route path='/admin' element={
+              <MyMainPageContainer>
+                  <MainMenu/>
+                  <AdminMain/>
               </MyMainPageContainer>}>    
           </Route>
 
