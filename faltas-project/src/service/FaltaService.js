@@ -80,7 +80,7 @@ export const deleteFaltaApi = (faltaDeleteInput) => {
     },
     body: JSON.stringify({
       query: `
-      mutation deleteFalta($faltaDeleteInput: FaltaDeleteInputDTO!) {
+      mutation deleteFalta($faltaDeleteInput: IdFaltaDTO!) {
         deleteFalta(faltaDeleteInput: $faltaDeleteInput) 
       }
       `,

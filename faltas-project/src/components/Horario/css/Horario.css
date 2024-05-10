@@ -8,6 +8,7 @@
 }
 
 .hh-horario-container {
+    flex: 1 1 auto;
     border: 3px solid var(--gray-color);
     border-radius: 10px;
     overflow: auto;

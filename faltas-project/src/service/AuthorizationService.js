@@ -38,13 +38,22 @@ export const getInfoUserAuthentication = () => {
           return res.json();
     })
     .then((res)=>{
-       return res.jwt
+        const username = res.username
+        const role = res.role
+        const referenciaProfesor = res.referenciaProfesor
+       return {username,role,referenciaProfesor}
     })
 };
 
 export const saveTokenInCookies=(token)=>{
     window.localStorage.setItem(
         'tokenBackend',token
+    )
+}
+
+export const deleteTokenInCookies=()=>{
+    window.localStorage.setItem(
+        'tokenBackend',null
     )
 }
 

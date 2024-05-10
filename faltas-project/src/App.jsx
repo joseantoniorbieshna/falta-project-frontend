@@ -5,6 +5,8 @@ import MainMenu from './components/Menu/MainMenu'
 import { HorarioMain } from './components/HorarioMain'
 import FaltasMain from './components/FaltasMain'
 import Login from './components/Login'
+import { useEffect } from 'react'
+import AuthProvider,{ useAuth } from './context/authenticationState'
 
 
 function MyLandingContainer({ children }) {
@@ -16,16 +18,37 @@ function MyLandingContainer({ children }) {
 }
 
 function MyMainPageContainer({ children }) {
+  const {isChecking,isLoggedIn,checkIsLogin} = useAuth()
+  useEffect(()=>{
+    checkIsLogin()
+  },[isLoggedIn])
+
   return (
-    <div className='mm-container-root flex flex-col md:flex-row'> {/*flex flex-col  md:flex-row md:h-[100vh]*/}
-      {children}
-    </div>
+    <>
+    {
+      !isChecking && isLoggedIn && 
+      <div className='mm-container-root flex flex-col md:flex-row'> {/*flex flex-col  md:flex-row md:h-[100vh]*/}
+        {children}
+      </div>
+    }
+    </>
+  );
+}
+
+function MyMainPageContainerLogin({ children }) {
+  return (
+    <>
+      <div className='mm-container-root flex flex-col md:flex-row'> {/*flex flex-col  md:flex-row md:h-[100vh]*/}
+        {children}
+      </div>
+    </>
   );
 }
 function App() {
 
   return (
       <BrowserRouter basename={"/faltas"}>
+        <AuthProvider>
         <Routes>
           <Route path='/' element={<MyLandingContainer><Landing/></MyLandingContainer>}></Route>
           <Route path='/home' element={<MyLandingContainer><Landing/></MyLandingContainer>}></Route>
@@ -50,14 +73,15 @@ function App() {
           </Route>
 
           <Route path='/login' element={
-              <MyMainPageContainer>
+              <MyMainPageContainerLogin>
                   <Login/>
-              </MyMainPageContainer>}>    
+              </MyMainPageContainerLogin>}>    
           </Route>
 
           <Route path='/error' element={<ErrorMessage/>}></Route>
           <Route path='*' element={<ErrorMessage/>}></Route>
         </Routes>
+        </AuthProvider>
       </BrowserRouter>
   )
 }

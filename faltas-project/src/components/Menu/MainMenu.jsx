@@ -5,8 +5,9 @@ import { IonIcon } from '@ionic/react';
 import { logOutOutline,settingsOutline,calendar, closeOutline, menuOutline, handLeft } from 'ionicons/icons';
 import useMobile from "../../hooks/useMobile";
 import useEffectAddWindowEvent from "../../hooks/useEffectAddWindowEvent";
-import { saveTokenInCookies } from "../../service/AuthorizationService";
+import { useAuth } from "../../context/authenticationState";
 export default function MainMenu(){
+    const {logout} =useAuth();
     const location = useLocation();
     const [activeButton, setActiveButton] = useState({
         faltas: '',
@@ -19,7 +20,7 @@ export default function MainMenu(){
       };
 
       const cerrarSesion=()=>{
-        saveTokenInCookies(null);
+        logout()
       }
   
 

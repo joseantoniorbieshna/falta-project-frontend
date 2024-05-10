@@ -100,10 +100,21 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
         return fecha.getDate();
     });
 
-    const diaActual = getActualDate().getDate();
+    const isActualFechaiWithIndiceDay=(diaIndice)=>{
+        const yearProve = lunesCercano.getFullYear();
+        const monthProve = String(lunesCercano.getMonth() + 1).padStart(2, '0');
+        const dayProve = parseInt(String(lunesCercano.getDate()).padStart(2, '0'))+diaIndice;
+
+        const yearActual = getActualDate().getFullYear();
+        const monthActual = String(getActualDate().getMonth() + 1).padStart(2, '0');
+        const dayActual = String(getActualDate().getDate()).padStart(2, '0');
+
+        return (yearProve==yearActual && monthProve==monthActual && dayProve==dayActual)
+    }
+
     const indiceDiaActual = getActualDate().getDay() - 1;
     const diasTextoAbreviado = ['Lun', 'Mart', 'Mier', 'Juev', 'Vier']
-    const isLastDayClassName = indiceDiaActual == 4 ? 'is-last-day' : ''
+    const isLastDayClassName = indiceDiaActual == 4 && isActualFechaiWithIndiceDay(4) ? 'is-last-day' : ''
 
 
 
@@ -146,20 +157,6 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
 
     
     useResizeComponentAndWindow({ handleResize });
-
-    const isActualFechaiWithIndiceDay=(diaIndice)=>{
-        const yearProve = lunesCercano.getFullYear();
-        const monthProve = String(lunesCercano.getMonth() + 1).padStart(2, '0');
-        const dayProve = parseInt(String(lunesCercano.getDate()).padStart(2, '0'))+diaIndice;
-
-        const yearActual = getActualDate().getFullYear();
-        const monthActual = String(getActualDate().getMonth() + 1).padStart(2, '0');
-        const dayActual = String(getActualDate().getDate()).padStart(2, '0');
-
-        return (yearProve==yearActual && monthProve==monthActual && dayProve==dayActual)
-    }
-
-
 
     return (
 
