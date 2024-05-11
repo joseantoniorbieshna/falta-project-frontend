@@ -1,23 +1,61 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { sendXMLFileToPopulateDatabase } from "../service/xmlService";
+import { toast,Bounce } from "react-toastify";
+import Loading from "./Utiles/Loading";
 
 export default function AdminMain() {
-    const [hasFile, setHasFile] = useState(false);
+    const [isInRequest,setIsInRequest] = useState(false)
+    const [responseMessage,setResponseMessage] = useState(null)
+    const [hasFile,setHasFile] = useState(false)
+    const [archivo, setArchivo] = useState(null);
     const [fileName, setFileName] = useState('');
 
-    const checkHasFileSelected = () => {
+    const loadFileInState = () => {
         const input = document.getElementById('file');
         if (input.files.length > 0) {
             setHasFile(true);
+            setArchivo(input.files[0])
             setFileName(input.files[0].name);
         } else {
+            setArchivo(null)
             setHasFile(false);
             setFileName('');
         }
     };
 
-    useEffect(() => {
-        checkHasFileSelected();
-    }, []);
+    const sendFile=(event)=>{
+        setIsInRequest(true)
+        event.preventDefault()
+        if (hasFile && archivo!=null) {
+
+            sendXMLFileToPopulateDatabase(archivo)
+            .then(data=>{
+                setResponseMessage(data)
+                setIsInRequest(false)
+                console.log("lo que sucedio fue:"+data);
+            })
+            .catch(err=>{
+                setResponseMessage(null)
+                setIsInRequest(false)
+                console.log("el error es:"+err.message);
+            })
+          
+        }else{
+            toast.error("Selecciona un archivo xml", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+                setIsInRequest(false)
+        }
+
+    }
 
     const clickButtonFile = (e) => {
         e.preventDefault();
@@ -35,7 +73,7 @@ export default function AdminMain() {
                 <form>
                     <div className="flex flex-row items-center">
                         <button onClick={clickButtonFile} className="bg-[black] text-[white] rounded-lg px-2">Seleccionar XML</button>
-                        <input type="file" id="file" accept=".xml" onChange={checkHasFileSelected} className="hidden" />
+                        <input type="file" id="file" accept=".xml" onChange={loadFileInState} className="hidden" />
                     </div>
                     {hasFile ?
                         <p>Xml seleccionado: {fileName}</p>
@@ -46,8 +84,19 @@ export default function AdminMain() {
                     <p>Esta acción puede tardar varios minutos...</p>
 
                     <div className="">
-                        <button type="submit" className="bg-green text-[black] p-2 rounded-lg">Enviar XML</button>
+                        <button type="submit" className="bg-green text-[black] p-2 rounded-lg" onClick={sendFile}>Enviar XML</button>
                     </div>
+                    {
+                        isInRequest &&
+                        <div >
+                            <Loading/>
+                        </div>
+                    }
+
+                    {
+                        responseMessage!=null && !isInRequest && <p>{responseMessage.split('\n').map((linea,index)=><React.Fragment key={index}>{linea}<br/></React.Fragment>)}</p>
+                    }
+                    
                 </form>
             </div>
         </section>

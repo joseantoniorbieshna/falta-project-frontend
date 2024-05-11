@@ -5,7 +5,7 @@ import MainMenu from './components/Menu/MainMenu'
 import { HorarioMain } from './components/HorarioMain'
 import FaltasMain from './components/FaltasMain'
 import Login from './components/Login'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import AuthProvider,{ useAuth } from './context/authenticationState'
 import AdminMain from './components/AdminMain'
 
@@ -20,10 +20,15 @@ function MyLandingContainer({ children }) {
 }
 
 function MyMainPageContainer({ children }) {
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const {isChecking,isLoggedIn,checkIsLogin} = useAuth()
   useEffect(()=>{
-    checkIsLogin()
-  },[isLoggedIn])
+    if (!isInitialRender) {
+      checkIsLogin();
+    } else {
+      setIsInitialRender(false);
+    }
+  },[isLoggedIn,isInitialRender])
 
   return (
     <>

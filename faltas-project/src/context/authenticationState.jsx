@@ -35,6 +35,7 @@ const AuthProvider = ({ children }) => {
         setIsChecking(false)
       }).catch((err)=>{
         setAllNull()
+        console.log("estoy en login:"+location.pathname!="/login");
         if(location.pathname!="/login"){
         toast.error("La sesión ha expirado o hubo un error. Vuelve a iniciar sesión", {
             position: "top-right",
