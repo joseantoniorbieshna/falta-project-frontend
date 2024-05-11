@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import XmlFileSender from "./admin/XmlFileSender";
 import UserCreator from "./admin/UserCreator";
+import { getAllProfesores } from "../service/profesorService";
+import { data } from "autoprefixer";
 
 export default function AdminMain() {
     return (

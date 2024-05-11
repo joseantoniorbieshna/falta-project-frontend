@@ -3,41 +3,33 @@ import { IonIcon } from '@ionic/react';
 import { chevronDownOutline, searchOutline } from 'ionicons/icons';
 
 
-const Selector = () => {
+const Selector = ({messageSearch,selectMessage,itemsInput, changeItemSelected, itemSelected}) => {
 
-    const messageSearch = "Introduce el nombre un profesor"
-    const selectMessage = "Selecciona un profesor"
-    const [items, setItems] = useState([{ name: "Nieves" }, 
-    { name: "Jose eeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeee eeeeeeeeee1" },
-    { name: "Jose eeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeee eeeeeeeeee2" },
-    { name: "Jose eeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeee eeeeeeeeee3" },
-    { name: "Jose eeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeee eeeeeeeeee4" },
-    { name: "Jose eeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeee eeeeeeeeee5" },
-    { name: "Jose eeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeee eeeeeeeeee6" },
-    { name: "Jose eeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeee eeeeeeeeee7" },
-    { name: "Jose eeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeeeeee eeeeeeeeee8" },
-    { name: "Fernando" }]);
+    const [items, setItems] = useState(itemsInput);
     const [inputValue, setInputValue] = useState("");
-    const [selected, setSelected] = useState("");
     const [open, setOpen] = useState(false);
+
+    useEffect(()=>{
+        setItems(itemsInput)
+    },[itemsInput])
 
     return (
         <div className="w-[20rem] font-medium min-h-min max-h-80">
             <div
                 onClick={() => setOpen(!open)}
-                className={`bg-gray w-full p-2 flex items-center justify-between rounded ${!selected && "text-gray-700"
+                className={`bg-gray w-full p-2 flex items-center justify-between rounded ${itemSelected!=null && "text-gray-700"
                     }`}
             >
-                {selected
-                    ? selected?.length > 25
-                        ? selected?.substring(0, 25) + "..."
-                        : selected
+                {itemSelected!=null
+                    ? itemSelected?.nombre?.length > 25
+                        ? itemSelected?.nombre?.substring(0, 25) + "..."
+                        : itemSelected.nombre
                     : selectMessage}
                 <IonIcon icon={chevronDownOutline}></IonIcon>
             </div>
             
             <ul
-                className={`bg-white mt-2 overflow-y-auto ${open ? "max-h-60" : "max-h-0"
+                className={`absolute bg-white mt-2 overflow-y-auto ${open ? "max-h-60" : "max-h-0"
                     } `}
             >
                 <div className="flex items-center px-2 sticky top-0 bg-white">
@@ -51,25 +43,27 @@ const Selector = () => {
                     />
                 </div>
                 {items?.map((item, index) => (
+                    
                     <li
                         key={index}
                         className={`p-2 text-sm hover:bg-sky-600 hover:text-black hover:bg-gray
-            ${item?.name?.toLowerCase() === selected?.toLowerCase() &&
+            ${item?.nombre?.toLowerCase() === itemSelected?.nombre?.toLowerCase() &&
                             "bg-black text-white hover:bg-black hover:text-white "
                             }
-            ${item?.name?.toLowerCase().includes(inputValue)
+            ${item?.nombre?.toLowerCase().includes(inputValue)
                                 ? "block"
                                 : "hidden"
                             }`}
                         onClick={() => {
-                            if (item?.name?.toLowerCase() !== selected.toLowerCase()) {
-                                setSelected(item?.name);
+                            if (itemSelected==null || item?.nombre?.toLowerCase() !== itemSelected.nombre?.toLowerCase()) {
+                                changeItemSelected(item);
                                 setOpen(false);
                                 setInputValue("");
                             }
                         }}
                     >
-                        {item?.name}
+                        
+                        {item?.nombre}
                     </li>
                 ))}
             </ul>
