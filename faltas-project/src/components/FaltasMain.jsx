@@ -97,7 +97,7 @@ export default function FaltasMain(){
       }, [fechaBase]);
 
     return (
-        <section className="hh-section-horario flex-1 flex flex-col justify-center">
+        <section className="hh-section-horario flex-auto flex flex-col justify-center">
         <div className="hm-title-container md:p-5 p-2">
             <h1 className='font-bold text-2xl text-blacklight'>Faltas</h1>
         </div>

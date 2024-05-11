@@ -1,104 +1,18 @@
-import React, { useState } from "react";
-import { sendXMLFileToPopulateDatabase } from "../service/xmlService";
-import { toast,Bounce } from "react-toastify";
-import Loading from "./Utiles/Loading";
+import React from "react";
+import XmlFileSender from "./admin/XmlFileSender";
+import UserCreator from "./admin/UserCreator";
 
 export default function AdminMain() {
-    const [isInRequest,setIsInRequest] = useState(false)
-    const [responseMessage,setResponseMessage] = useState(null)
-    const [hasFile,setHasFile] = useState(false)
-    const [archivo, setArchivo] = useState(null);
-    const [fileName, setFileName] = useState('');
-
-    const loadFileInState = () => {
-        const input = document.getElementById('file');
-        if (input.files.length > 0) {
-            setHasFile(true);
-            setArchivo(input.files[0])
-            setFileName(input.files[0].name);
-        } else {
-            setArchivo(null)
-            setHasFile(false);
-            setFileName('');
-        }
-    };
-
-    const sendFile=(event)=>{
-        setIsInRequest(true)
-        event.preventDefault()
-        if (hasFile && archivo!=null) {
-
-            sendXMLFileToPopulateDatabase(archivo)
-            .then(data=>{
-                setResponseMessage(data)
-                setIsInRequest(false)
-                console.log("lo que sucedio fue:"+data);
-            })
-            .catch(err=>{
-                setResponseMessage(null)
-                setIsInRequest(false)
-                console.log("el error es:"+err.message);
-            })
-          
-        }else{
-            toast.error("Selecciona un archivo xml", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Bounce,
-                });
-                setIsInRequest(false)
-        }
-
-    }
-
-    const clickButtonFile = (e) => {
-        e.preventDefault();
-        document.getElementById('file').click();
-    };
-
     return (
-        <section className="hh-section-horario flex-1 flex flex-col justify-center">
-            <div className="hm-title-container md:p-5 p-2 border-b-[3px] border-[#F0F0F0]">
+        <section className="hh-section-horario flex-auto flex flex-col justify-center overflow-hidden items-center">
+            <div className="hm-title-container md:p-5 p-2 border-b-[3px] border-[#F0F0F0] w-full">
                 <h1 className='font-bold text-2xl text-blacklight'>Admin</h1>
             </div>
-
-            <div className="flex-auto flex flex-col gap-1 md:px-5 p-2">
-                <h1 className='font-bold text-2xl text-blacklight'>XML</h1>
-                <form>
-                    <div className="flex flex-row items-center">
-                        <button onClick={clickButtonFile} className="bg-[black] text-[white] rounded-lg px-2">Seleccionar XML</button>
-                        <input type="file" id="file" accept=".xml" onChange={loadFileInState} className="hidden" />
-                    </div>
-                    {hasFile ?
-                        <p>Xml seleccionado: {fileName}</p>
-                        :
-                        <p>No has seleccionado ningún archivo.</p>
-                    }
-                    <p><span className="text-[red]">ATENCION:</span>Resetearas la base</p>
-                    <p>Esta acción puede tardar varios minutos...</p>
-
-                    <div className="">
-                        <button type="submit" className="bg-green text-[black] p-2 rounded-lg" onClick={sendFile}>Enviar XML</button>
-                    </div>
-                    {
-                        isInRequest &&
-                        <div >
-                            <Loading/>
-                        </div>
-                    }
-
-                    {
-                        responseMessage!=null && !isInRequest && <p>{responseMessage.split('\n').map((linea,index)=><React.Fragment key={index}>{linea}<br/></React.Fragment>)}</p>
-                    }
-                    
-                </form>
+            <div className="flex-auto overflow-y-scroll w-full">
+                <UserCreator></UserCreator>
+                <XmlFileSender></XmlFileSender>
             </div>
+            
         </section>
     )
 }
