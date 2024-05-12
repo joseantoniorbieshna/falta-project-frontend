@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Selector from "../Utiles/Selector";
-import { getAllProfesores } from "../../service/profesorService";
+import { getAllProfesoresWithoutUser } from "../../service/profesorService";
 import { createUserApi } from "../../service/AuthorizationService";
 import { toast, Bounce } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -72,7 +72,7 @@ export default function UserCreator() {
 
     useEffect(() => {
 
-        getAllProfesores()
+        getAllProfesoresWithoutUser()
             .then((profesoresList) => {
                 setProfesores(profesoresList)
             })
