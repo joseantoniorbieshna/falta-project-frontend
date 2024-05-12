@@ -87,11 +87,11 @@ export default function UserCreator() {
             <h1 className='font-bold text-2xl text-blacklight'>Creación de Usuario</h1>
             <form className="flex flex-col items-center">
                 <div className="flex flex-row gap-3 mb-3 flex-wrap justify-center md:justify-start ">
-                    <div className="flex justify-center border-2 rounded-md">
-                        <input id="username" name="username" className="px-2" type="text" value={username} placeholder="Usuario" onChange={({ target }) => { setUsername(target.value) }}></input>
+                    <div className="flex justify-center">
+                        <input id="username" name="username" className="px-2 border-2 rounded-md" type="text" value={username} placeholder="Usuario" onChange={({ target }) => { setUsername(target.value) }}></input>
                     </div>
-                    <div className="flex justify-center border-2 rounded-md ">
-                        <input className="px-2" type="password" id="pass" name="password" value={password} placeholder="contraseña" onChange={({ target }) => { setPassword(target.value) }}></input>
+                    <div className="flex justify-center">
+                        <input className="px-2 border-2 rounded-md" type="password" id="pass" name="password" value={password} placeholder="contraseña" onChange={({ target }) => { setPassword(target.value) }}></input>
                     </div>
                 </div>
                 <Selector messageSearch={messageSearch} selectMessage={selectMessage} itemsInput={profesores} changeItemSelected={SetProfesorSelected} itemSelected={profesorSelected}></Selector>

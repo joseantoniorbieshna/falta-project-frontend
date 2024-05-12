@@ -162,7 +162,7 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
 
         <>
             {/*HORARIO INFO*/}
-            <div className={`hh-horario-container flex-1${isLastDayClassName}`}>
+            <div className={`hh-horario-container ${isLastDayClassName}`}>
 
                 {!isMobile ?
                     <div className={`hh-horario-head ${isLastDayClassName}`}>
