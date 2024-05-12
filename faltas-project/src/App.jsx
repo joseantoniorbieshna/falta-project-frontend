@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import {BrowserRouter, Route, Routes, useLocation} from 'react-router-dom'
 import Landing from './components/Landing/Landing'
 import ErrorMessage from './components/Utiles/ErrorMessage'
 import MainMenu from './components/Menu/MainMenu'
@@ -20,15 +20,20 @@ function MyLandingContainer({ children }) {
 }
 
 function MyMainPageContainer({ children }) {
+  const location = useLocation();
+  const [proveLocation,setProveLocation] = useState("")
   const [isInitialRender, setIsInitialRender] = useState(true);
   const {isChecking,isLoggedIn,checkIsLogin} = useAuth()
+
   useEffect(()=>{
-    if (!isInitialRender) {
+    if (!isInitialRender && proveLocation!=location.pathname) {
+      setProveLocation(location.pathname)
       checkIsLogin();
+      console.log("Comprobando sesion");
     } else {
       setIsInitialRender(false);
     }
-  },[isLoggedIn,isInitialRender])
+  },[isLoggedIn,isInitialRender,location.pathname])
 
   return (
     <>

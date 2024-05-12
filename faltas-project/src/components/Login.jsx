@@ -11,7 +11,6 @@ export default function Login(){
     const [isProvedLogged,setIsProvedLogged] =  useState(false)
     const [username,setUsername] = useState("")
     const [password,setPassword] = useState("")
-    const navigate = useNavigate();
 
     useEffect(()=> {
         checkIsLogin()

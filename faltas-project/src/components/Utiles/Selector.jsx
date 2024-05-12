@@ -17,7 +17,7 @@ const Selector = ({messageSearch,selectMessage,itemsInput, changeItemSelected, i
         <div className="w-[20rem] font-medium min-h-min max-h-80">
             <div
                 onClick={() => setOpen(!open)}
-                className={`bg-gray w-full p-2 flex items-center justify-between rounded ${itemSelected!=null && "text-gray-700"
+                className={`bg-gray w-full p-2 flex items-center justify-between rounded cursor-pointer ${itemSelected!=null && "text-gray-700"
                     }`}
             >
                 {itemSelected!=null
@@ -46,10 +46,10 @@ const Selector = ({messageSearch,selectMessage,itemsInput, changeItemSelected, i
                     
                     <li
                         key={index}
-                        className={`p-2 text-sm hover:bg-sky-600 hover:text-black hover:bg-gray
-            ${item?.nombre?.toLowerCase() === itemSelected?.nombre?.toLowerCase() &&
-                            "bg-black text-white hover:bg-black hover:text-white "
-                            }
+                        className={`p-2 text-sm hover:bg-sky-600 cursor-pointer 
+            ${item?.nombre?.toLowerCase() === itemSelected?.nombre?.toLowerCase() ?
+                            "bg-black text-white hover:bg-black hover:text-white"
+                            : "hover:text-black hover:bg-gray"}
             ${item?.nombre?.toLowerCase().includes(inputValue)
                                 ? "block"
                                 : "hidden"

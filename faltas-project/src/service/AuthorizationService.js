@@ -1,5 +1,6 @@
 const URL_BACKEND_AUTH = import.meta.env.VITE_BACKEND_END_POINT + "/auth";
 const URL_BACKEND_AUTH_LOGIN = URL_BACKEND_AUTH+"/log-in";
+const URL_BACKEND_AUTH_SIGNUP = URL_BACKEND_AUTH+"/sign-up";
 const URL_BACKEND_AUTH_INFO = URL_BACKEND_AUTH+"/info";
 export const getloginUserToken = (user,password) => {
     return fetch(URL_BACKEND_AUTH_LOGIN, {
@@ -20,6 +21,28 @@ export const getloginUserToken = (user,password) => {
     })
     .then((res)=>{
        return res.jwt
+    })
+};
+
+export const createUserApi = (username,password,referenciaProfesor) => {
+    console.log("u:"+username+" p:"+password+" ref:"+referenciaProfesor);
+    return fetch(URL_BACKEND_AUTH_SIGNUP, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': getTokenBearerInCookies()
+        },
+        body: JSON.stringify({
+            username: username,
+            password: password,
+            referenciaProfesor:referenciaProfesor
+        })
+    })
+    .then((res) =>{
+        if (!res.ok) {
+            throw new Error('Error al crear usuario: ',{cause:{status:res.status}});
+        }
+        return res.json();
     })
 };
 
@@ -60,3 +83,4 @@ export const deleteTokenInCookies=()=>{
 export const getTokenBearerInCookies=()=>{
     return `Bearer ${window.localStorage.getItem('tokenBackend')}`
 }
+

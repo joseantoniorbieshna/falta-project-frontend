@@ -10,7 +10,7 @@ export default function AdminMain() {
             <div className="hm-title-container md:p-5 p-2 border-b-[3px] border-[#F0F0F0] w-full">
                 <h1 className='font-bold text-2xl text-blacklight'>Admin</h1>
             </div>
-            <div className="flex-auto overflow-y-scroll w-full">
+            <div className="flex-auto overflow-y-auto w-full">
                 <UserCreator></UserCreator>
                 <XmlFileSender></XmlFileSender>
             </div>

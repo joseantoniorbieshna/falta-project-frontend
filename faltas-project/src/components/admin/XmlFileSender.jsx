@@ -71,11 +71,11 @@ export default function XmlFileSender() {
                         <input type="file" id="file" accept=".xml" onChange={loadFileInState} className="hidden" />
                     </div>
                     {hasFile ?
-                        <p>Xml seleccionado: {fileName}</p>
+                        <p><span className="font-bold">Xml seleccionado: </span>{fileName}</p>
                         :
                         <p>No has seleccionado ningún archivo.</p>
                     }
-                    <p><span className="text-[red]">ATENCION:</span>Resetearas la base</p>
+                    <p><span className="text-[red]"><span className="font-bold">ATENCION:</span> </span>Resetearas la base</p>
                     <p>Esta acción puede tardar varios minutos...</p>
 
                     <div className="">
