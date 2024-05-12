@@ -12,6 +12,7 @@ import { getAllFaltasBetweenFechas } from "../service/FaltaService";
 import PopUpSustituirFalta from "./PopUps/PopUpSustituirFalta";
 import PopUpEditarEliminarFalta from "./PopUps/PopUpEditarEliminarFalta";
 import { useParams,useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authenticationState";
 function getFechaBase(year,month,day){
     if(!isNaN(year) && year!=null && !isNaN(month) && month!=null && !isNaN(day) && day!=null){
         try{
@@ -28,6 +29,8 @@ function getFechaBase(year,month,day){
 }
 
 export default function FaltasMain(){
+    const {referenciaProfesor} = useAuth();
+    const [referenciaProfesorSesionActual,setReferenciaProfesorSesionActual] = useState(referenciaProfesor)
     const { year,month,day } = useParams();
     const navigate = useNavigate();
     const [fechaBase,setFechaBase] = useState(getFechaBase(year,month,day))
@@ -55,7 +58,6 @@ export default function FaltasMain(){
           .then(([timeHorario,faltas]) => {
               setAllHours(timeHorario);
               faltas = faltas.map((horaHorarioDTO,index)=>{
-                  const referenciaProfesorSesionActual = "100041110"
                   const {comentario,fecha,referenciaSesion,dia,indice,materia,grupos,curso,nombreProfesor,referenciaProfesor,nombreProfesorSustituto,referenciaProfesorSustituto} = horaHorarioDTO
   
                   const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso} profesor={nombreProfesor} profesorSustituto={nombreProfesorSustituto}></ContainerInfoGrupoYCurso>

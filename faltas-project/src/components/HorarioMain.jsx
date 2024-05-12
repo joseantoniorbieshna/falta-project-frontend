@@ -11,9 +11,11 @@ import MensajeHorario from './MensajeHorario';
 import ContainerInfoGrupoYCurso from './ContainerInfoGrupoYCurso';
 import { getActualDate, getLunesCercano } from '../utils/myDateFunctions';
 import PopUpCreateFaltaHorario from './PopUps/PopUpCreateFaltaHorario';
+import { useAuth } from '../context/authenticationState';
 
 
 export function HorarioMain() {
+    const {referenciaProfesor} = useAuth();
     const [isLoad,setLoad] = useState(false)
     const [allHours,setAllHours] = useState(null);
     const [allElementsHour,setAllElementHour] = useState(null);
@@ -23,7 +25,7 @@ export function HorarioMain() {
     useEffect(() => {
         Promise.all([
           getAllHours(),
-          getHorarioByProfesor({referenciaProfesor:"100041110"})
+          getHorarioByProfesor({referenciaProfesor:referenciaProfesor})
         ])
         .then(([timeHorario, horasHorario]) => {
             setAllHours(timeHorario);

@@ -38,7 +38,7 @@ function MyMainPageContainer({ children }) {
   return (
     <>
     {
-      !isChecking && isLoggedIn && 
+      !isInitialRender && isLoggedIn &&
       <div className='mm-container-root flex flex-col md:flex-row'> {/*flex flex-col  md:flex-row md:h-[100vh]*/}
         {children}
       </div>

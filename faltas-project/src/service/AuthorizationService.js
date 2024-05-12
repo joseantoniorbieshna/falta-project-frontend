@@ -1,8 +1,8 @@
 const URL_BACKEND_AUTH = import.meta.env.VITE_BACKEND_END_POINT + "/auth";
-const URL_BACKEND_AUTH_LOGIN = URL_BACKEND_AUTH+"/log-in";
-const URL_BACKEND_AUTH_SIGNUP = URL_BACKEND_AUTH+"/sign-up";
-const URL_BACKEND_AUTH_INFO = URL_BACKEND_AUTH+"/info";
-export const getloginUserToken = (user,password) => {
+const URL_BACKEND_AUTH_LOGIN = URL_BACKEND_AUTH + "/log-in";
+const URL_BACKEND_AUTH_SIGNUP = URL_BACKEND_AUTH + "/sign-up";
+const URL_BACKEND_AUTH_INFO = URL_BACKEND_AUTH + "/info";
+export const getloginUserToken = (user, password) => {
     return fetch(URL_BACKEND_AUTH_LOGIN, {
         method: 'POST',
         headers: {
@@ -13,20 +13,19 @@ export const getloginUserToken = (user,password) => {
             password: password
         })
     })
-    .then((res) =>{
-        if (!res.ok) {
-            throw new Error('Error al iniciar',{cause:{status:res.status}});
-          }
-          return res.json();
-    })
-    .then((res)=>{
-       return res.jwt
-    })
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error('Error al iniciar', { cause: { status: res.status } });
+            }
+            return res.json();
+        })
+        .then((res) => {
+            return res.jwt
+        })
 };
 
-export const createUserApi = (username,password,referenciaProfesor) => {
-    console.log("u:"+username+" p:"+password+" ref:"+referenciaProfesor);
-    return fetch(URL_BACKEND_AUTH_SIGNUP, {
+export const createUserApi = async (username, password, referenciaProfesor) => {
+    return await fetch(URL_BACKEND_AUTH_SIGNUP, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -35,14 +34,17 @@ export const createUserApi = (username,password,referenciaProfesor) => {
         body: JSON.stringify({
             username: username,
             password: password,
-            referenciaProfesor:referenciaProfesor
+            referenciaProfesor: referenciaProfesor
         })
     })
-    .then((res) =>{
-        if (!res.ok) {
-            throw new Error('Error al crear usuario: ',{cause:{status:res.status}});
+    .then(response => {
+        if (response.status!=201) {
+            return response.json().then(res => {
+                let errorMessage = res.message || "No se ha podido crear el usuario";
+                throw new Error(errorMessage, { cause: { status: response.status } });
+            });
         }
-        return res.json();
+        return response.json();
     })
 };
 
@@ -54,33 +56,33 @@ export const getInfoUserAuthentication = () => {
             'Authorization': getTokenBearerInCookies()
         }
     })
-    .then((res) =>{
-        if (!res.ok) {
-            throw new Error('Error al iniciar',{cause:{status:res.status}});
-          }
-          return res.json();
-    })
-    .then((res)=>{
-        const username = res.username
-        const role = res.role
-        const referenciaProfesor = res.referenciaProfesor
-       return {username,role,referenciaProfesor}
-    })
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error('Error al iniciar', { cause: { status: res.status } });
+            }
+            return res.json();
+        })
+        .then((res) => {
+            const username = res.username
+            const role = res.role
+            const referenciaProfesor = res.referenciaProfesor
+            return { username, role, referenciaProfesor }
+        })
 };
 
-export const saveTokenInCookies=(token)=>{
+export const saveTokenInCookies = (token) => {
     window.localStorage.setItem(
-        'tokenBackend',token
+        'tokenBackend', token
     )
 }
 
-export const deleteTokenInCookies=()=>{
+export const deleteTokenInCookies = () => {
     window.localStorage.setItem(
-        'tokenBackend',null
+        'tokenBackend', null
     )
 }
 
-export const getTokenBearerInCookies=()=>{
+export const getTokenBearerInCookies = () => {
     return `Bearer ${window.localStorage.getItem('tokenBackend')}`
 }
 
