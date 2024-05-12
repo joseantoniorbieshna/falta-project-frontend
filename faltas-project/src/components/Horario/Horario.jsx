@@ -9,87 +9,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import useScrollComponent from '../../hooks/useScrollComponent';
 import useResizeComponentAndWindow from '../../hooks/useResizeComponentAndWindow';
 import { getActualDate } from '../../utils/myDateFunctions';
-
-const HorarioHeadDayWeek = React.forwardRef(({ dayOfWeek, dayOfMonth, isActual = false, children, showDayNumber }, ref) => {
-    const clasesStyle = isActual ? 'actual-day' : 'no-actual-day'
-    const dia = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes']
-    const classNameLastDay = dayOfWeek == 4 ? 'last-day-horario-head' : ''
-    const classNameNotShowDayNumber = !showDayNumber? 'hh-is-only-day-of-week-name':''
-    return (
-        <div ref={ref} id={`day-${dayOfWeek}`} name={`day-${dayOfWeek}`} className={`${clasesStyle} ${classNameLastDay} ${classNameNotShowDayNumber} hhdk-hora-head flex flex-col items-center justify-center p-5`}>
-            <div className={`hhdk-dia-semana ${clasesStyle}`}>
-                {dia[dayOfWeek]}
-            </div>
-            {
-                showDayNumber ?
-                    <div className='hh-dia-title '>
-                        Dia {dayOfMonth}
-                    </div>
-                    :
-                    <></>
-            }
-
-            {children}
-        </div>
-    )
-});
-
-function DayNavigationMobile({ dayIndex, diasTextoAbreviado, actualDay, isActual, isActive, setActive, showDayNumber }, key) {
-    const classNameActualDay = isActual ? 'last-day-horario-head' : ''
-    const classNameActiveDay = isActive ? 'active-horario-head' : ''
-    const classNameNotShowDayNumber = !showDayNumber? 'hh-is-only-day-of-week-name':''
-    const funcionOnCLick = (event) => {
-        /* PARA QUE NO APAREZCA EN LA RUTA */
-        event.preventDefault();
-        const targetId = event.currentTarget.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-            targetElement.scrollIntoView({ behavior: 'instant' });
-        }
-        /* ACTIVAR EL COLOR */
-        setActive(dayIndex)
-    }
-    return (
-        <a key={key} href={`#day-${dayIndex}`} name={`#day-${dayIndex}`} className={`hh-menu-mobile-part-day ${classNameActualDay} ${classNameActiveDay} ${classNameNotShowDayNumber}`} onClick={funcionOnCLick}>
-            <div className='hh-menu-mobile-day-day_number' >
-                {diasTextoAbreviado}
-            </div>
-            {
-                showDayNumber?
-                <div className='hh-menu-mobile-day-day_text'>
-                    {actualDay}
-                </div>
-                :
-                <></>
-            }
-        
-        </a>
-    )
-};
-
-const HorarioTime = React.forwardRef(({ time, isActual = false }, ref) => {
-    const classNameIsActual = isActual ? 'hh-time-actual-day' : ''
-    return (
-        <div className={`hh-hora min-h-12`} ref={ref}>
-            <div className={`ht-time-del-horario ${classNameIsActual}`}>
-                <div className='ht-time-del-horario-text'>
-                    {time}
-                </div>
-            </div>
-        </div>
-    );
-});
-
-
-function HorarioHora({ children, isActual = false }) {
-    const clasesStyle = isActual ? 'actual-day' : 'no-actual-day'
-    return (
-        <div className={`hh-hora ${clasesStyle}`}>
-            {children}
-        </div>
-    );
-}
-
+import HorarioHeadDayWeek from './HorarioHeadDayWeek';
+import DayNavigationMobile from './DayNavigationMobile';
+import HorarioTime from './HorarioTime';
+import HorarioHora from './HorarioHora';
 
 
 export default function Horario({ timeArray, mensajes, showDayNumber, lunesCercano }) {

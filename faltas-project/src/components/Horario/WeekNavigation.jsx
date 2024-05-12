@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { IonIcon } from '@ionic/react'
 import './css/Horario.css'
 import { arrowBack, arrowForward } from 'ionicons/icons';
-import CalendarWeekSelector from './CalendarWeekSelector';
+import CalendarWeekSelector from '../Utiles/CalendarWeekSelector';
 
 
 export default function WeekNavigation({ lunesCercano, setFecha }) {
