@@ -1,3 +1,5 @@
+import { getTokenBearerInCookies } from "./AuthorizationService";
+
 const URL_BACKEND_GRAPHQL = import.meta.env.VITE_BACKEND_END_POINT + "/graphql";
 
 export const createFalta = (faltaCreateInput) => {
@@ -5,6 +7,7 @@ export const createFalta = (faltaCreateInput) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': getTokenBearerInCookies()
     },
     body: JSON.stringify({
       query: `
@@ -41,6 +44,7 @@ export const editarFaltaApi = (faltaUpdateInput) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': getTokenBearerInCookies()
     },
     body: JSON.stringify({
       query: `
@@ -77,6 +81,7 @@ export const deleteFaltaApi = (faltaDeleteInput) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': getTokenBearerInCookies()
     },
     body: JSON.stringify({
       query: `
@@ -102,12 +107,49 @@ export const deleteFaltaApi = (faltaDeleteInput) => {
   });
 };
 
+
+export const sustituirFaltaApi = (faltaSustituirInput) => {
+  return fetch(URL_BACKEND_GRAPHQL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': getTokenBearerInCookies()
+    },
+    body: JSON.stringify({
+      query: `
+      mutation sustituirFalta($faltaSustituirInput: IdFaltaDTO!) {
+        sustituirFalta(faltaSustituirInput: $faltaSustituirInput) {
+          profesorSustituto{
+            referencia
+          }
+        }
+      }
+      `,
+      variables: {
+        faltaSustituirInput: faltaSustituirInput,
+      },
+    }),
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    console.log(res);
+    if (res.errors) {
+      console.log(res.errors);
+      throw new Error(res.errors[0].message);
+    } else {
+      console.log(res.data);
+      return res.data;
+    }
+  });
+};
+
 export const getAllFaltasBetweenFechas = ({ fechaInicio,fechaFin }) => {
   console.log(fechaInicio,fechaFin);
   return fetch(URL_BACKEND_GRAPHQL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': getTokenBearerInCookies()
     },
     body: JSON.stringify({
       query: `

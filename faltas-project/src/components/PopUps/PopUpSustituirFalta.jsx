@@ -3,17 +3,47 @@ import './css/PopUpGeneral.css'
 import '../css/MensajeHorario.css'
 import './css/PopUpSustituirFalta.css'
 import { close } from 'ionicons/icons';
-import { createFalta } from '../../service/FaltaService';
+import { createFalta, sustituirFaltaApi } from '../../service/FaltaService';
 import { useState } from 'react';
 import { convertDateToString } from '../../utils/myDateFunctions';
-export default function PopUpSustituirFalta({dia,indice, referenciaSesion, changeToClose, materia,comentario, containerInfoGrupoYCurso  }) {
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+export default function PopUpSustituirFalta({dia,indice, referenciaSesion, fechaInput, changeToClose, materia,comentario, containerInfoGrupoYCurso  }) {
     const diaDeLaSemanaPalabra = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"]
     const indiceDeLaSemanaPalabra = ["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
-    const fechaFaltaString = new Date().toLocaleDateString("es-ES"); 
-
-    console.log(convertDateToString(new Date())+"hihi");
+    const fechaFaltaString = fechaInput.toLocaleDateString("es-ES"); 
 
     const sustituirFalta = ()=>{
+        const faltaSustituirInput = { dia, indice, referenciaSesion, fecha: convertDateToString(fechaInput)}
+
+        sustituirFaltaApi(faltaSustituirInput)
+        .then(res=>{
+            toast.success('Falta sustituida con exito!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+        })
+        .catch(err=>{
+            toast.error(err.message, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+                });
+
+        })
     }
 
     const noPropagationChangeToClose = (e) => {

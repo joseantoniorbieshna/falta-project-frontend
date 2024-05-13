@@ -91,7 +91,6 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                 setOpenDelete(false)
             })
             .catch((err) => {
-                console.log(err.message);
                 toast.error(err.message, {
                     position: "top-right",
                     autoClose: 5000,

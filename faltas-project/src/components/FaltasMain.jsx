@@ -66,15 +66,19 @@ export default function FaltasMain(){
                   /* COLOR Y ACCION*/
                   let color="#d3d3d3"; // COLOR POR DEFECTO (GRIS)
                   console.log(referenciaProfesor);
+                  console.log(referenciaProfesorSustituto+" - "+referenciaProfesorSesionActual);
                   if(referenciaProfesorSesionActual==referenciaProfesor){ // Es mi falta
                       console.log("falta mia");
                       color="#9cd6ff" // COLOR ES MI FALTA (AZUL) 
                       poUp = <PopUpEditarEliminarFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso}comentarioInput={comentario} fechaInput={fecha} reloadData={loadDataApi}></PopUpEditarEliminarFalta>
-                  }else if(nombreProfesorSustituto && referenciaProfesorSustituto!=referenciaProfesorSesionActual){ // La estoy sustituyendo
+                  }else if(referenciaProfesorSustituto!=null && referenciaProfesorSustituto==referenciaProfesorSesionActual){ // La estoy sustituyendo
+                    color= "#ffdb9c"
+                    poUp=null //poner accion popup para poder eliminar mi falta
+                }else if(referenciaProfesorSustituto!=null && referenciaProfesorSustituto!=referenciaProfesorSesionActual){ // La estoy sustituyendo
                       color= "#ff9c9c"
                       poUp=null //poner accion popup para poder eliminar mi falta
                   }else{
-                      poUp = <PopUpSustituirFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} comentario={comentario}></PopUpSustituirFalta>
+                      poUp = <PopUpSustituirFalta dia={dia} indice={indice}  referenciaSesion={referenciaSesion} fechaInput={fecha} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} comentario={comentario}></PopUpSustituirFalta>
                   }
   
                   return <MensajeHorario backgroundColor={color} key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={poUp}></MensajeHorario>
