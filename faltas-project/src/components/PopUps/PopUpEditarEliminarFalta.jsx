@@ -113,9 +113,9 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
         <div className={`menumenh-container-parent`} id='parent-menu-mensaje' onClick={(e) => noPropagationChangeToClose(e)}>
             <div className="menumenh-container">
                 <IonIcon icon={close} onClick={changeToClose} className={'menumenh-close-button text-blacklight text-4xl cursor-pointer'}></IonIcon>
-                <h1 className='menumenh-title bg-[#ffdb9c] text-4xl font-bold'>Editar/Eliminar falta</h1>
+                <h1 className='menumenh-title bg-[#9cd6ff] text-2xl font-bold'>Editar/Eliminar falta</h1>
                 <div className='menumenh-container-info'>
-                    <h2 className='text-2xl font-semibold break-words'>{materia}</h2>
+                    <h2 className='text-lg font-semibold break-words'>{materia}</h2>
                     <div className='flex flex-row items-end'>
                         <p className='italic mr-2'><span className='m-text-span'>Dia: </span>{diaDeLaSemanaPalabra[dia]}</p>
                         <p className='italic'><span className='m-text-span'>Hora: </span>{indiceDeLaSemanaPalabra[indice]} </p>

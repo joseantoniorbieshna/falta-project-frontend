@@ -143,6 +143,43 @@ export const sustituirFaltaApi = (faltaSustituirInput) => {
   });
 };
 
+export const cancelarFaltaApi = (faltaCancelarInput) => {
+  return fetch(URL_BACKEND_GRAPHQL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': getTokenBearerInCookies()
+    },
+    body: JSON.stringify({
+      query: `
+      mutation cancelarFalta($faltaCancelarInput: IdFaltaDTO!) {
+        cancelarFalta(faltaCancelarInput: $faltaCancelarInput) {
+          horaHorario {
+            sesion {
+              referencia
+            }
+          }
+        }
+      }
+      `,
+      variables: {
+        faltaCancelarInput: faltaCancelarInput,
+      },
+    }),
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    console.log(res);
+    if (res.errors) {
+      console.log(res.errors);
+      throw new Error(res.errors[0].message);
+    } else {
+      console.log(res.data);
+      return res.data;
+    }
+  });
+};
+
 export const getAllFaltasBetweenFechas = ({ fechaInicio,fechaFin }) => {
   console.log(fechaInicio,fechaFin);
   return fetch(URL_BACKEND_GRAPHQL, {
