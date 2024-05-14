@@ -8,10 +8,12 @@ import { useState } from 'react';
 import { convertDateToString } from '../../utils/myDateFunctions';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../../context/authenticationState';
 export default function PopUpSustituirFalta({dia,indice, referenciaSesion, fechaInput, changeToClose, materia,comentario, containerInfoGrupoYCurso  }) {
     const diaDeLaSemanaPalabra = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"]
     const indiceDeLaSemanaPalabra = ["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
     const fechaFaltaString = fechaInput.toLocaleDateString("es-ES"); 
+    const {checkIsLogin} = useAuth()
 
     const sustituirFalta = ()=>{
         const faltaSustituirInput = { dia, indice, referenciaSesion, fecha: convertDateToString(fechaInput)}
@@ -29,6 +31,7 @@ export default function PopUpSustituirFalta({dia,indice, referenciaSesion, fecha
                 theme: "dark",
                 transition: Bounce,
                 });
+                checkIsLogin()
         })
         .catch(err=>{
             toast.error(err.message, {
@@ -42,6 +45,7 @@ export default function PopUpSustituirFalta({dia,indice, referenciaSesion, fecha
                 theme: "dark",
                 transition: Bounce,
                 });
+                checkIsLogin()
 
         })
     }

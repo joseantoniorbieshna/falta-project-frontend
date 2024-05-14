@@ -10,14 +10,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { convertDateToString } from '../../utils/myDateFunctions';
 import Modal from './Modal';
 import { useNavigate } from 'react-router-dom';
-export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso, comentarioInput, fechaInput, reloadData }) {
+import { useAuth } from '../../context/authenticationState';
+export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso, comentarioInput, fechaInput }) {
     const navigate = useNavigate();
     const [openDelete, setOpenDelete] = useState(false)
     const [myDate, setMyDate] = useState(fechaInput);
     const [comentario, setComentario] = useState(comentarioInput);
     const diaDeLaSemanaPalabra = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
     const indiceDeLaSemanaPalabra = ["Primera", "Segunda", "Tercera", "Recreo", "Cuarta", "Quinta", "Sexta"]
-
+    const {checkIsLogin} = useAuth()
 
 
     const editarFalta = () => {
@@ -52,7 +53,7 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                     theme: "dark",
                     transition: Bounce,
                 });
-                reloadData()
+                checkIsLogin()
                 
             })
             .catch((err) => {
@@ -68,6 +69,7 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                     theme: "dark",
                     transition: Bounce,
                 });
+                checkIsLogin()
             })
     }
 
@@ -87,8 +89,8 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                     theme: "dark",
                     transition: Bounce,
                 });
-                reloadData()
                 setOpenDelete(false)
+                checkIsLogin()
             })
             .catch((err) => {
                 toast.error(err.message, {
@@ -102,6 +104,7 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                     theme: "dark",
                     transition: Bounce,
                 });
+                checkIsLogin()
             })
     }
 

@@ -20,25 +20,15 @@ function MyLandingContainer({ children }) {
 }
 
 function MyMainPageContainer({ children }) {
-  const location = useLocation();
-  const [proveLocation,setProveLocation] = useState("")
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const {isChecking,isLoggedIn,checkIsLogin} = useAuth()
-
+  const {isLoggedIn,checkIsLogin} = useAuth()
   useEffect(()=>{
-    if (!isInitialRender && proveLocation!=location.pathname) {
-      setProveLocation(location.pathname)
       checkIsLogin();
-      console.log("Comprobando sesion");
-    } else {
-      setIsInitialRender(false);
-    }
-  },[isLoggedIn,isInitialRender,location.pathname])
+  },[isLoggedIn])
 
   return (
     <>
     {
-      !isInitialRender && isLoggedIn &&
+      isLoggedIn &&
       <div className='mm-container-root flex flex-col md:flex-row'> {/*flex flex-col  md:flex-row md:h-[100vh]*/}
         {children}
       </div>

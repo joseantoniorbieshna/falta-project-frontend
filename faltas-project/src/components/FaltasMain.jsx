@@ -30,7 +30,7 @@ function getFechaBase(year, month, day) {
 }
 
 export default function FaltasMain() {
-    const { referenciaProfesor } = useAuth();
+    const { isChecking,checkIsLogin,referenciaProfesor } = useAuth();
     const [referenciaProfesorSesionActual, setReferenciaProfesorSesionActual] = useState(referenciaProfesor)
     const { year, month, day } = useParams();
     const navigate = useNavigate();
@@ -71,7 +71,7 @@ export default function FaltasMain() {
                     if (referenciaProfesorSesionActual == referenciaProfesor) { // Es mi falta
                         console.log("falta mia");
                         color = "#9cd6ff" // COLOR ES MI FALTA (AZUL) 
-                        poUp = <PopUpEditarEliminarFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} comentarioInput={comentario} fechaInput={fecha} reloadData={loadDataApi}></PopUpEditarEliminarFalta>
+                        poUp = <PopUpEditarEliminarFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} comentarioInput={comentario} fechaInput={fecha}></PopUpEditarEliminarFalta>
                     } else if (referenciaProfesorSustituto != null && referenciaProfesorSustituto == referenciaProfesorSesionActual) { // La estoy sustituyendo
                         color = "#dff2cd"
                         poUp = <PopUpCancelarFalta dia={dia} indice={indice} referenciaSesion={referenciaSesion} fechaInput={fecha} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} comentario={comentario}></PopUpCancelarFalta>
@@ -93,15 +93,18 @@ export default function FaltasMain() {
             .catch((err) => {
                 setLoad(false);
                 console.log("err:", err);
+                checkIsLogin();
             });
     }
 
     useEffect(() => {
-        const { year, month, day } = convertDateToObjYearMonthDay(lunesCercano);
-        navigate(`/faltas/${year}/${month}/${day}`, { replace: true })
-
-        loadDataApi();
-    }, [fechaBase]);
+        if(isChecking==false){
+            const { year, month, day } = convertDateToObjYearMonthDay(lunesCercano);
+            navigate(`/faltas/${year}/${month}/${day}`, { replace: true })
+    
+            loadDataApi();
+        }
+    }, [isChecking,fechaBase]);
 
     return (
         <section className="hh-section-horario flex-auto flex flex-col justify-center">

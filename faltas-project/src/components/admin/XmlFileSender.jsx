@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { sendXMLFileToPopulateDatabase } from "../../service/xmlService";
 import { toast,Bounce } from "react-toastify";
 import Loading from "../Utiles/Loading";
+import { useAuth } from "../../context/authenticationState";
 
 export default function XmlFileSender() {
     const [isInRequest,setIsInRequest] = useState(false)
@@ -9,6 +10,7 @@ export default function XmlFileSender() {
     const [hasFile,setHasFile] = useState(false)
     const [archivo, setArchivo] = useState(null);
     const [fileName, setFileName] = useState('');
+    const {checkIsLogin} = useAuth()
 
     const loadFileInState = () => {
         const input = document.getElementById('file');
@@ -33,11 +35,13 @@ export default function XmlFileSender() {
                 setResponseMessage(data)
                 setIsInRequest(false)
                 console.log("lo que sucedio fue:"+data);
+                checkIsLogin()
             })
             .catch(err=>{
                 setResponseMessage(null)
                 setIsInRequest(false)
                 console.log("el error es:"+err.message);
+                checkIsLogin()
             })
           
         }else{

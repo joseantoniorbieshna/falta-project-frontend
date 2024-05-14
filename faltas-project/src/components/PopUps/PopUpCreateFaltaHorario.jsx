@@ -8,12 +8,14 @@ import { useState } from 'react';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { convertDateToString } from '../../utils/myDateFunctions';
+import { useAuth } from '../../context/authenticationState';
 
 export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso }) {
     const [myDate, setMyDate] = useState(null);
     const [comentario, setComentario] = useState('');
     const diaDeLaSemanaPalabra = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"]
     const indiceDeLaSemanaPalabra = ["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
+    const {checkIsLogin} = useAuth()
 
     const crearFalta = ()=>{
         /* VALIDACION */
@@ -46,6 +48,7 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
                 theme: "dark",
                 transition: Bounce,
                 });
+                checkIsLogin()
         })
         .catch((err)=>{
             console.log(err.message);
@@ -60,6 +63,7 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
                 theme: "dark",
                 transition: Bounce,
                 });
+                checkIsLogin()
         })
     }
 

@@ -5,6 +5,7 @@ import { createUserApi } from "../../service/AuthorizationService";
 import { toast, Bounce } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from "../Utiles/Loading";
+import { useAuth } from "../../context/authenticationState";
 
 export default function UserCreator() {
     const [isInRequest, setIsInRequest] = useState(false)
@@ -14,6 +15,7 @@ export default function UserCreator() {
     const selectMessage = "Selecciona un profesor"
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const {isChecking,checkIsLogin} = useAuth()
 
 
     const crearUsuario = (event) => {
@@ -38,6 +40,7 @@ export default function UserCreator() {
                     profesores.splice(indiceElemento, 1)
                     SetProfesorSelected(null)
                     setIsInRequest(false)
+                    checkIsLogin()
                 })
                 .catch(err => {
                     setIsInRequest(false)
@@ -52,6 +55,7 @@ export default function UserCreator() {
                         theme: "dark",
                         transition: Bounce,
                     });
+                    checkIsLogin()
                 });
         } else {
             toast.error("Selecciona un profesor", {
@@ -71,16 +75,19 @@ export default function UserCreator() {
     }
 
     useEffect(() => {
+        if(isChecking==false){
 
-        getAllProfesoresWithoutUser()
+            getAllProfesoresWithoutUser()
             .then((profesoresList) => {
                 setProfesores(profesoresList)
             })
             .catch((err) => {
                 console.log(err);
+                checkIsLogin()
             });
-
-    }, [])
+            
+        }
+    }, [isChecking])
 
     return (
         <div className="flex flex-col md:items-baseline items-center gap-1 md:px-5 p-2">
