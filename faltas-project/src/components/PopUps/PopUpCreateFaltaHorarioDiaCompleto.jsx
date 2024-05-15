@@ -9,16 +9,15 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { convertDateToString } from '../../utils/myDateFunctions';
 import { useAuth } from '../../context/authenticationState';
-import { getAllDayOfWeekString, getAllHoursOfDayString } from '../../utils/HoursAndWeekFunctions';
+import { getAllDayOfWeekString } from '../../utils/HoursAndWeekFunctions';
 
-export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso }) {
+export default function PopUpCreateFaltaHorarioDiaCompleto({dia,changeToClose }) {
     const [myDate, setMyDate] = useState(null);
     const [comentario, setComentario] = useState('');
     const diaDeLaSemanaPalabra = getAllDayOfWeekString()
-    const indiceDeLaSemanaPalabra = getAllHoursOfDayString()
     const {checkIsLogin} = useAuth()
 
-    const crearFalta = ()=>{
+    const crearAllFaltas = ()=>{
         /* VALIDACION */
         if(myDate==null){
             toast.error("Introduce una fecha", {
@@ -35,7 +34,9 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
             return
         }
         /* QUERY */
-        const faltaCreateObject={dia,indice,referenciaSesion,comentario,fecha:convertDateToString(myDate)}
+        const faltaCreateObject={dia,comentario,fecha:convertDateToString(myDate)}
+        console.log("registrar");
+        /*
         createFalta(faltaCreateObject)
         .then((data)=>{
             toast.success('Falta creada con exito!', {
@@ -66,6 +67,7 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
                 });
                 checkIsLogin()
         })
+        */
     }
 
     const noPropagationChangeToClose = (e) => {
@@ -76,24 +78,22 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
         <div className={`menumenh-container-parent`} id='parent-menu-mensaje' onClick={(e) => noPropagationChangeToClose(e)}>
             <div className="menumenh-container">
                     <IonIcon icon={close} onClick={changeToClose} className={'menumenh-close-button text-blacklight text-4xl cursor-pointer'}></IonIcon>
-                <h1 className='menumenh-title bg-[#dff2cd] text-2xl font-bold'>Registrar falta</h1>
+                <h1 className='menumenh-title bg-[#dff2cd] text-2xl font-bold'>Registrar falta día completo</h1>
                 <div className='menumenh-container-info'>
-                    <h2 className='text-lg font-semibold break-words'>{materia}</h2>
+                    <h2 className='text-lg font-semibold break-words'>Dia completo</h2>
                     <div className='flex flex-row items-end'>
                         <p className='italic mr-2'><span className='m-text-span'>Dia: </span>{diaDeLaSemanaPalabra[dia]}</p>
-                        <p className='italic'><span className='m-text-span'>Hora: </span>{indiceDeLaSemanaPalabra[indice]} </p>
                     </div>
                     <div>
                         <p className='text-[0.8rem] italic'><span className='m-text-span'>Fecha:</span></p>
                         <MyCalendar myDate={myDate} setMyDate={setMyDate} day={dia}></MyCalendar>
                     </div>
-                    {containerInfoGrupoYCurso}
                     <div className='menumenh-info-comentario'>
                         <p className='text-[0.8rem] italic m-text-span'>Comentario:</p>
                         <textarea type="text" className='w-[100%]' onChange={(e)=>setComentario(e.target.value)}/>
                     </div>
                     <div className='menumh-send-container'>
-                        <button className='menumh-button' onClick={(e)=>crearFalta()}>Registrar Falta</button>
+                        <button className='menumh-button' onClick={(e)=>crearAllFaltas()}>Registrar Faltas</button>
                     </div>
 
                 </div>

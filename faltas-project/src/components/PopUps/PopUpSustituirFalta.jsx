@@ -9,9 +9,10 @@ import { convertDateToString } from '../../utils/myDateFunctions';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../context/authenticationState';
+import { getAllDayOfWeekString, getAllHoursOfDayString } from '../../utils/HoursAndWeekFunctions';
 export default function PopUpSustituirFalta({dia,indice, referenciaSesion, fechaInput, changeToClose, materia,comentario, containerInfoGrupoYCurso  }) {
-    const diaDeLaSemanaPalabra = ["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"]
-    const indiceDeLaSemanaPalabra = ["Primera","Segunda","Tercera","Recreo","Cuarta","Quinta","Sexta"]
+    const diaDeLaSemanaPalabra = getAllDayOfWeekString()
+    const indiceDeLaSemanaPalabra = getAllHoursOfDayString()
     const fechaFaltaString = fechaInput.toLocaleDateString("es-ES"); 
     const {checkIsLogin} = useAuth()
 

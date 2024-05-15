@@ -11,13 +11,14 @@ import { convertDateToString } from '../../utils/myDateFunctions';
 import Modal from './Modal';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authenticationState';
+import { getAllDayOfWeekString, getAllHoursOfDayString } from '../../utils/HoursAndWeekFunctions';
 export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion, changeToClose, materia, containerInfoGrupoYCurso, comentarioInput, fechaInput }) {
     const navigate = useNavigate();
     const [openDelete, setOpenDelete] = useState(false)
     const [myDate, setMyDate] = useState(fechaInput);
     const [comentario, setComentario] = useState(comentarioInput);
-    const diaDeLaSemanaPalabra = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
-    const indiceDeLaSemanaPalabra = ["Primera", "Segunda", "Tercera", "Recreo", "Cuarta", "Quinta", "Sexta"]
+    const diaDeLaSemanaPalabra = getAllDayOfWeekString()
+    const indiceDeLaSemanaPalabra = getAllHoursOfDayString()
     const {checkIsLogin} = useAuth()
 
 

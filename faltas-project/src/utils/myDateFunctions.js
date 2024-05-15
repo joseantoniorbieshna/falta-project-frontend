@@ -28,3 +28,5 @@ export function convertDateToObjYearMonthDay(myDate){
 export function getActualDate(){
     return new Date()
 }
+
+

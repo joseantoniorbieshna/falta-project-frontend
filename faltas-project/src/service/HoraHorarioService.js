@@ -1,6 +1,6 @@
 
 const URL_BACKEND_GRAPHQL = import.meta.env.VITE_BACKEND_END_POINT + "/graphql";
-export const getHorarioByProfesor=({referenciaProfesor})=>{
+export const getHorarioByProfesor=(referenciaProfesor)=>{
     return fetch(URL_BACKEND_GRAPHQL, {
   method: 'POST',
   headers: {

@@ -7,11 +7,14 @@ import { getAllHours } from '../service/TramoHorarioService';
 import { getHorarioByProfesor } from '../service/HoraHorarioService';
 import WeekNavigation from './Horario/WeekNavigation';
 import Loading from './Utiles/Loading';
-import MensajeHorario from './MensajeHorario';
+import MensajeHorario from './MensajeHora';
 import ContainerInfoGrupoYCurso from './ContainerInfoGrupoYCurso';
 import { getActualDate, getLunesCercano } from '../utils/myDateFunctions';
 import PopUpCreateFaltaHorario from './PopUps/PopUpCreateFaltaHorario';
 import { useAuth } from '../context/authenticationState';
+import { getAllGuardiasByProfesorAPi } from '../service/GuardiaService';
+import Guardiahora from './MensajeGuardiaHora';
+import MensajeGuardiahora from './MensajeGuardiaHora';
 
 
 export function HorarioMain() {
@@ -27,9 +30,10 @@ export function HorarioMain() {
         setLoad(false)
         Promise.all([
             getAllHours(),
-            getHorarioByProfesor({referenciaProfesor:referenciaProfesor})
+            getHorarioByProfesor(referenciaProfesor),
+            getAllGuardiasByProfesorAPi(referenciaProfesor)
           ])
-          .then(([timeHorario, horasHorario]) => {
+          .then(([timeHorario, horasHorario,guardias]) => {
               setAllHours(timeHorario);
               horasHorario = horasHorario.map((horaHorarioDTO,index)=>{
                   const {dia,indice,materia,grupos,curso,referenciaSesion} = horaHorarioDTO
@@ -38,7 +42,12 @@ export function HorarioMain() {
   
                   return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={poUp}></MensajeHorario>
               })
-              setAllElementHour(horasHorario)
+              guardias = guardias.map((guardia,index)=>{
+                const {dia, indice} = guardia
+                return <MensajeGuardiahora key={indice} dia={dia} indice={indice}></MensajeGuardiahora>
+              })
+              const allMessage = [...horasHorario,...guardias]
+              setAllElementHour(allMessage)
               /*AQUI DECIMOS QUE CARGUE YA QUE EL FETCH SE HA HECHO CON EXITO */
               setLoad(true);
           })
@@ -60,7 +69,7 @@ export function HorarioMain() {
                 <h1 className='font-bold text-2xl text-blacklight'>Horario Escolar</h1>
             </div>
             {
-                isLoad?<Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={false} lunesCercano={lunesCercano}></Horario>:<Loading></Loading>
+                isLoad?<Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={false} lunesCercano={lunesCercano} hasActionInAllDay={true}></Horario>:<Loading></Loading>
             }
             
         </section>

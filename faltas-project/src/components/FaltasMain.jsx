@@ -4,7 +4,7 @@ import { getAllHours } from "../service/TramoHorarioService";
 import { getHorarioByProfesor } from "../service/HoraHorarioService";
 import ContainerInfoGrupoYCurso from "./ContainerInfoGrupoYCurso";
 import Loading from "./Utiles/Loading";
-import MensajeHorario from "./MensajeHorario";
+import MensajeHorario from "./MensajeHora";
 import Horario from "./Horario/Horario";
 import WeekNavigation from "./Horario/WeekNavigation";
 import { convertDateToObjYearMonthDay, convertDateToString, getActualDate, getLunesCercano } from "../utils/myDateFunctions";

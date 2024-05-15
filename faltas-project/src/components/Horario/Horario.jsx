@@ -13,9 +13,10 @@ import HorarioHeadDayWeek from './HorarioHeadDayWeek';
 import DayNavigationMobile from './DayNavigationMobile';
 import HorarioTime from './HorarioTime';
 import HorarioHora from './HorarioHora';
+import MobileButtonPutFaltaDiaCompleto from '../Faltas/MobileButtonPutFaltaDiaCompleto';
 
 
-export default function Horario({ timeArray, mensajes, showDayNumber, lunesCercano }) {
+export default function Horario({ timeArray, mensajes, showDayNumber, lunesCercano, hasActionInAllDay=false }) {
     /* DATA */
     const dias = Array.from({ length: 5 }, (_, i) => { // el barra baja es para indicar que no haga caso a ese parametro
         var fecha = new Date(lunesCercano);
@@ -93,7 +94,7 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
                         {/* horario cabezera dia */}
                         <div className={`hhdk-hora-head hh-first-space-grid ${indiceDiaActual == 0 ? 'hh-first-space-grid-active' : ''}`} style={{ width: sizeTimeWidth }}></div>
                         {dias.map((day, index) => (
-                            <HorarioHeadDayWeek key={index} dayOfWeek={index} dayOfMonth={day} isActual={isActualFechaiWithIndiceDay(index)} showDayNumber={showDayNumber}/>
+                            <HorarioHeadDayWeek key={index} dayOfWeek={index} dayOfMonth={day} isActual={isActualFechaiWithIndiceDay(index)} showDayNumber={showDayNumber} canPutFaltaFullDay={hasActionInAllDay}/>
                         ))}
                     </div>
                     :
@@ -140,14 +141,14 @@ export default function Horario({ timeArray, mensajes, showDayNumber, lunesCerca
 
                         {dias.map((day, indexDia) => (
                             <React.Fragment key={indexDia}>
-                                <HorarioHeadDayWeek dayOfWeek={indexDia} dayOfMonth={day} isActual={isActualFechaiWithIndiceDay(indexDia)} >
+                                <HorarioHeadDayWeek dayOfWeek={indexDia} dayOfMonth={day} isActual={isActualFechaiWithIndiceDay(indexDia)} canPutFaltaFullDay={false}>
+                                {hasActionInAllDay && <MobileButtonPutFaltaDiaCompleto key={indexDia} dia={indexDia}></MobileButtonPutFaltaDiaCompleto>}
                                     {timeArray.map((hora, indexTime) => (
                                         <React.Fragment key={indexTime}>
                                             <HorarioTime time={hora} ref={timeHoraHorarioRef} isActual={isActualFechaiWithIndiceDay(indexDia)}></HorarioTime>
                                             <HorarioHora isActual={isActualFechaiWithIndiceDay(indexDia)}>
 
                                                 {/* Aqui se imprimen los mensajes*/}
-
                                                 {mensajes.filter((element) => {
                                                     return element.props.dia == indexDia && element.props.indice == indexTime
                                                 }).map((mensaje, indexMensaje) => (

@@ -14,7 +14,8 @@ export default {
       'blacklight':'#404040',
       'red': '#ff9c9c',
       'orange': '#ffdb9c',
-      'blue': '#9cd6ff'
+      'blue': '#9cd6ff',
+      'blueblack': '#3a8abf'
     },
     extend: {},
   },
