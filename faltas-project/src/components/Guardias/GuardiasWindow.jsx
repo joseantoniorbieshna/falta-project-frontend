@@ -5,6 +5,7 @@ import './css/guardiasWindow.css';
 import { useAuth } from '../../context/authenticationState';
 import { getAllDayOfWeekString, getAllHoursOfDayString } from '../../utils/HoursAndWeekFunctions';
 import { useState } from 'react';
+import FaltaInGuardia from './FaltaInGuardia';
 export default function GuardiasWindow({ dia, indice, changeToClose }) {
 
     const [isFirstSelected,setIsFirstSelected]=useState(true)
@@ -18,12 +19,15 @@ export default function GuardiasWindow({ dia, indice, changeToClose }) {
             <div className='flex justify-end my-3 mr-5 w-full'>
                 <IonIcon icon={close} onClick={changeToClose} className={'text-[black] text-4xl cursor-pointer'}></IonIcon>
             </div>
-            <div className='flex flex-row gap-2 w-[90%] justify-center sticky'>
+            <div className='w-[90%]'>
+            <div className='flex flex-row gap-2 justify-center sticky'>
                 <input type='button' className={`border-2 rounded-lg bg-black text-white border-black py-2 flex-1 ${isFirstSelected?'selected-window-guardia':''}`} value={"FALTAS"} onClick={()=>{setIsFirstSelected(true)}}/>
                 <input type='button' className={`border-2 rounded-lg bg-black text-white border-black py-2 flex-1 ${!isFirstSelected?'selected-window-guardia':''}`} value={"PROFESORES"} onClick={()=>{setIsFirstSelected(false)} }/>
             </div>
-            <div className='flex flex-col items-center flex-auto overflow-auto w-[100%]'>
+
+                {isFirstSelected && <FaltaInGuardia dia={dia} indice={indice}></FaltaInGuardia>}
             </div>
+
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react'
 import './css/MensajeHorario.css'
-export default function MensajeHora({ mensaje, backgroundColor = '#dff2cd', containerInfoGrupoYCurso, dia, indice, PopUpComponent }) {
+export default function MensajeHora({ mensaje, backgroundColor = '#dff2cd', containerInfoGrupoYCurso, dia, indice, fecha=new Date(), PopUpComponent }) {
     const [isActive, setActive] = useState(false)
     const changeActive = () => {
         setActive(!isActive);
