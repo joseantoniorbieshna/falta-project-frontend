@@ -1,7 +1,6 @@
 import { IonIcon } from '@ionic/react';
 import './css/PopUpGeneral.css'
 import '../css/MensajeHorario.css'
-import './css/PopUpSustituirFalta.css'
 import { close } from 'ionicons/icons';
 import { cancelarFaltaApi } from '../../service/FaltaService';
 import { useState } from 'react';

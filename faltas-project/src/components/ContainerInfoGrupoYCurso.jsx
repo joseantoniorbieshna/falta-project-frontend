@@ -22,7 +22,7 @@ export default function ContainerInfoGrupoYCurso({ curso, grupos, profesor = nul
                     <p className='m-curso-text'><span className='font-bold mr-1'>Curso:</span>{curso}</p>
                 </div>
                 <div className='m-grupos'>
-                    <p className='m-grupo-title'><span className='font-bold mr-1'>Grupos:</span>
+                    <p className='m-grupo-title break-all'><span className='font-bold mr-1'>Grupos:</span>
                         {
                             grupos.length == 1 ?
                                 grupos.map((grupo, index) => {

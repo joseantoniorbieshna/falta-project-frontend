@@ -51,22 +51,28 @@ export default function Login() {
 
     }
     return (
-        <div className="flex-auto flex items-center justify-center flex-col gap-3 bg-blue">
-            <div className="p-10 py-15 rounded-lg bg-white flex flex-col items-center">
-                <h1 className="text-3xl font-bold">INICIAR SESIÓN</h1>
+        <div className="flex-auto justify-center bg-white">
+            <div className="p-10 py-15 rounded-lg bg-white h-full flex flex-col items-center justify-center gap-5">
+                <h1 className="text-4xl font-bold">FaltaTracker</h1>
+                <div className="flex flex-col justify-center items-center">
+                    <h2 className="text-2xl text-center">Inicia Sesión</h2>
+                    <p className="text-md text-center">Sustituye y pon faltas de manera sencilla</p>
+                </div>
+               
                 <form onSubmit={handleLogin} className="flex flex-col gap-3">
                     <div className="flex flex-col justify-center ">
-                        <label className="font-bold">Usuario:</label>
-                        <input id="username" name="username" className="px-2 py-1 border-2" type="text" value={username} placeholder="Usuario" onChange={({ target }) => { setUsername(target.value) }}></input>
+                        <input id="username" name="username" className="px-2 py-1 border-2 border-black rounded-[10px]" style={!username?{borderColor:"red"}:{}} type="text" value={username} placeholder="Usuario" onChange={({ target }) => { setUsername(target.value) }}></input>
                     </div>
                     <div className="flex flex-col justify-center ">
-                        <label className="font-bold">Contraseña:</label>
-                        <input className="px-2 py-1 border-2" type="password" id="pass" name="password" value={password} placeholder="contraseña" onChange={({ target }) => { setPassword(target.value) }}></input>
+                        <input className="px-2 py-1 border-2 border-black rounded-[10px]" type="password" id="pass" name="password" style={!password?{borderColor:"red"}:{}} value={password} placeholder="Contraseña" onChange={({ target }) => { setPassword(target.value) }}></input>
                     </div>
                     <div className="flex justify-center mt-3">
-                        <button className="border-2 p-2 px-4 border-none rounded-sm font-bold bg-black text-white">Iniciar sesion</button>
+                        <button className="p-3 w-full px-4 rounded-[10px] font-bold bg-green text-black">Iniciar Sesión</button>
                     </div>
                 </form>
+                <div className="text-center"><span className="font-bold">¿no tienes cuenta?</span> ponte en contacto con un admin</div>
+
+
             </div>
             {
                 isProvedLogged && isAdmin && isLoggedIn && !isChecking && <Navigate to={"/admin"}></Navigate>

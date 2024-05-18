@@ -148,7 +148,7 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                                         ¿Seguro que quieres borrar esta falta?
                                     </p>
                                 </div>
-                                <div className="flex gap-4">
+                                <div className="menumh-send-container">
                                     <button className="btn btn-danger w-full rounded-lg bg-[red] text-[white] font-bold py-1"
                                         onClick={borrarFalta}>Borrar</button>
                                     <button

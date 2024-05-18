@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import './css/MainMenu.css'
+import logo from '../../assets/logohna.jpeg'
 import { IonIcon } from '@ionic/react';
 import { logOutOutline, settingsOutline, calendar, closeOutline, menuOutline, handLeft,key } from 'ionicons/icons';
 import useMobile from "../../hooks/useMobile";
@@ -53,7 +54,7 @@ export default function MainMenu() {
         <header ref={headerRef} className="mm-header flex flex-col items-center bg-gray ">
 
             <div className="mm-user-container flex flex-row items-center bg-[#fff] w-[80%] m-5 rounded-3xl py-5 px-3">
-                <img className="mm-user-image rounded-full w-7 h-7" src="https://th.bing.com/th/id/OIP.R9HMSxN_IRyxw9-iE1usugAAAA?rs=1&pid=ImgDetMain"></img>
+                <img className="mm-user-image rounded-full w-8 h-8" src={logo}></img>
                 <div className="flex flex-col ml-4 flex-1 overflow-hidden items-start">
                     <h5 className="mm-text-user text-sm overflow-hidden font-bold text-blacklight">Jose Antonio Ramos</h5>
                 </div>

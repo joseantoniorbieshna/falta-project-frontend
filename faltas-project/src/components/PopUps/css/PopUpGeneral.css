@@ -77,15 +77,12 @@
 }
 
 .menumenh-info-comentario{
-    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
 }
 .menumenh-info-comentario textarea{
-    min-height: 5rem;
     resize: none;
     padding: 0.25rem;
-    flex: 1 1 auto;
 }
 
 .menumh-button{
@@ -99,10 +96,16 @@
     color: black;
 }
 .menumh-send-container{
+    flex: 1 1 auto;
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
+}
+
+.menumh-send-container-create{
+    flex: 0 0 0;
 }
 
 .menumh-button-normal{

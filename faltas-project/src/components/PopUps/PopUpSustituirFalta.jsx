@@ -1,12 +1,10 @@
 import { IonIcon } from '@ionic/react';
 import './css/PopUpGeneral.css'
 import '../css/MensajeHorario.css'
-import './css/PopUpSustituirFalta.css'
 import { close } from 'ionicons/icons';
-import { createFalta, sustituirFaltaApi } from '../../service/FaltaService';
-import { useState } from 'react';
+import { sustituirFaltaApi } from '../../service/FaltaService';
 import { convertDateToString } from '../../utils/myDateFunctions';
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../context/authenticationState';
 import { getAllDayOfWeekString, getAllHoursOfDayString } from '../../utils/HoursAndWeekFunctions';

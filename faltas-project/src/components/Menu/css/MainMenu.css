@@ -45,7 +45,7 @@
         max-width: fit-content;
     }
     .mm-user-container{
-        padding: 0.5rem;
+        padding: 0rem;
         display: block;
 
     }
@@ -72,7 +72,7 @@
     }
     .mm-user-container{
         margin: 0.75rem;
-        padding: 0.25rem;
+        padding: 0rem;
     }
     .mm-nav{
         width: 80%;
