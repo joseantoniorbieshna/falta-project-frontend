@@ -17,6 +17,10 @@ export function convertDateToString(myDate){
     const{year,month,day}=convertDateToObjYearMonthDay(myDate)
     return `${year}-${month}-${day}`;
 }
+export function convertDateToStringESP(myDate){
+    const{year,month,day}=convertDateToObjYearMonthDay(myDate)
+    return `${day}-${month}-${year}`;
+}
 
 export function convertDateToObjYearMonthDay(myDate){
     const year = myDate.getFullYear();

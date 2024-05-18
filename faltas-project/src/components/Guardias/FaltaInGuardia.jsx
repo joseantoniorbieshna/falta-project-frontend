@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getFaltasByDiaAndIndice } from "../../service/FaltaService"
 import { processFaltas } from "../../utils/faltaProcess";
 import Loading from "../Utiles/Loading";
 import { useAuth } from "../../context/authenticationState";
+import { convertDateToString } from "../../utils/myDateFunctions";
 
 export default function FaltaInGuardia({ dia, indice }) {
     const [allObject, setAllObject] = useState([]);
     const [isInRequest, setIsInRequest] = useState(true);
-    const [ fechasDistinct, setFechasDistint ] = useState(new Set())
+    const [fechasDistinct, setFechasDistint] = useState(new Set())
     const { referenciaProfesor } = useAuth();
     const loadData = () => {
         getFaltasByDiaAndIndice(dia, indice)
             .then((dataObject) => {
-                console.log(dataObject);
-                const resultDataSetObject = processFaltas(dataObject, referenciaProfesor);
+                const resultDataSetObject = processFaltas(dataObject, referenciaProfesor,true);
                 setAllObject(resultDataSetObject)
 
                 const uniqueDates = new Set();
-                resultDataSetObject.forEach(message => {
-                    uniqueDates.add(message.fecha);
+                dataObject.forEach((object, index) => {
+                    uniqueDates.add(object.fecha);
                 });
                 console.log(uniqueDates);
 
@@ -34,7 +34,7 @@ export default function FaltaInGuardia({ dia, indice }) {
         loadData();
     }, [])
     return (
-        <div className='flex flex-col items-center flex-auto overflow-auto w-[100%] pt-5'>
+        <>
 
             {
                 isInRequest ?
@@ -42,19 +42,24 @@ export default function FaltaInGuardia({ dia, indice }) {
                     :
                     <>
                         {
-                            [...fechasDistinct].map((fecha) => {
-                                allObject.map((object) => {
-                                    return <>
-                                        {object}
-                                    </>
-                                })
-                            })
-
+                            [...fechasDistinct].sort((fecha1, fecha2) => new Date(fecha1) - new Date(fecha2)).map((fecha, fechaIndex) => (
+                                <div key={fechaIndex} className="w-full flex flex-col items-center">
+                                   
+                                    <div className="text-center font-bold text-2xl sticky top-0 bg-white w-full">{convertDateToString(fecha)}</div>
+                                    {
+                                        allObject.filter(myobj=>myobj.props.fecha==fecha).map((object, index) => (
+                                            <React.Fragment key={index}>
+                                                {object}
+                                            </React.Fragment>
+                                        ))
+                                    }
+                                </div>
+                            ))
                         }
                     </>
 
 
             }
-        </div>
+        </>
     )
 }

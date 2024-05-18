@@ -38,7 +38,10 @@ export function HorarioMain() {
               horasHorario = horasHorario.map((horaHorarioDTO,index)=>{
                   const {dia,indice,materia,grupos,curso,referenciaSesion} = horaHorarioDTO
                   const containerInfoGrupoYCurso = <ContainerInfoGrupoYCurso key={index} grupos={grupos} curso={curso}></ContainerInfoGrupoYCurso>
-                  const poUp = <PopUpCreateFaltaHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} ></PopUpCreateFaltaHorario>
+                  const containerInfoGrupoYCursoConGap = React.cloneElement(containerInfoGrupoYCurso, {
+                    gap: 1 
+                  });
+                  const poUp = <PopUpCreateFaltaHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} materia={materia} containerInfoGrupoYCurso={containerInfoGrupoYCursoConGap}></PopUpCreateFaltaHorario>
   
                   return <MensajeHorario key={index} dia={dia} indice={indice} referenciaSesion={referenciaSesion} mensaje={materia} containerInfoGrupoYCurso={containerInfoGrupoYCurso} PopUpComponent={poUp}></MensajeHorario>
               })

@@ -1,15 +1,12 @@
 .selected-window-guardia{
-    background-color: rgb(156 214 255 / var(--tw-bg-opacity));
-    border-color: rgb(156 214 255 / var(--tw-bg-opacity));
+    background-color: #dff2cd;
     color: black;
 }
 
 .guardia-window-parent{
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
+    background-color: white;
 }
 
 .bg-green {
     --tw-bg-opacity: 1;
-    
 }

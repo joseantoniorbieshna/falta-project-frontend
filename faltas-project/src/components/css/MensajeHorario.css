@@ -15,6 +15,10 @@
 .m-info-container{
     width: 90%;
 }
+.m-info-container{
+    display: flex;
+    flex-direction: column;
+}
 
 /* ASIGNATURA*/
 .m-asignatura-container{
@@ -43,7 +47,6 @@
 .m-text-span{
     font-size: 0.8rem;
     font-weight: 600;
-    font-style: italic;
     text-decoration: wavy;
     vertical-align: text-bottom;
 }
@@ -55,10 +58,9 @@
     flex-wrap: wrap;
 }
 
-/*ITALIC*/
 .m-curso-text,
 .m-grupo-title{
-    font-style: italic;
+    font-style: normal;
 }
 
 

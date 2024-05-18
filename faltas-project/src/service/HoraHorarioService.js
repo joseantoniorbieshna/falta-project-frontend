@@ -34,6 +34,12 @@ export const getHorarioByProfesor=(referenciaProfesor)=>{
     },
   }),
 })
+.then(res=>{
+  if(!res.ok){
+    throw new Error("Error al hacer la petición al servidor");
+  }
+  return res
+})
   .then((res) => res.json())
   .then((result) =>{
     let horasHorario = result.data.getHorasHorarioByReferenciaProfesor

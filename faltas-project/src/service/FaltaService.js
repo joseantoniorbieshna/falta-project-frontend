@@ -26,6 +26,12 @@ export const createFalta = (faltaCreateInput) => {
       },
     }),
   })
+  .then(res=>{
+    if(!res.ok){
+      throw new Error("Error al hacer la petición al servidor");
+    }
+    return res
+  })
   .then((res) => res.json())
   .then((res) => {
     if (res.errors) {
@@ -63,6 +69,12 @@ export const editarFaltaApi = (faltaUpdateInput) => {
       },
     }),
   })
+  .then(res=>{
+    if(!res.ok){
+      throw new Error("Error al hacer la petición al servidor");
+    }
+    return res
+  })
   .then((res) => res.json())
   .then((res) => {
     console.log(res);
@@ -93,6 +105,12 @@ export const deleteFaltaApi = (faltaDeleteInput) => {
         faltaDeleteInput: faltaDeleteInput,
       },
     }),
+  })
+  .then(res=>{
+    if(!res.ok){
+      throw new Error("Error al hacer la petición al servidor");
+    }
+    return res
   })
   .then((res) => res.json())
   .then((res) => {
@@ -130,6 +148,12 @@ export const sustituirFaltaApi = (faltaSustituirInput) => {
       },
     }),
   })
+  .then(res=>{
+    if(!res.ok){
+      throw new Error("Error al hacer la petición al servidor");
+    }
+    return res
+  })
   .then((res) => res.json())
   .then((res) => {
     console.log(res);
@@ -166,6 +190,12 @@ export const cancelarFaltaApi = (faltaCancelarInput) => {
         faltaCancelarInput: faltaCancelarInput,
       },
     }),
+  })
+  .then(res=>{
+    if(!res.ok){
+      throw new Error("Error al hacer la petición al servidor");
+    }
+    return res
   })
   .then((res) => res.json())
   .then((res) => {
@@ -228,6 +258,12 @@ export const getAllFaltasBetweenFechas = ({ fechaInicio,fechaFin }) => {
         fechaFin
       },
     }),
+  })
+  .then(res=>{
+    if(!res.ok){
+      throw new Error("Error al hacer la petición al servidor");
+    }
+    return res
   })
   .then((res) => res.json())
   .then((res) => {
@@ -313,13 +349,26 @@ export const getFaltasByDiaAndIndice = (dia,indice) => {
       },
     }),
   })
+  .then(res=>{
+    if(!res.ok){
+      throw new Error("Error al hacer la petición al servidor");
+    }
+    return res
+  })
+  .then(res=>{
+    if(!res.ok){
+      throw new Error("Error al hacer la petición al servidor");
+    }
+    return res
+  })
   .then((res) => res.json())
   .then((res) => {
+    console.log(res);
+
     if (res.errors) {
       throw new Error(res.errors[0].message);
     } else {
       const dataList = res.data.faltasByDiaAndIndice;
-      console.log(dataList);
       return dataList.map((dataObject,index)=>{
         const comentario = dataObject.comentario;
         const fecha = new Date(dataObject.fecha);

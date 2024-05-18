@@ -10,7 +10,7 @@ export default function MobileButtonPutFaltaDiaCompleto({dia}){
     }
     return (
         <>
-        <button onClick={()=>setIsOpen(true)} className='col-span-2 w-[98%] rounded-[20px] bg-green p-8 my-5 cursor-pointer font-bold'>FALTAR DIA COMPLETO {diaDeLaSemanaPalabra[dia].toUpperCase()}</button>
+        <button onClick={()=>setIsOpen(true)} className='col-span-2 w-[100%] rounded-md bg-green p-5 my-5 cursor-pointer font-bold'>FALTAR DIA COMPLETO {diaDeLaSemanaPalabra[dia].toUpperCase()}</button>
         {
             isOpen && <PopUpCreateFaltaHorarioDiaCompleto dia={dia} changeToClose={changeToClose}></PopUpCreateFaltaHorarioDiaCompleto>
         }

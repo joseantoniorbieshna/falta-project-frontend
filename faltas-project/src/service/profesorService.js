@@ -19,6 +19,12 @@ export const getAllProfesores = () => {
         `
         }),
     })
+        .then(res=>{
+            if(!res.ok){
+            throw new Error("Error al hacer la petición al servidor");
+            }
+            return res
+        })
         .then((res) => res.json())
         .then((res) => {
             console.log(res);

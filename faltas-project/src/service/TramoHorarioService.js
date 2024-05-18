@@ -19,6 +19,12 @@ export const getAllHours=()=>{
         },
       }),
     })
+      .then(res=>{
+        if(!res.ok){
+          throw new Error("Error al hacer la petición al servidor");
+        }
+        return res
+      })
       .then((res) => res.json())
       .then((result) => result.data.tramosHorarios)
       .then(tramosHorarios => tramosHorarios.flatMap(tramo => [tramo.horaEntrada, tramo.horaSalida]))

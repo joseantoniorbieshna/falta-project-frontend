@@ -204,6 +204,7 @@
 
     /*only mobile part*/
     .hh-navigation-container-day {
+        background-color: white;
         display: flex;
         flex-direction: column;
         justify-content: center;
