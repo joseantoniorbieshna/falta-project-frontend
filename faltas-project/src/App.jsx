@@ -49,7 +49,7 @@ function MyMainPageContainerLogin({ children }) {
 function App() {
 
   return (
-      <BrowserRouter basename={"/faltas"}>
+      <BrowserRouter basename={"/faltastracker"}>
         <AuthProvider>
         <Routes>
           <Route path='/' element={<MyLandingContainer><Landing/></MyLandingContainer>}></Route>
