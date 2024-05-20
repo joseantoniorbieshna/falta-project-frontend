@@ -29,7 +29,7 @@ const Selector = ({messageSearch,selectMessage,itemsInput, changeItemSelected, i
             </div>
             
             <ul
-                className={`absolute bg-white mt-2 overflow-y-auto ${open ? "max-h-60" : "max-h-0"
+                className={`absolute z-[50] bg-white mt-2 overflow-y-auto ${open ? "max-h-60" : "max-h-0"
                     } `}
             >
                 <div className="flex items-center px-2 sticky top-0 bg-white">
@@ -37,7 +37,9 @@ const Selector = ({messageSearch,selectMessage,itemsInput, changeItemSelected, i
                     <input
                         type="text"
                         value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value.toLowerCase())}
+                        onChange={(e) => {
+                            setInputValue(e.target.value.toLowerCase());
+                        }}
                         placeholder={messageSearch}
                         className="placeholder:text-gray-700 p-2 outline-none flex-auto"
                     />

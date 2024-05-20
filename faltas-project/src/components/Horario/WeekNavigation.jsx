@@ -46,7 +46,7 @@ export default function WeekNavigation({ lunesCercano, setFecha }) {
 
     return (
         <>
-            <div className='wn-week-navigation-container p-5'>
+            <div className='p-5'>
                 <div className='flex flex-row'>
                     <div>{`${lunesCercano.getDate()}-${viernesCercano.getDate()}`} {getMonths()} {getYears()}</div>
                     <div className='wn-container-buttons flex flex-row items-center ml-5'>

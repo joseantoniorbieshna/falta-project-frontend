@@ -12,10 +12,10 @@ export default function PopUpSustituirFalta({ dia, indice, referenciaSesion, fec
     const diaDeLaSemanaPalabra = getAllDayOfWeekString()
     const indiceDeLaSemanaPalabra = getAllHoursOfDayString()
     const fechaFaltaString = fechaInput.toLocaleDateString("es-ES");
-    const { checkIsLogin } = useAuth()
+    const { checkIsLogin,referenciaProfesor } = useAuth()
 
     const sustituirFalta = () => {
-        const faltaSustituirInput = { dia, indice, referenciaSesion, fecha: convertDateToString(fechaInput) }
+        const faltaSustituirInput = { dia, indice, referenciaSesion, fecha: convertDateToString(fechaInput),referenciaProfesorSustituto:referenciaProfesor }
 
         sustituirFaltaApi(faltaSustituirInput)
             .then(res => {

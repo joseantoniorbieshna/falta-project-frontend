@@ -8,6 +8,7 @@ import { getAllFaltasBetweenFechas } from "../service/FaltaService";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/authenticationState";
 import { processFaltas } from "../utils/faltaProcess";
+import ChangeUserDropdownAdmin from "./admin/ChangeUserDropdownAdmin";
 function getFechaBase(year, month, day) {
     if (!isNaN(year) && year != null && !isNaN(month) && month != null && !isNaN(day) && day != null) {
         try {
@@ -24,8 +25,7 @@ function getFechaBase(year, month, day) {
 }
 
 export default function FaltasMain() {
-    const { isChecking,checkIsLogin,referenciaProfesor } = useAuth();
-    const [referenciaProfesorSesionActual, setReferenciaProfesorSesionActual] = useState(referenciaProfesor)
+    const { isChecking,checkIsLogin,referenciaProfesor,isAdmin } = useAuth();
     const { year, month, day } = useParams();
     const navigate = useNavigate();
     const [fechaBase, setFechaBase] = useState(getFechaBase(year, month, day))
@@ -52,7 +52,7 @@ export default function FaltasMain() {
         ])
             .then(([timeHorario, faltas]) => {
                 setAllHours(timeHorario);
-                const processedFaltas = processFaltas(faltas, referenciaProfesorSesionActual);
+                const processedFaltas = processFaltas(faltas, referenciaProfesor);
                 setAllElementHour(processedFaltas)
                 /*AQUI DECIMOS QUE CARGUE YA QUE EL FETCH SE HA HECHO CON EXITO */
                 console.log("faltas");
@@ -67,20 +67,28 @@ export default function FaltasMain() {
     }
 
     useEffect(() => {
-        if(isChecking==false){
+        if(referenciaProfesor!=null && isChecking==false){
             const { year, month, day } = convertDateToObjYearMonthDay(lunesCercano);
             navigate(`/faltas/${year}/${month}/${day}`, { replace: true })
     
             loadDataApi();
         }
-    }, [isChecking,fechaBase]);
+    }, [referenciaProfesor,isChecking,fechaBase]);
 
     return (
         <section className="hh-section-horario flex-auto flex flex-col justify-center">
-            <div className="hm-title-container md:p-5 p-2">
+            <div className="hm-title-container md:p-5 p-2 border-b-[3px] border-solid border-[#f0f0f0]">
                 <h1 className='font-bold text-2xl text-blacklight'>Faltas</h1>
             </div>
+           <div className="flex flex-row align-middle flex-wrap mb-1">
             <WeekNavigation lunesCercano={lunesCercano} setFecha={setFechaBase}></WeekNavigation>
+            {
+                isAdmin &&
+                <div className="flex items-center pl-5 md:pl-0">
+                    <ChangeUserDropdownAdmin></ChangeUserDropdownAdmin>
+                </div>
+            }
+           </div>
 
             {
                 isLoad ? <Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={true} lunesCercano={lunesCercano}></Horario> : <Loading></Loading>

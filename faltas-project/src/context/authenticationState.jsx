@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
   
     const checkIsLogin = () => {
+      console.log("mi referencia es: "+referenciaProfesor);
       setIsChecking(true)
       getInfoUserAuthentication()
       .then((res)=>{
@@ -24,7 +25,6 @@ const AuthProvider = ({ children }) => {
         setUsername(username)
 
         if(role=="ADMIN"){
-          setReferenciaProfesor(null)
           setIsAdmin(true)
           console.log("SOY ADMIN");
         }else{
@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
     }
   
     return (
-      <authenticationContext.Provider value={{isLoggedIn,isChecking, username, referenciaProfesor, isAdmin, checkIsLogin, logout }}>
+      <authenticationContext.Provider value={{isLoggedIn,isChecking, username, referenciaProfesor, isAdmin,setReferenciaProfesor, checkIsLogin, logout }}>
         {children}
       </authenticationContext.Provider>
     );

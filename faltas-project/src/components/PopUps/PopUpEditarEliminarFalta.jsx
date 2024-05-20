@@ -134,7 +134,7 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                             <p className='font-bold'>Comentario:</p>
                             <textarea type="text" className='m-text-comment w-[100%]' value={comentario} onChange={(e) => setComentario(e.target.value)} />
                         </div>
-                        <div className='flex gap-3 flex-row justify-center'>
+                        <div className='menumh-send-container'>
                             <button className='menumh-button menumh-button-edit font-bold' onClick={(e) => editarFalta()}>Editar</button>
                             <button className='menumh-button menumh-button-rechazar font-bold' onClick={(e) => setOpenDelete(!openDelete)}>borrar</button>
                         </div>
@@ -148,7 +148,7 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                                         ¿Seguro que quieres borrar esta falta?
                                     </p>
                                 </div>
-                                <div className="menumh-send-container">
+                                <div className="flex gap-4">
                                     <button className="btn btn-danger w-full rounded-lg bg-[red] text-[white] font-bold py-1"
                                         onClick={borrarFalta}>Borrar</button>
                                     <button

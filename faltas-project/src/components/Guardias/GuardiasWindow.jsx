@@ -54,7 +54,7 @@ export default function GuardiasWindow({ dia, indice, changeToClose }) {
             <div className='w-[90%] p-2'>
                 <div className='bg-white flex flex-row gap-2 justify-center'>
                     <input type='button' className={`rounded-lg bg-black text-white py-2 flex-1 ${isFirstSelected ? 'selected-window-guardia' : ''}`} value={"FALTAS"} onClick={() => { setIsFirstSelected(true) }} />
-                    <input type='button' className={`rounded-lg bg-black text-white py-2 flex-1 ${!isFirstSelected ? 'selected-window-guardia' : ''}`} value={"PROFESORES"} onClick={() => { setIsFirstSelected(false) }} />
+                    <input type='button' className={`rounded-lg bg-black text-white py-2 flex-1 ${!isFirstSelected ? 'selected-window-guardia' : ''}`} value={"PROF. DE GUARDIA"} onClick={() => { setIsFirstSelected(false) }} />
                 </div>
             </div>
             <div className='w-[90%] overflow-auto flex flex-col items-center gap-2'>

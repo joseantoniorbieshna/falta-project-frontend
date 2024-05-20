@@ -84,7 +84,7 @@
         margin: 0;
         top: 80px;
         right: -100%;
-        z-index: 10;
+        z-index: 1000;
         justify-content: start;
         align-items: center;
         padding-top: 2rem;

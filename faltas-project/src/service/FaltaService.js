@@ -135,7 +135,7 @@ export const sustituirFaltaApi = (faltaSustituirInput) => {
     },
     body: JSON.stringify({
       query: `
-      mutation sustituirFalta($faltaSustituirInput: IdFaltaDTO!) {
+      mutation sustituirFalta($faltaSustituirInput: FaltaSustituirInputDTO!) {
         sustituirFalta(faltaSustituirInput: $faltaSustituirInput) {
           profesorSustituto{
             referencia

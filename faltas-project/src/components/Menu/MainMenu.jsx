@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import './css/MainMenu.css'
 import logo from '../../assets/logohna.jpeg'
 import { IonIcon } from '@ionic/react';
-import { logOutOutline, settingsOutline, calendar, closeOutline, menuOutline, handLeft,key } from 'ionicons/icons';
+import { logOutOutline, settingsOutline, calendar, closeOutline, menuOutline, handLeft, key } from 'ionicons/icons';
 import useMobile from "../../hooks/useMobile";
 import useEffectAddWindowEvent from "../../hooks/useEffectAddWindowEvent";
 import { useAuth } from "../../context/authenticationState";
@@ -14,7 +14,7 @@ export default function MainMenu() {
         faltas: '',
         horario: '',
         settings: '',
-        admin:''
+        admin: ''
     });
     const [isMenuOpen, setMenuOpen] = useState(false);
     const toggleMenu = () => {
@@ -63,49 +63,47 @@ export default function MainMenu() {
             <nav style={{ top: height }} className={`mm-nav flex flex-1 justify-between flex-col w-[80%] mt-4 ${isMenuOpen ? 'menu-open' : ''}`}>
                 <div>
 
-                    <ul className="flex flex-col gap-3">
-                        {
-                            !isAdmin ?
-                                /* USER OPT */
-                                <>
-                                    <li>
-                                        <Link title="Horario" to='/horario' className={`mm-button ${activeButton.horario}`}>
-                                            <IonIcon icon={calendar} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
-                                            <p className="mm-button-text">Horario</p>
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link title="Faltas" to='/faltas' className={`mm-button ${activeButton.faltas}`}>
-                                            <IonIcon icon={handLeft} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
-                                            <p className="mm-button-text">Faltas</p>
-                                        </Link>
-                                    </li>
-                                </>
-                                :
-                                /* ADMIN OPT */
-                                <>
-                                <li>
-                                        <Link title="Admin" to='/admin' className={`mm-button ${activeButton.admin}`}>
-                                            <IonIcon icon={key} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
-                                            <p className="mm-button-text">Admin</p>
-                                        </Link>
-                                    </li>
-                                </>
+                    <ul className="flex flex-col gap-3 items-center md:items-start">
+                    {
+                            isAdmin &&
+                            /* ADMIN OPT */
+                            <>
+                                <li className="w-full">
+                                    <Link title="Admin" to='/admin' className={`mm-button ${activeButton.admin}`}>
+                                        <IonIcon icon={key} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
+                                        <p className="mm-button-text">Admin</p>
+                                    </Link>
+                                </li>
+                            </>
                         }
+                        <>
+                            <li className="w-full">
+                                <Link title="Horario" to='/horario' className={`mm-button ${activeButton.horario}`}>
+                                    <IonIcon icon={calendar} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
+                                    <p className="mm-button-text">Horario profesor/ra</p>
+                                </Link>
+                            </li>
+                            <li className="w-full">
+                                <Link title="Faltas" to='/faltas' className={`mm-button ${activeButton.faltas}`}>
+                                    <IonIcon icon={handLeft} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
+                                    <p className="mm-button-text">Faltas</p>
+                                </Link>
+                            </li>
+                        </>
 
                     </ul>
                 </div>
 
                 <div>
                     <hr className="mb-3 text-grayblack" />
-                    <ul className="flex flex-col gap-5 mb-5">
-                        <li>
+                    <ul className="flex flex-col gap-5 mb-5 items-center md:items-start">
+                        <li className="w-full">
                             <Link title="Configuración" to='/settings' className={`mm-button ${activeButton.settings}`}>
                                 <IonIcon icon={settingsOutline} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
                                 <p className="mm-button-text">Configuración</p>
                             </Link>
                         </li>
-                        <li>
+                        <li className="w-full">
                             <Link title="Cerrar sesión" to='/home' className={`mm-button ${activeButton}`} onClick={cerrarSesion}>
                                 <IonIcon icon={logOutOutline} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>
                                 <p className="mm-button-text">Cerrar sesión</p>
