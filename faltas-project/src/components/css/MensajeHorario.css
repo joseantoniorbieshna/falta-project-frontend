@@ -72,7 +72,6 @@
     }
 
     .hm-title-container{
-        border: 0 solid black;
         display: flex;
         flex-direction: column;
         align-items: center;

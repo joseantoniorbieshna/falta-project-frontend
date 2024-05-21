@@ -15,11 +15,28 @@ export default function UserCreator() {
     const selectMessage = "Selecciona un profesor"
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordRepetirField, setPasswordRepetirField] = useState("");
     const {isChecking,checkIsLogin} = useAuth()
 
 
     const crearUsuario = (event) => {
         event.preventDefault();
+
+        if(password!=passwordRepetirField){
+            toast.error("Las contraseñas tienen que ser iguales.", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce,
+            });
+            return
+        }
+
         if (profesorSelected != null) {
             console.log("entre");
             setIsInRequest(true)
@@ -97,8 +114,9 @@ export default function UserCreator() {
                     <div className="flex justify-center">
                         <input id="username" name="username" className="px-2 border-2 rounded-md" type="text" value={username} placeholder="Usuario" onChange={({ target }) => { setUsername(target.value) }}></input>
                     </div>
-                    <div className="flex justify-center">
-                        <input className="px-2 border-2 rounded-md" type="password" id="pass" name="password" value={password} placeholder="contraseña" onChange={({ target }) => { setPassword(target.value) }}></input>
+                    <div className="flex justify-center flex-wrap gap-2">
+                        <input className="px-2 border-2 rounded-md" type="password" id="pass" name="password" value={password} placeholder="contraseña" onChange={({ target }) => { setPassword(target.value) }}  ></input>
+                        <input className="px-2 border-2 rounded-md" type="password" id="pass2" name="password" value={passwordRepetirField} placeholder="Repetir contraseña" onChange={({ target }) => { setPasswordRepetirField(target.value) }}></input>
                     </div>
                 </div>
                 <Selector messageSearch={messageSearch} selectMessage={selectMessage} itemsInput={profesores} changeItemSelected={SetProfesorSelected} itemSelected={profesorSelected}></Selector>

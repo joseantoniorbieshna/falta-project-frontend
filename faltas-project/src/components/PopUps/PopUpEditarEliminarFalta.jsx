@@ -130,11 +130,11 @@ export default function PopUpCreateFaltaHorario({ dia, indice, referenciaSesion,
                             <MyCalendar myDate={myDate} setMyDate={setMyDate} day={dia}></MyCalendar>
                         </div>
                         {containerInfoGrupoYCurso}
-                        <div className='menumenh-info-comentario'>
+                        <div className='menumenh-info-comentario flex-auto'>
                             <p className='font-bold'>Comentario:</p>
-                            <textarea type="text" className='m-text-comment w-[100%]' value={comentario} onChange={(e) => setComentario(e.target.value)} />
+                            <textarea type="text" className='m-text-comment w-[100%] flex-auto' value={comentario} onChange={(e) => setComentario(e.target.value)} />
                         </div>
-                        <div className='menumh-send-container'>
+                        <div className='menumh-send-container mb-4'>
                             <button className='menumh-button menumh-button-edit font-bold' onClick={(e) => editarFalta()}>Editar</button>
                             <button className='menumh-button menumh-button-rechazar font-bold' onClick={(e) => setOpenDelete(!openDelete)}>borrar</button>
                         </div>

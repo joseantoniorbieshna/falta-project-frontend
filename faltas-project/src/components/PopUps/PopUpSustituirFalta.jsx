@@ -69,11 +69,11 @@ export default function PopUpSustituirFalta({ dia, indice, referenciaSesion, fec
                             <p className=''><span className='font-bold'>Fecha: </span>{fechaFaltaString}</p>
                         </div>
                         {containerInfoGrupoYCurso}
-                        <div className='menumenh-info-comentario'>
+                        <div className='menumenh-info-comentario flex-auto'>
                         <p className='font-bold'>Comentario:</p>
-                            <textarea disabled type="text" className='w-[100%] rounded-md bg-[white]' value={comentario} />
+                            <textarea disabled type="text" className='w-[100%] rounded-md bg-[white] flex-auto' value={comentario} />
                         </div>
-                        <div className='menumh-send-container'>
+                        <div className='menumh-send-container mb-4'>
                             <button className='menumh-button menumh-button-aceptar' onClick={(e) => sustituirFalta()}>SI</button>
                             <button className='menumh-button menumh-button-rechazar' onClick={(e) => changeToClose()}>NO</button>
                         </div>

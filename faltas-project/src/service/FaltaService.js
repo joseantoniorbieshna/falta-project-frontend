@@ -44,6 +44,48 @@ export const createFalta = (faltaCreateInput) => {
 
 
 
+export const createAllFaltasApi = (faltaCreateAllInput) => {
+  return fetch(URL_BACKEND_GRAPHQL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': getTokenBearerInCookies()
+    },
+    body: JSON.stringify({
+      query: `
+        mutation CreateFullDayFalta($faltaCreateAllInput: FaltaCreateByDiaProfesorDTO!) {
+          createFullDayFalta(faltaCreateAllInput: $faltaCreateAllInput) {
+            horaHorario {
+              sesion {
+                referencia
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        faltaCreateAllInput: faltaCreateAllInput,
+      },
+    }),
+  })
+  .then(res=>{
+    if(!res.ok){
+      throw new Error("Error al hacer la petición al servidor");
+    }
+    return res
+  })
+  .then((res) => res.json())
+  .then((res) => {
+    if (res.errors) {
+      throw new Error(res.errors[0].message);
+    } else {
+      return res.data.createFullDayFalta;
+    }
+  });
+};
+
+
+
 
 export const editarFaltaApi = (faltaUpdateInput) => {
   return fetch(URL_BACKEND_GRAPHQL, {

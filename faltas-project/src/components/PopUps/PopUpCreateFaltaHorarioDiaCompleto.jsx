@@ -3,7 +3,7 @@ import './css/PopUpGeneral.css'
 import '../css/MensajeHorario.css'
 import { close } from 'ionicons/icons';
 import MyCalendar from '../Utiles/MyCalendar';
-import { createFalta } from '../../service/FaltaService';
+import { createAllFaltasApi, createFalta } from '../../service/FaltaService';
 import { useState } from 'react';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,7 +15,7 @@ export default function PopUpCreateFaltaHorarioDiaCompleto({ dia, changeToClose 
     const [myDate, setMyDate] = useState(null);
     const [comentario, setComentario] = useState('');
     const diaDeLaSemanaPalabra = getAllDayOfWeekString()
-    const { checkIsLogin } = useAuth()
+    const { checkIsLogin,referenciaProfesor } = useAuth()
 
     const crearAllFaltas = () => {
         /* VALIDACION */
@@ -34,12 +34,13 @@ export default function PopUpCreateFaltaHorarioDiaCompleto({ dia, changeToClose 
             return
         }
         /* QUERY */
-        const faltaCreateObject = { dia, comentario, fecha: convertDateToString(myDate) }
+        const faltaCreateObject = { dia, comentario,referenciaProfesor, fecha: convertDateToString(myDate) }
         console.log("registrar");
-        /*
-        createFalta(faltaCreateObject)
+        
+        createAllFaltasApi(faltaCreateObject)
         .then((data)=>{
-            toast.success('Falta creada con exito!', {
+            console.log(data);
+            toast.success('Faltas creadas con exito!', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -67,7 +68,7 @@ export default function PopUpCreateFaltaHorarioDiaCompleto({ dia, changeToClose 
                 });
                 checkIsLogin()
         })
-        */
+
     }
 
     const noPropagationChangeToClose = (e) => {
@@ -94,7 +95,7 @@ export default function PopUpCreateFaltaHorarioDiaCompleto({ dia, changeToClose 
                             <p className='font-bold'>Comentario:</p>
                             <textarea type="text" className='m-text-comment w-[100%] flex-auto' onChange={(e) => setComentario(e.target.value)} />
                         </div>
-                        <div className='menumh-send-container menumh-send-container-create'>
+                        <div className='menumh-send-container menumh-send-container-create mb-8'>
                             <button className='menumh-button menumh-button-aceptar' onClick={(e) => crearAllFaltas()}>Registrar Faltas</button>
                         </div>
 

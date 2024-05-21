@@ -93,7 +93,7 @@ export default function PopUpCreateFaltaHorario({dia,indice, referenciaSesion, c
                         <p className='font-bold'>Comentario:</p>
                         <textarea type="text" className='m-text-comment w-[100%] flex-auto' onChange={(e)=>setComentario(e.target.value)}/>
                     </div>
-                    <div className='menumh-send-container menumh-send-container-create'>
+                    <div className='menumh-send-container mb-4'>
                         <button className='menumh-button menumh-button-aceptar' onClick={(e)=>crearFalta()}>SI</button>
                         <button className='menumh-button' onClick={(e)=>crearFalta()}>NO</button>
                     </div>
