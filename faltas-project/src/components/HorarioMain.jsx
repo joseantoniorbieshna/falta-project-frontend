@@ -28,6 +28,7 @@ export function HorarioMain() {
     /* FETCH DATA */
 
     const loadData = () => {
+        console.log(referenciaProfesor);
         setLoad(false)
         Promise.all([
             getAllHours(),
@@ -63,7 +64,9 @@ export function HorarioMain() {
     }
 
     useEffect(() => {
+        console.log("cambio");
         if (referenciaProfesor != null && isChecking == false) {
+            
             loadData()
         }
     }, [referenciaProfesor, isChecking]);

@@ -23,7 +23,7 @@ export default function UserCreator() {
         event.preventDefault();
 
         if(password!=passwordRepetirField){
-            toast.error("Las contraseñas tienen que ser iguales.", {
+            toast.error("Las contraseñas tienen que ser iguales", {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

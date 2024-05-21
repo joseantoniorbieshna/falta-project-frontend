@@ -8,6 +8,7 @@ import Login from './components/Login'
 import { useEffect, useState } from 'react'
 import AuthProvider,{ useAuth } from './context/authenticationState'
 import AdminMain from './components/AdminMain'
+import ConfigMain from './components/ConfigMain'
 
 
 
@@ -70,9 +71,7 @@ function App() {
           <Route path='/settings' element={
               <MyMainPageContainer>
                   <MainMenu/>
-                  <div className='flex-auto  text-center'>
-                    CONFIGURACION
-                  </div>
+                  <ConfigMain></ConfigMain>
               </MyMainPageContainer>}>    
           </Route>
 

@@ -6,7 +6,7 @@ export const getloginUserToken = (user, password) => {
     return fetch(URL_BACKEND_AUTH_LOGIN, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             username: user,

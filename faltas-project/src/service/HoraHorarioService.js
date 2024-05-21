@@ -1,3 +1,4 @@
+import { getTokenBearerInCookies } from "./AuthorizationService";
 
 const URL_BACKEND_GRAPHQL = import.meta.env.VITE_BACKEND_END_POINT + "/graphql";
 export const getHorarioByProfesor=(referenciaProfesor)=>{
@@ -5,6 +6,7 @@ export const getHorarioByProfesor=(referenciaProfesor)=>{
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
+    'Authorization': getTokenBearerInCookies()
   },
   body: JSON.stringify({
     query: `

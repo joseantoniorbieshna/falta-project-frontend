@@ -13,7 +13,7 @@ export default function ChangeUserDropdownAdmin() {
 
 
     const changeUser = () => {
-        if (profesorSelected != null) {
+        if (profesorSelected != null  && profesorSelected.referencia!=null) {
             setReferenciaProfesor(profesorSelected.referencia);
         }
     }

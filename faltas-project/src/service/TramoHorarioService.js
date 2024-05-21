@@ -1,3 +1,4 @@
+import { getTokenBearerInCookies } from "./AuthorizationService";
 
 const URL_BACKEND_GRAPHQL = import.meta.env.VITE_BACKEND_END_POINT + "/graphql";
 export const getAllHours=()=>{
@@ -5,6 +6,7 @@ export const getAllHours=()=>{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': getTokenBearerInCookies()
       },
       body: JSON.stringify({
         query: `
@@ -27,6 +29,7 @@ export const getAllHours=()=>{
       })
       .then((res) => res.json())
       .then((result) => result.data.tramosHorarios)
-      .then(tramosHorarios => tramosHorarios.flatMap(tramo => [tramo.horaEntrada, tramo.horaSalida]))
+      .then(tramosHorarios =>
+        tramosHorarios.flatMap(tramo => [tramo.horaEntrada, tramo.horaSalida]))
       .then(horas => [...new Set(horas)])
     };
