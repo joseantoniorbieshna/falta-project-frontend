@@ -95,16 +95,12 @@
     color: black;
 }
 .menumh-send-container{
-    flex: 1 1 auto;
+    flex: 1 1 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 0.5rem;
-}
-
-.menumh-send-container-create{
-    flex: 0 0 0;
 }
 
 .menumh-button-normal{

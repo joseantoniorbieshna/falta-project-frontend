@@ -5,6 +5,7 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from "../context/authenticationState";
 import { reload } from "ionicons/icons";
+import InputPassword from "./Utiles/InputPassword";
 
 export default function Login() {
     const { isAdmin, isLoggedIn, isChecking, checkIsLogin, logout } = useAuth();
@@ -65,7 +66,7 @@ export default function Login() {
                         <input id="username" name="username" className="px-2 py-1 border-2 border-black rounded-[10px]" style={!username?{borderColor:"red"}:{}} type="text" value={username} placeholder="Usuario" onChange={({ target }) => { setUsername(target.value) }}></input>
                     </div>
                     <div className="flex flex-col justify-center ">
-                        <input className="px-2 py-1 border-2 border-black rounded-[10px]" type="password" id="pass" name="password" style={!password?{borderColor:"red"}:{}} value={password} placeholder="Contraseña" onChange={({ target }) => { setPassword(target.value) }}></input>
+                        <InputPassword style={!password?{borderColor:"red"}:{}} placeholder="Contraseña" password={password} setPassword={setPassword}></InputPassword>
                     </div>
                     <div className="flex justify-center mt-3">
                         <button className="p-3 w-full px-4 rounded-[10px] font-bold bg-green text-black">Iniciar Sesión</button>

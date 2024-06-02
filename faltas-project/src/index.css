@@ -15,3 +15,7 @@
   height: 100vh;
   height: 100dvh;
 }
+
+::-ms-reveal {
+  display: none;
+}

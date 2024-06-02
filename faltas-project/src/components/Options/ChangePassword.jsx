@@ -6,6 +6,7 @@ import { toast, Bounce } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from "../Utiles/Loading";
 import { useAuth } from "../../context/authenticationState";
+import InputPassword from "../Utiles/InputPassword";
 
 export default function ChangePassword() {
     const {username}=useAuth();
@@ -79,12 +80,12 @@ export default function ChangePassword() {
             <form className="flex flex-col items-center">
                 <div className="flex flex-row gap-3 mb-3 flex-wrap justify-center md:justify-start ">
                     <div className="flex flex-col justify-center flex-wrap gap-2">
-                        <input className="px-2 border-2 rounded-md" type="password" id="passActual" name="password" value={passwordActual} placeholder="contraseña actual" onChange={({ target }) => { setPasswordActual(target.value) }}  ></input>
-                        <input className="px-2 border-2 rounded-md" type="password" id="pass" name="password" value={password} placeholder="contraseña" onChange={({ target }) => { setPassword(target.value) }}  ></input>
-                        <input className="px-2 border-2 rounded-md" type="password" id="pass2" name="password" value={passwordRepetirField} placeholder="Repetir contraseña" onChange={({ target }) => { setPasswordRepetirField(target.value) }}></input>
+                        <InputPassword placeholder="contraseña actual" password={passwordActual} setPassword={setPasswordActual}></InputPassword>
+                        <InputPassword placeholder="Contraseña nueva" password={password} setPassword={setPassword}></InputPassword>
+                        <InputPassword placeholder="Repetir contraseña nueva" password={passwordRepetirField} setPassword={setPasswordRepetirField}></InputPassword>
                     </div>
                 </div>
-                <button className=" my-3 p-2 rounded-lg bg-green" onClick={(event) => changePassword(event)}>Cambiar Contraseña</button>
+                <button className=" p-2 rounded-lg bg-green" onClick={(event) => changePassword(event)}>Cambiar Contraseña</button>
 
             </form>
             {

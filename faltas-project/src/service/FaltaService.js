@@ -343,7 +343,6 @@ export const getAllFaltasBetweenFechas = ({ fechaInicio,fechaFin }) => {
 
 
 export const getFaltasByDiaAndIndice = (dia,indice) => {
-  console.log("diae:"+dia+"indicee:"+indice);
   return fetch(URL_BACKEND_GRAPHQL, {
     method: 'POST',
     headers: {
@@ -405,8 +404,6 @@ export const getFaltasByDiaAndIndice = (dia,indice) => {
   })
   .then((res) => res.json())
   .then((res) => {
-    console.log(res);
-
     if (res.errors) {
       throw new Error(res.errors[0].message);
     } else {

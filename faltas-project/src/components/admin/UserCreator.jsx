@@ -6,6 +6,7 @@ import { toast, Bounce } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from "../Utiles/Loading";
 import { useAuth } from "../../context/authenticationState";
+import InputPassword from "../Utiles/InputPassword";
 
 export default function UserCreator() {
     const [isInRequest, setIsInRequest] = useState(false)
@@ -112,11 +113,11 @@ export default function UserCreator() {
             <form className="flex flex-col items-center md:items-start">
                 <div className="flex flex-row gap-3 mb-3 flex-wrap justify-center md:justify-start ">
                     <div className="flex justify-center">
-                        <input id="username" name="username" className="px-2 border-2 rounded-md" type="text" value={username} placeholder="Usuario" onChange={({ target }) => { setUsername(target.value) }}></input>
+                        <input id="username" name="username" className="px-2 py-1 border-2 border-black rounded-[10px]" type="text" value={username} placeholder="Usuario" onChange={({ target }) => { setUsername(target.value) }}></input>
                     </div>
                     <div className="flex justify-center flex-wrap gap-2">
-                        <input className="px-2 border-2 rounded-md" type="password" id="pass" name="password" value={password} placeholder="contraseña" onChange={({ target }) => { setPassword(target.value) }}  ></input>
-                        <input className="px-2 border-2 rounded-md" type="password" id="pass2" name="password" value={passwordRepetirField} placeholder="Repetir contraseña" onChange={({ target }) => { setPasswordRepetirField(target.value) }}></input>
+                        <InputPassword placeholder="Contraseña" password={password} setPassword={setPassword}></InputPassword>
+                        <InputPassword placeholder="Repetir contraseña" password={passwordRepetirField} setPassword={setPasswordRepetirField}></InputPassword>
                     </div>
                 </div>
                 <Selector messageSearch={messageSearch} selectMessage={selectMessage} itemsInput={profesores} changeItemSelected={SetProfesorSelected} itemSelected={profesorSelected} flotante={false}></Selector>

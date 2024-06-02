@@ -94,9 +94,10 @@ export default function PopUpCreateFaltaHorarioDiaCompleto({ dia, changeToClose 
                         <div className='menumenh-info-comentario flex-auto'>
                             <p className='font-bold'>Comentario:</p>
                             <textarea type="text" className='m-text-comment w-[100%] flex-auto' onChange={(e) => setComentario(e.target.value)} />
-                        </div>
-                        <div className='menumh-send-container menumh-send-container-create mb-8'>
-                            <button className='menumh-button menumh-button-aceptar' onClick={(e) => crearAllFaltas()}>Registrar Faltas</button>
+                            
+                            <div className='menumh-send-container menumh-send-container-create'>
+                                <button className='menumh-button menumh-button-aceptar' onClick={(e) => crearAllFaltas()}>Registrar Faltas</button>
+                            </div>
                         </div>
 
                     </div>
