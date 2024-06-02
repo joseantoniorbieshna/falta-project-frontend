@@ -78,7 +78,7 @@ export default function ChangePassword() {
             <h1 className='font-bold text-2xl text-blacklight text-center'>Cambiar contraseña</h1>
             <form className="flex flex-col items-center">
                 <div className="flex flex-row gap-3 mb-3 flex-wrap justify-center md:justify-start ">
-                    <div className="flex justify-center flex-wrap gap-2">
+                    <div className="flex flex-col justify-center flex-wrap gap-2">
                         <input className="px-2 border-2 rounded-md" type="password" id="passActual" name="password" value={passwordActual} placeholder="contraseña actual" onChange={({ target }) => { setPasswordActual(target.value) }}  ></input>
                         <input className="px-2 border-2 rounded-md" type="password" id="pass" name="password" value={password} placeholder="contraseña" onChange={({ target }) => { setPassword(target.value) }}  ></input>
                         <input className="px-2 border-2 rounded-md" type="password" id="pass2" name="password" value={passwordRepetirField} placeholder="Repetir contraseña" onChange={({ target }) => { setPasswordRepetirField(target.value) }}></input>

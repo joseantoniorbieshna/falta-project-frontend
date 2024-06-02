@@ -3,7 +3,7 @@ import { IonIcon } from '@ionic/react';
 import { chevronDownOutline, searchOutline } from 'ionicons/icons';
 
 
-const Selector = ({messageSearch,selectMessage,itemsInput, changeItemSelected, itemSelected}) => {
+const Selector = ({messageSearch,selectMessage,itemsInput, changeItemSelected, itemSelected,flotante=true}) => {
 
     const [items, setItems] = useState(itemsInput);
     const [inputValue, setInputValue] = useState("");
@@ -29,8 +29,8 @@ const Selector = ({messageSearch,selectMessage,itemsInput, changeItemSelected, i
             </div>
             
             <ul
-                className={`absolute z-[50] bg-white mt-2 overflow-y-auto ${open ? "max-h-60" : "max-h-0"
-                    } `}
+                className={`${flotante?"absolute z-[50]":""} bg-white mt-2 overflow-y-auto ${open ? "max-h-60" : "max-h-0"
+                    } `}    
             >
                 <div className="flex items-center px-2 sticky top-0 bg-white">
                     <IonIcon icon={searchOutline}></IonIcon>

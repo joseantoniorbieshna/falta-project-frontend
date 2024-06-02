@@ -6,6 +6,7 @@ import { data } from "autoprefixer";
 import { useAuth } from "../context/authenticationState";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordUserAdmin from "./admin/ChangePasswordUserAdmin";
+import ShowUserNameByProfesor from "./admin/ShowUserNameByProfesor";
 
 export default function AdminMain() {
     const { isAdmin } = useAuth();
@@ -31,6 +32,7 @@ export default function AdminMain() {
                     <div className="flex-auto overflow-y-auto w-full">
                         <UserCreator></UserCreator>
                         <ChangePasswordUserAdmin></ChangePasswordUserAdmin>
+                        <ShowUserNameByProfesor></ShowUserNameByProfesor>
                         <XmlFileSender></XmlFileSender>
                     </div>
 

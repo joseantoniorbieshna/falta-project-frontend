@@ -112,7 +112,7 @@ export default function ChangePasswordUserAdmin() {
                         <input className="px-2 border-2 rounded-md" type="password" id="pass2" name="password" value={passwordRepetirField} placeholder="Repetir contraseña" onChange={({ target }) => { setPasswordRepetirField(target.value) }}></input>
                     </div>
                 </div>
-                <Selector messageSearch={messageSearch} selectMessage={selectMessage} itemsInput={profesores} changeItemSelected={SetProfesorSelected} itemSelected={profesorSelected}></Selector>
+                <Selector messageSearch={messageSearch} selectMessage={selectMessage} itemsInput={profesores} changeItemSelected={SetProfesorSelected} itemSelected={profesorSelected} flotante={false}></Selector>
                 <button className=" my-3 p-2 rounded-lg bg-green" onClick={(event)=>crearUsuario(event)}>Cambiar contraseña</button>
 
             </form>
