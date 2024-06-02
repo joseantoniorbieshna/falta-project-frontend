@@ -66,8 +66,12 @@ export default function Landing() {
                 <h1 className='text-5xl font-bold text-pretty'>Organiza tu horario y registra faltas de asistencias</h1>
                 <p className='text-pretty'>Producimos horarios seguros y garantizamos el seguimiento de faltas de asistencias.</p>
                 <div className='flex gap-5'>
+                <Link to='/login'>
                     <button className='bg-black text-white rounded-full px-5 py-3'>Explorar</button>
+                </Link>
+                <Link to='/about'>
                     <button className='bg-black text-white rounded-full px-5 py-3'>Ver mas</button>
+                </Link>
                 </div>
             </div>
         </section>

@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import AuthProvider,{ useAuth } from './context/authenticationState'
 import AdminMain from './components/AdminMain'
 import ConfigMain from './components/ConfigMain'
+import Contact from './components/Contact'
 
 
 
@@ -55,7 +56,9 @@ function App() {
         <Routes>
           <Route path='/' element={<MyLandingContainer><Landing/></MyLandingContainer>}></Route>
           <Route path='/home' element={<MyLandingContainer><Landing/></MyLandingContainer>}></Route>
-
+          <Route path='/contact' element={<MyLandingContainer><Contact/></MyLandingContainer>}></Route>
+          <Route path='/about' element={<MyLandingContainer><Contact/></MyLandingContainer>}></Route>
+          
           <Route path='/horario' element={
               <MyMainPageContainer>
                   <MainMenu/>
