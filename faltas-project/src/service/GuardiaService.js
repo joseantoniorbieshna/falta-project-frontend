@@ -58,7 +58,8 @@ export const getAllGuardiaProfesorByDiaAndIndice = (dia,indice) => {
                 query($tramoHorario: IdTramoHorario!) {
                     guardiasByDiaAndIndice(tramoHorario: $tramoHorario) {
                             profesor{
-                              nombre
+                              nombre,
+                              totalFaltasSustituidas
                             }
                     }
                 }
@@ -81,9 +82,9 @@ export const getAllGuardiaProfesorByDiaAndIndice = (dia,indice) => {
             } else {
                 const dataList = res.data.guardiasByDiaAndIndice;
                 return dataList.map((dataObject, index) => {
-                    const {nombre} = dataObject.profesor;
-                    console.log(nombre);
-                    return { nombre };
+                    const {nombre,totalFaltasSustituidas} = dataObject.profesor;
+                    console.log(nombre+":"+totalFaltasSustituidas);
+                    return { nombre,totalFaltasSustituidas };
                 });
             }
         });

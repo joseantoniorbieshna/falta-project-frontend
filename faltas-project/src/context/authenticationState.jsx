@@ -10,6 +10,7 @@ const AuthProvider = ({ children }) => {
     const location = useLocation();
     const [isChecking, setIsChecking] = useState(false);
     const [username, setUsername] = useState(null);
+    const [nombre, setNombre] = useState(null);
     const [referenciaProfesor, setReferenciaProfesor]= useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,16 +20,18 @@ const AuthProvider = ({ children }) => {
       setIsChecking(true)
       getInfoUserAuthentication()
       .then((res)=>{
-        const {username,role,referenciaProfesor}=res;
+        const {username,role,referenciaProfesor,nombre}=res;
         console.log("username: "+username+" role: "+role+" referenciaProfesor: "+referenciaProfesor);
         setIsLoggedIn(true);
         setUsername(username)
 
         if(role=="ADMIN"){
           setIsAdmin(true)
+          setNombre(username)
           console.log("SOY ADMIN");
         }else{
           setIsAdmin(false);
+          setNombre(nombre);
           setReferenciaProfesor(referenciaProfesor)
           console.log("SOY USER");
         }
@@ -71,7 +74,7 @@ const AuthProvider = ({ children }) => {
     }
   
     return (
-      <authenticationContext.Provider value={{isLoggedIn,isChecking, username, referenciaProfesor, isAdmin,setReferenciaProfesor, checkIsLogin, logout }}>
+      <authenticationContext.Provider value={{isLoggedIn,isChecking,nombre, username, referenciaProfesor, isAdmin,setReferenciaProfesor, checkIsLogin, logout }}>
         {children}
       </authenticationContext.Provider>
     );

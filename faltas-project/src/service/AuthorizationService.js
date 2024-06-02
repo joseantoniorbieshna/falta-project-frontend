@@ -2,7 +2,11 @@ const URL_BACKEND_AUTH = import.meta.env.VITE_BACKEND_END_POINT + "/auth";
 const URL_BACKEND_AUTH_LOGIN = URL_BACKEND_AUTH + "/log-in";
 const URL_BACKEND_AUTH_SIGNUP = URL_BACKEND_AUTH + "/sign-up";
 const URL_BACKEND_AUTH_INFO = URL_BACKEND_AUTH + "/info";
+const URL_BACKEND_CHANGE_PASSWORD_BY_USER = URL_BACKEND_AUTH +"/change-password-by-user";
+const URL_BACKEND_CHANGE_PASSWORD_BY_REF_PROF = URL_BACKEND_AUTH +"/change-password-by-ref-prof";
+
 export const getloginUserToken = (user, password) => {
+    console.log(URL_BACKEND_AUTH_LOGIN);
     return fetch(URL_BACKEND_AUTH_LOGIN, {
         method: 'POST',
         headers: {
@@ -14,6 +18,7 @@ export const getloginUserToken = (user, password) => {
         })
     })
         .then((res) => {
+            console.log(res);
             if (!res.ok) {
                 throw new Error('Error al iniciar', { cause: { status: res.status } });
             }
@@ -48,6 +53,55 @@ export const createUserApi = async (username, password, referenciaProfesor) => {
     })
 };
 
+export const changePasswordByUser = async (username, actualPassword, passwordToChange) => {
+    return await fetch(URL_BACKEND_CHANGE_PASSWORD_BY_USER, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': getTokenBearerInCookies()
+        },
+        body: JSON.stringify({
+            username: username,
+            actualPassword: actualPassword,
+            passwordToChange: passwordToChange
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(res => {
+                console.log(res);
+                let errorMessage = res.message || "No se ha podido cambiar la contraseña.";
+                throw new Error(errorMessage, { cause: { status: response.status } });
+            });
+        }
+        return response.text();
+    })
+};
+
+export const changePasswordByRefProfesor = async (referenciaProfesor, password) => {
+    return await fetch(URL_BACKEND_CHANGE_PASSWORD_BY_REF_PROF, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': getTokenBearerInCookies()
+        },
+        body: JSON.stringify({
+            referenciaProfesor: referenciaProfesor,
+            password: password
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(res => {
+                console.log(res);
+                let errorMessage = res.message || "No se ha podido cambiar la contraseña.";
+                throw new Error(errorMessage, { cause: { status: response.status } });
+            });
+        }
+        return response.text();
+    })
+};
+
 export const getInfoUserAuthentication = () => {
     return fetch(URL_BACKEND_AUTH_INFO, {
         method: 'GET',
@@ -65,8 +119,9 @@ export const getInfoUserAuthentication = () => {
         .then((res) => {
             const username = res.username
             const role = res.role
+            const nombre = res.nombre
             const referenciaProfesor = res.referenciaProfesor
-            return { username, role, referenciaProfesor }
+            return { username, role, referenciaProfesor,nombre }
         })
 };
 

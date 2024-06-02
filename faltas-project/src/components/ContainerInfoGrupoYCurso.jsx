@@ -12,7 +12,7 @@ export default function ContainerInfoGrupoYCurso({ curso, grupos, profesor = nul
         <>
             <div className='m-info-container' style={containerStyle}>
                 {
-                    dia && indice &&
+                    dia!=null && indice!=null &&
                     <div className='flex flex-row items-end'>
                         <p className='mr-1 font-bold'>Día:</p>
                         <p className=''>{diaDeLaSemanaPalabra[dia]} a {indiceDeLaSemanaPalabra[indice]}</p>

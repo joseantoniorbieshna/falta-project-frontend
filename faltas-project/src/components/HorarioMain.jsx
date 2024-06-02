@@ -85,7 +85,11 @@ export function HorarioMain() {
             }
             </div>
             {
-                isLoad ? <Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={false} lunesCercano={lunesCercano} hasActionInAllDay={true}></Horario> : <Loading></Loading>
+                referenciaProfesor == null?<div className='flex-1 flex items-center justify-center'>Selecciona un profesor.</div>: 
+                isLoad ? 
+                <Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={false} lunesCercano={lunesCercano} hasActionInAllDay={true}></Horario> 
+                :
+                <Loading></Loading>
             }
 
         </section>

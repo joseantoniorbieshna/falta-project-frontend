@@ -29,6 +29,7 @@ export default function Login() {
                 checkIsLogin();
             })
             .catch(err => {
+                console.log(err);
                 logout()
                 let messageError = ""
                 if (err.cause && err.cause.status == 401) {

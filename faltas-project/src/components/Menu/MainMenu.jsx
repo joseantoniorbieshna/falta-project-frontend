@@ -8,7 +8,7 @@ import useMobile from "../../hooks/useMobile";
 import useEffectAddWindowEvent from "../../hooks/useEffectAddWindowEvent";
 import { useAuth } from "../../context/authenticationState";
 export default function MainMenu() {
-    const { isAdmin, logout } = useAuth();
+    const { isAdmin, logout,nombre } = useAuth();
     const location = useLocation();
     const [activeButton, setActiveButton] = useState({
         faltas: '',
@@ -56,12 +56,12 @@ export default function MainMenu() {
             <div className="mm-user-container flex flex-row items-center bg-[#fff] w-[80%] m-5 rounded-3xl py-5 px-3">
                 <img className="mm-user-image rounded-full w-8 h-8" src={logo}></img>
                 <div className="flex flex-col ml-4 flex-1 overflow-hidden items-start">
-                    <h5 className="mm-text-user text-sm overflow-hidden font-bold text-blacklight">Jose Antonio Ramos</h5>
+                    <h5 className="mm-text-user text-sm overflow-hidden font-bold text-blacklight">{nombre}</h5>
                 </div>
             </div>
             <IonIcon onClick={toggleMenu} icon={isMenuOpen ? closeOutline : menuOutline} className='mm-menu.icon text-black text-3xl cursor-pointer md:hidden'></IonIcon>
             <nav style={{ top: height }} className={`mm-nav flex flex-1 justify-between flex-col w-[80%] mt-4 ${isMenuOpen ? 'menu-open' : ''}`}>
-                <div>
+                <div className="w-[80%] md:w-full">
 
                     <ul className="flex flex-col gap-3 items-center md:items-start">
                     {
@@ -94,9 +94,9 @@ export default function MainMenu() {
                     </ul>
                 </div>
 
-                <div>
+                <div className="w-[80%] md:w-full mb-3">
                     <hr className="mb-3 text-grayblack" />
-                    <ul className="flex flex-col gap-5 mb-5 items-center md:items-start">
+                    <ul className="flex flex-col gap-3 items-center md:items-start">
                         <li className="w-full">
                             <Link title="Configuración" to='/settings' className={`mm-button ${activeButton.settings}`}>
                                 <IonIcon icon={settingsOutline} className={'text-black text-2xl cursor-pointer mm-icon'}></IonIcon>

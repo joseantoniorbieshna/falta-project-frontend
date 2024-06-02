@@ -89,9 +89,12 @@ export default function FaltasMain() {
                 </div>
             }
            </div>
-
             {
-                isLoad ? <Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={true} lunesCercano={lunesCercano}></Horario> : <Loading></Loading>
+                referenciaProfesor==null?
+                <div className='flex-1 flex items-center justify-center'>Selecciona un profesor.</div> :
+                isLoad ? <Horario timeArray={allHours} mensajes={allElementsHour} showDayNumber={true} lunesCercano={lunesCercano}></Horario>
+                :
+                <Loading></Loading>
             }
 
 

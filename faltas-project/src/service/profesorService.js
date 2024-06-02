@@ -78,3 +78,38 @@ export const getAllProfesoresWithoutUser = () => {
             }
         });
 };
+
+export const getAllProfesoresWithUser = () => {
+    return fetch(URL_BACKEND_GRAPHQL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': getTokenBearerInCookies()
+        },
+        body: JSON.stringify({
+            query: `
+        query profesoresWithRegistrationUser{
+            profesoresWithRegistrationUser{
+                  referencia,
+                  nombre
+                }
+              }
+        `
+        }),
+    })
+        .then((res) => res.json())
+        .then((res) => {
+            if (res.errors) {
+                console.log(res.errors);
+                throw new Error(res.errors[0].message);
+            } else {
+                const profesoresRaw = res.data.profesoresWithRegistrationUser;
+                const profesoresDataList=profesoresRaw.map(profesor=>{
+                    const referencia = profesor.referencia;
+                    const nombre = profesor.nombre;
+                    return {referencia,nombre}
+                })
+                return profesoresDataList;
+            }
+        });
+};
